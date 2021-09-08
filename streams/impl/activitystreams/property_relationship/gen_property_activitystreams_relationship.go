@@ -35,7 +35,6 @@ type ActivityStreamsRelationshipPropertyIterator struct {
 	activitystreamsFlagMember                  vocab.ActivityStreamsFlag
 	activitystreamsFollowMember                vocab.ActivityStreamsFollow
 	activitystreamsGroupMember                 vocab.ActivityStreamsGroup
-	tootHashtagMember                          vocab.TootHashtag
 	tootIdentityProofMember                    vocab.TootIdentityProof
 	activitystreamsIgnoreMember                vocab.ActivityStreamsIgnore
 	activitystreamsImageMember                 vocab.ActivityStreamsImage
@@ -228,12 +227,6 @@ func deserializeActivityStreamsRelationshipPropertyIterator(i interface{}, alias
 			this := &ActivityStreamsRelationshipPropertyIterator{
 				activitystreamsGroupMember: v,
 				alias:                      alias,
-			}
-			return this, nil
-		} else if v, err := mgr.DeserializeHashtagToot()(m, aliasMap); err == nil {
-			this := &ActivityStreamsRelationshipPropertyIterator{
-				alias:             alias,
-				tootHashtagMember: v,
 			}
 			return this, nil
 		} else if v, err := mgr.DeserializeIdentityProofToot()(m, aliasMap); err == nil {
@@ -838,12 +831,6 @@ func (this ActivityStreamsRelationshipPropertyIterator) GetTootEmoji() vocab.Too
 	return this.tootEmojiMember
 }
 
-// GetTootHashtag returns the value of this property. When IsTootHashtag returns
-// false, GetTootHashtag will return an arbitrary value.
-func (this ActivityStreamsRelationshipPropertyIterator) GetTootHashtag() vocab.TootHashtag {
-	return this.tootHashtagMember
-}
-
 // GetTootIdentityProof returns the value of this property. When
 // IsTootIdentityProof returns false, GetTootIdentityProof will return an
 // arbitrary value.
@@ -916,9 +903,6 @@ func (this ActivityStreamsRelationshipPropertyIterator) GetType() vocab.Type {
 	}
 	if this.IsActivityStreamsGroup() {
 		return this.GetActivityStreamsGroup()
-	}
-	if this.IsTootHashtag() {
-		return this.GetTootHashtag()
 	}
 	if this.IsTootIdentityProof() {
 		return this.GetTootIdentityProof()
@@ -1052,7 +1036,6 @@ func (this ActivityStreamsRelationshipPropertyIterator) HasAny() bool {
 		this.IsActivityStreamsFlag() ||
 		this.IsActivityStreamsFollow() ||
 		this.IsActivityStreamsGroup() ||
-		this.IsTootHashtag() ||
 		this.IsTootIdentityProof() ||
 		this.IsActivityStreamsIgnore() ||
 		this.IsActivityStreamsImage() ||
@@ -1479,13 +1462,6 @@ func (this ActivityStreamsRelationshipPropertyIterator) IsTootEmoji() bool {
 	return this.tootEmojiMember != nil
 }
 
-// IsTootHashtag returns true if this property has a type of "Hashtag". When true,
-// use the GetTootHashtag and SetTootHashtag methods to access and set this
-// property.
-func (this ActivityStreamsRelationshipPropertyIterator) IsTootHashtag() bool {
-	return this.tootHashtagMember != nil
-}
-
 // IsTootIdentityProof returns true if this property has a type of
 // "IdentityProof". When true, use the GetTootIdentityProof and
 // SetTootIdentityProof methods to access and set this property.
@@ -1541,8 +1517,6 @@ func (this ActivityStreamsRelationshipPropertyIterator) JSONLDContext() map[stri
 		child = this.GetActivityStreamsFollow().JSONLDContext()
 	} else if this.IsActivityStreamsGroup() {
 		child = this.GetActivityStreamsGroup().JSONLDContext()
-	} else if this.IsTootHashtag() {
-		child = this.GetTootHashtag().JSONLDContext()
 	} else if this.IsTootIdentityProof() {
 		child = this.GetTootIdentityProof().JSONLDContext()
 	} else if this.IsActivityStreamsIgnore() {
@@ -1692,62 +1666,59 @@ func (this ActivityStreamsRelationshipPropertyIterator) KindIndex() int {
 	if this.IsActivityStreamsGroup() {
 		return 20
 	}
-	if this.IsTootHashtag() {
+	if this.IsTootIdentityProof() {
 		return 21
 	}
-	if this.IsTootIdentityProof() {
+	if this.IsActivityStreamsIgnore() {
 		return 22
 	}
-	if this.IsActivityStreamsIgnore() {
+	if this.IsActivityStreamsImage() {
 		return 23
 	}
-	if this.IsActivityStreamsImage() {
+	if this.IsActivityStreamsIntransitiveActivity() {
 		return 24
 	}
-	if this.IsActivityStreamsIntransitiveActivity() {
+	if this.IsActivityStreamsInvite() {
 		return 25
 	}
-	if this.IsActivityStreamsInvite() {
+	if this.IsActivityStreamsJoin() {
 		return 26
 	}
-	if this.IsActivityStreamsJoin() {
+	if this.IsActivityStreamsLeave() {
 		return 27
 	}
-	if this.IsActivityStreamsLeave() {
+	if this.IsActivityStreamsLike() {
 		return 28
 	}
-	if this.IsActivityStreamsLike() {
+	if this.IsActivityStreamsListen() {
 		return 29
 	}
-	if this.IsActivityStreamsListen() {
+	if this.IsActivityStreamsMove() {
 		return 30
 	}
-	if this.IsActivityStreamsMove() {
+	if this.IsActivityStreamsNote() {
 		return 31
 	}
-	if this.IsActivityStreamsNote() {
+	if this.IsActivityStreamsOffer() {
 		return 32
 	}
-	if this.IsActivityStreamsOffer() {
+	if this.IsActivityStreamsOrderedCollection() {
 		return 33
 	}
-	if this.IsActivityStreamsOrderedCollection() {
+	if this.IsActivityStreamsOrderedCollectionPage() {
 		return 34
 	}
-	if this.IsActivityStreamsOrderedCollectionPage() {
+	if this.IsActivityStreamsOrganization() {
 		return 35
 	}
-	if this.IsActivityStreamsOrganization() {
+	if this.IsActivityStreamsPage() {
 		return 36
 	}
-	if this.IsActivityStreamsPage() {
+	if this.IsActivityStreamsPerson() {
 		return 37
 	}
-	if this.IsActivityStreamsPerson() {
-		return 38
-	}
 	if this.IsActivityStreamsPlace() {
-		return 39
+		return 38
 	}
 	if this.IsActivityStreamsProfile() {
 		return 41
@@ -1868,8 +1839,6 @@ func (this ActivityStreamsRelationshipPropertyIterator) LessThan(o vocab.Activit
 		return this.GetActivityStreamsFollow().LessThan(o.GetActivityStreamsFollow())
 	} else if this.IsActivityStreamsGroup() {
 		return this.GetActivityStreamsGroup().LessThan(o.GetActivityStreamsGroup())
-	} else if this.IsTootHashtag() {
-		return this.GetTootHashtag().LessThan(o.GetTootHashtag())
 	} else if this.IsTootIdentityProof() {
 		return this.GetTootIdentityProof().LessThan(o.GetTootIdentityProof())
 	} else if this.IsActivityStreamsIgnore() {
@@ -2357,13 +2326,6 @@ func (this *ActivityStreamsRelationshipPropertyIterator) SetTootEmoji(v vocab.To
 	this.tootEmojiMember = v
 }
 
-// SetTootHashtag sets the value of this property. Calling IsTootHashtag
-// afterwards returns true.
-func (this *ActivityStreamsRelationshipPropertyIterator) SetTootHashtag(v vocab.TootHashtag) {
-	this.clear()
-	this.tootHashtagMember = v
-}
-
 // SetTootIdentityProof sets the value of this property. Calling
 // IsTootIdentityProof afterwards returns true.
 func (this *ActivityStreamsRelationshipPropertyIterator) SetTootIdentityProof(v vocab.TootIdentityProof) {
@@ -2456,10 +2418,6 @@ func (this *ActivityStreamsRelationshipPropertyIterator) SetType(t vocab.Type) e
 	}
 	if v, ok := t.(vocab.ActivityStreamsGroup); ok {
 		this.SetActivityStreamsGroup(v)
-		return nil
-	}
-	if v, ok := t.(vocab.TootHashtag); ok {
-		this.SetTootHashtag(v)
 		return nil
 	}
 	if v, ok := t.(vocab.TootIdentityProof); ok {
@@ -2630,7 +2588,6 @@ func (this *ActivityStreamsRelationshipPropertyIterator) clear() {
 	this.activitystreamsFlagMember = nil
 	this.activitystreamsFollowMember = nil
 	this.activitystreamsGroupMember = nil
-	this.tootHashtagMember = nil
 	this.tootIdentityProofMember = nil
 	this.activitystreamsIgnoreMember = nil
 	this.activitystreamsImageMember = nil
@@ -2717,8 +2674,6 @@ func (this ActivityStreamsRelationshipPropertyIterator) serialize() (interface{}
 		return this.GetActivityStreamsFollow().Serialize()
 	} else if this.IsActivityStreamsGroup() {
 		return this.GetActivityStreamsGroup().Serialize()
-	} else if this.IsTootHashtag() {
-		return this.GetTootHashtag().Serialize()
 	} else if this.IsTootIdentityProof() {
 		return this.GetTootIdentityProof().Serialize()
 	} else if this.IsActivityStreamsIgnore() {
@@ -3507,17 +3462,6 @@ func (this *ActivityStreamsRelationshipProperty) AppendTootEmoji(v vocab.TootEmo
 		myIdx:           this.Len(),
 		parent:          this,
 		tootEmojiMember: v,
-	})
-}
-
-// AppendTootHashtag appends a Hashtag value to the back of a list of the property
-// "relationship". Invalidates iterators that are traversing using Prev.
-func (this *ActivityStreamsRelationshipProperty) AppendTootHashtag(v vocab.TootHashtag) {
-	this.properties = append(this.properties, &ActivityStreamsRelationshipPropertyIterator{
-		alias:             this.alias,
-		myIdx:             this.Len(),
-		parent:            this,
-		tootHashtagMember: v,
 	})
 }
 
@@ -4712,82 +4656,78 @@ func (this ActivityStreamsRelationshipProperty) Less(i, j int) bool {
 			rhs := this.properties[j].GetActivityStreamsGroup()
 			return lhs.LessThan(rhs)
 		} else if idx1 == 21 {
-			lhs := this.properties[i].GetTootHashtag()
-			rhs := this.properties[j].GetTootHashtag()
-			return lhs.LessThan(rhs)
-		} else if idx1 == 22 {
 			lhs := this.properties[i].GetTootIdentityProof()
 			rhs := this.properties[j].GetTootIdentityProof()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 23 {
+		} else if idx1 == 22 {
 			lhs := this.properties[i].GetActivityStreamsIgnore()
 			rhs := this.properties[j].GetActivityStreamsIgnore()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 24 {
+		} else if idx1 == 23 {
 			lhs := this.properties[i].GetActivityStreamsImage()
 			rhs := this.properties[j].GetActivityStreamsImage()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 25 {
+		} else if idx1 == 24 {
 			lhs := this.properties[i].GetActivityStreamsIntransitiveActivity()
 			rhs := this.properties[j].GetActivityStreamsIntransitiveActivity()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 26 {
+		} else if idx1 == 25 {
 			lhs := this.properties[i].GetActivityStreamsInvite()
 			rhs := this.properties[j].GetActivityStreamsInvite()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 27 {
+		} else if idx1 == 26 {
 			lhs := this.properties[i].GetActivityStreamsJoin()
 			rhs := this.properties[j].GetActivityStreamsJoin()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 28 {
+		} else if idx1 == 27 {
 			lhs := this.properties[i].GetActivityStreamsLeave()
 			rhs := this.properties[j].GetActivityStreamsLeave()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 29 {
+		} else if idx1 == 28 {
 			lhs := this.properties[i].GetActivityStreamsLike()
 			rhs := this.properties[j].GetActivityStreamsLike()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 30 {
+		} else if idx1 == 29 {
 			lhs := this.properties[i].GetActivityStreamsListen()
 			rhs := this.properties[j].GetActivityStreamsListen()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 31 {
+		} else if idx1 == 30 {
 			lhs := this.properties[i].GetActivityStreamsMove()
 			rhs := this.properties[j].GetActivityStreamsMove()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 32 {
+		} else if idx1 == 31 {
 			lhs := this.properties[i].GetActivityStreamsNote()
 			rhs := this.properties[j].GetActivityStreamsNote()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 33 {
+		} else if idx1 == 32 {
 			lhs := this.properties[i].GetActivityStreamsOffer()
 			rhs := this.properties[j].GetActivityStreamsOffer()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 34 {
+		} else if idx1 == 33 {
 			lhs := this.properties[i].GetActivityStreamsOrderedCollection()
 			rhs := this.properties[j].GetActivityStreamsOrderedCollection()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 35 {
+		} else if idx1 == 34 {
 			lhs := this.properties[i].GetActivityStreamsOrderedCollectionPage()
 			rhs := this.properties[j].GetActivityStreamsOrderedCollectionPage()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 36 {
+		} else if idx1 == 35 {
 			lhs := this.properties[i].GetActivityStreamsOrganization()
 			rhs := this.properties[j].GetActivityStreamsOrganization()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 37 {
+		} else if idx1 == 36 {
 			lhs := this.properties[i].GetActivityStreamsPage()
 			rhs := this.properties[j].GetActivityStreamsPage()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 38 {
+		} else if idx1 == 37 {
 			lhs := this.properties[i].GetActivityStreamsPerson()
 			rhs := this.properties[j].GetActivityStreamsPerson()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 39 {
+		} else if idx1 == 38 {
 			lhs := this.properties[i].GetActivityStreamsPlace()
 			rhs := this.properties[j].GetActivityStreamsPlace()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 40 {
+		} else if idx1 == 39 {
 			lhs := this.properties[i].GetActivityStreamsProfile()
 			rhs := this.properties[j].GetActivityStreamsProfile()
 			return lhs.LessThan(rhs)
@@ -5679,20 +5619,6 @@ func (this *ActivityStreamsRelationshipProperty) PrependTootEmoji(v vocab.TootEm
 	}
 }
 
-// PrependTootHashtag prepends a Hashtag value to the front of a list of the
-// property "relationship". Invalidates all iterators.
-func (this *ActivityStreamsRelationshipProperty) PrependTootHashtag(v vocab.TootHashtag) {
-	this.properties = append([]*ActivityStreamsRelationshipPropertyIterator{{
-		alias:             this.alias,
-		myIdx:             0,
-		parent:            this,
-		tootHashtagMember: v,
-	}}, this.properties...)
-	for i := 1; i < this.Len(); i++ {
-		(this.properties)[i].myIdx = i
-	}
-}
-
 // PrependTootIdentityProof prepends a IdentityProof value to the front of a list
 // of the property "relationship". Invalidates all iterators.
 func (this *ActivityStreamsRelationshipProperty) PrependTootIdentityProof(v vocab.TootIdentityProof) {
@@ -6470,19 +6396,6 @@ func (this *ActivityStreamsRelationshipProperty) SetTootEmoji(idx int, v vocab.T
 		myIdx:           idx,
 		parent:          this,
 		tootEmojiMember: v,
-	}
-}
-
-// SetTootHashtag sets a Hashtag value to be at the specified index for the
-// property "relationship". Panics if the index is out of bounds. Invalidates
-// all iterators.
-func (this *ActivityStreamsRelationshipProperty) SetTootHashtag(idx int, v vocab.TootHashtag) {
-	(this.properties)[idx].parent = nil
-	(this.properties)[idx] = &ActivityStreamsRelationshipPropertyIterator{
-		alias:             this.alias,
-		myIdx:             idx,
-		parent:            this,
-		tootHashtagMember: v,
 	}
 }
 

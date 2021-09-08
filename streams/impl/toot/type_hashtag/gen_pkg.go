@@ -11,79 +11,27 @@ var typePropertyConstructor func() vocab.JSONLDTypeProperty
 // privateManager abstracts the code-generated manager that provides access to
 // concrete implementations.
 type privateManager interface {
-	// DeserializeAltitudePropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsAltitudeProperty" non-functional
-	// property in the vocabulary "ActivityStreams"
-	DeserializeAltitudePropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsAltitudeProperty, error)
-	// DeserializeAttachmentPropertyActivityStreams returns the
-	// deserialization method for the "ActivityStreamsAttachmentProperty"
-	// non-functional property in the vocabulary "ActivityStreams"
-	DeserializeAttachmentPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsAttachmentProperty, error)
 	// DeserializeAttributedToPropertyActivityStreams returns the
 	// deserialization method for the
 	// "ActivityStreamsAttributedToProperty" non-functional property in
 	// the vocabulary "ActivityStreams"
 	DeserializeAttributedToPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsAttributedToProperty, error)
-	// DeserializeAudiencePropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsAudienceProperty" non-functional
+	// DeserializeHeightPropertyActivityStreams returns the deserialization
+	// method for the "ActivityStreamsHeightProperty" non-functional
 	// property in the vocabulary "ActivityStreams"
-	DeserializeAudiencePropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsAudienceProperty, error)
-	// DeserializeBccPropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsBccProperty" non-functional property
-	// in the vocabulary "ActivityStreams"
-	DeserializeBccPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsBccProperty, error)
-	// DeserializeBtoPropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsBtoProperty" non-functional property
-	// in the vocabulary "ActivityStreams"
-	DeserializeBtoPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsBtoProperty, error)
-	// DeserializeCcPropertyActivityStreams returns the deserialization method
-	// for the "ActivityStreamsCcProperty" non-functional property in the
-	// vocabulary "ActivityStreams"
-	DeserializeCcPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsCcProperty, error)
-	// DeserializeContentPropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsContentProperty" non-functional
+	DeserializeHeightPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsHeightProperty, error)
+	// DeserializeHrefPropertyActivityStreams returns the deserialization
+	// method for the "ActivityStreamsHrefProperty" non-functional
 	// property in the vocabulary "ActivityStreams"
-	DeserializeContentPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsContentProperty, error)
-	// DeserializeContextPropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsContextProperty" non-functional
+	DeserializeHrefPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsHrefProperty, error)
+	// DeserializeHreflangPropertyActivityStreams returns the deserialization
+	// method for the "ActivityStreamsHreflangProperty" non-functional
 	// property in the vocabulary "ActivityStreams"
-	DeserializeContextPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsContextProperty, error)
-	// DeserializeDurationPropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsDurationProperty" non-functional
-	// property in the vocabulary "ActivityStreams"
-	DeserializeDurationPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsDurationProperty, error)
-	// DeserializeEndTimePropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsEndTimeProperty" non-functional
-	// property in the vocabulary "ActivityStreams"
-	DeserializeEndTimePropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsEndTimeProperty, error)
-	// DeserializeGeneratorPropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsGeneratorProperty" non-functional
-	// property in the vocabulary "ActivityStreams"
-	DeserializeGeneratorPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsGeneratorProperty, error)
-	// DeserializeIconPropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsIconProperty" non-functional
-	// property in the vocabulary "ActivityStreams"
-	DeserializeIconPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsIconProperty, error)
+	DeserializeHreflangPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsHreflangProperty, error)
 	// DeserializeIdPropertyJSONLD returns the deserialization method for the
 	// "JSONLDIdProperty" non-functional property in the vocabulary
 	// "JSONLD"
 	DeserializeIdPropertyJSONLD() func(map[string]interface{}, map[string]string) (vocab.JSONLDIdProperty, error)
-	// DeserializeImagePropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsImageProperty" non-functional
-	// property in the vocabulary "ActivityStreams"
-	DeserializeImagePropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsImageProperty, error)
-	// DeserializeInReplyToPropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsInReplyToProperty" non-functional
-	// property in the vocabulary "ActivityStreams"
-	DeserializeInReplyToPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsInReplyToProperty, error)
-	// DeserializeLikesPropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsLikesProperty" non-functional
-	// property in the vocabulary "ActivityStreams"
-	DeserializeLikesPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsLikesProperty, error)
-	// DeserializeLocationPropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsLocationProperty" non-functional
-	// property in the vocabulary "ActivityStreams"
-	DeserializeLocationPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsLocationProperty, error)
 	// DeserializeMediaTypePropertyActivityStreams returns the deserialization
 	// method for the "ActivityStreamsMediaTypeProperty" non-functional
 	// property in the vocabulary "ActivityStreams"
@@ -92,58 +40,26 @@ type privateManager interface {
 	// method for the "ActivityStreamsNameProperty" non-functional
 	// property in the vocabulary "ActivityStreams"
 	DeserializeNamePropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsNameProperty, error)
-	// DeserializeObjectPropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsObjectProperty" non-functional
-	// property in the vocabulary "ActivityStreams"
-	DeserializeObjectPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsObjectProperty, error)
 	// DeserializePreviewPropertyActivityStreams returns the deserialization
 	// method for the "ActivityStreamsPreviewProperty" non-functional
 	// property in the vocabulary "ActivityStreams"
 	DeserializePreviewPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsPreviewProperty, error)
-	// DeserializePublishedPropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsPublishedProperty" non-functional
-	// property in the vocabulary "ActivityStreams"
-	DeserializePublishedPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsPublishedProperty, error)
-	// DeserializeRepliesPropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsRepliesProperty" non-functional
-	// property in the vocabulary "ActivityStreams"
-	DeserializeRepliesPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsRepliesProperty, error)
-	// DeserializeSharesPropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsSharesProperty" non-functional
-	// property in the vocabulary "ActivityStreams"
-	DeserializeSharesPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsSharesProperty, error)
-	// DeserializeSourcePropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsSourceProperty" non-functional
-	// property in the vocabulary "ActivityStreams"
-	DeserializeSourcePropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsSourceProperty, error)
-	// DeserializeStartTimePropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsStartTimeProperty" non-functional
-	// property in the vocabulary "ActivityStreams"
-	DeserializeStartTimePropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsStartTimeProperty, error)
+	// DeserializeRelPropertyActivityStreams returns the deserialization
+	// method for the "ActivityStreamsRelProperty" non-functional property
+	// in the vocabulary "ActivityStreams"
+	DeserializeRelPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsRelProperty, error)
 	// DeserializeSummaryPropertyActivityStreams returns the deserialization
 	// method for the "ActivityStreamsSummaryProperty" non-functional
 	// property in the vocabulary "ActivityStreams"
 	DeserializeSummaryPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsSummaryProperty, error)
-	// DeserializeTagPropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsTagProperty" non-functional property
-	// in the vocabulary "ActivityStreams"
-	DeserializeTagPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsTagProperty, error)
-	// DeserializeToPropertyActivityStreams returns the deserialization method
-	// for the "ActivityStreamsToProperty" non-functional property in the
-	// vocabulary "ActivityStreams"
-	DeserializeToPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsToProperty, error)
 	// DeserializeTypePropertyJSONLD returns the deserialization method for
 	// the "JSONLDTypeProperty" non-functional property in the vocabulary
 	// "JSONLD"
 	DeserializeTypePropertyJSONLD() func(map[string]interface{}, map[string]string) (vocab.JSONLDTypeProperty, error)
-	// DeserializeUpdatedPropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsUpdatedProperty" non-functional
+	// DeserializeWidthPropertyActivityStreams returns the deserialization
+	// method for the "ActivityStreamsWidthProperty" non-functional
 	// property in the vocabulary "ActivityStreams"
-	DeserializeUpdatedPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsUpdatedProperty, error)
-	// DeserializeUrlPropertyActivityStreams returns the deserialization
-	// method for the "ActivityStreamsUrlProperty" non-functional property
-	// in the vocabulary "ActivityStreams"
-	DeserializeUrlPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsUrlProperty, error)
+	DeserializeWidthPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsWidthProperty, error)
 }
 
 // jsonldContexter is a private interface to determine the JSON-LD contexts and

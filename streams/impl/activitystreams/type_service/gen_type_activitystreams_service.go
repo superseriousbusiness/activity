@@ -482,7 +482,7 @@ func NewActivityStreamsService() *ActivityStreamsService {
 // ServiceIsDisjointWith returns true if the other provided type is disjoint with
 // the Service type.
 func ServiceIsDisjointWith(other vocab.Type) bool {
-	disjointWith := []string{"Link", "Mention"}
+	disjointWith := []string{"Hashtag", "Link", "Mention"}
 	for _, disjoint := range disjointWith {
 		if disjoint == other.GetTypeName() {
 			return true

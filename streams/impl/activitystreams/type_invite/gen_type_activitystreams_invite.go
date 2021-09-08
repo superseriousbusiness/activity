@@ -423,7 +423,7 @@ func DeserializeInvite(m map[string]interface{}, aliasMap map[string]string) (*A
 // InviteIsDisjointWith returns true if the other provided type is disjoint with
 // the Invite type.
 func InviteIsDisjointWith(other vocab.Type) bool {
-	disjointWith := []string{"Link", "Mention"}
+	disjointWith := []string{"Hashtag", "Link", "Mention"}
 	for _, disjoint := range disjointWith {
 		if disjoint == other.GetTypeName() {
 			return true

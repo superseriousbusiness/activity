@@ -72,7 +72,7 @@ func ActivityStreamsArticleExtends(other vocab.Type) bool {
 // ArticleIsDisjointWith returns true if the other provided type is disjoint with
 // the Article type.
 func ArticleIsDisjointWith(other vocab.Type) bool {
-	disjointWith := []string{"Link", "Mention"}
+	disjointWith := []string{"Hashtag", "Link", "Mention"}
 	for _, disjoint := range disjointWith {
 		if disjoint == other.GetTypeName() {
 			return true

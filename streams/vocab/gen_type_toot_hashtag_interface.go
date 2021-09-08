@@ -17,99 +17,36 @@ package vocab
 //     "type": "Note"
 //   }
 type TootHashtag interface {
-	// GetActivityStreamsAltitude returns the "altitude" property if it
-	// exists, and nil otherwise.
-	GetActivityStreamsAltitude() ActivityStreamsAltitudeProperty
-	// GetActivityStreamsAttachment returns the "attachment" property if it
-	// exists, and nil otherwise.
-	GetActivityStreamsAttachment() ActivityStreamsAttachmentProperty
 	// GetActivityStreamsAttributedTo returns the "attributedTo" property if
 	// it exists, and nil otherwise.
 	GetActivityStreamsAttributedTo() ActivityStreamsAttributedToProperty
-	// GetActivityStreamsAudience returns the "audience" property if it
-	// exists, and nil otherwise.
-	GetActivityStreamsAudience() ActivityStreamsAudienceProperty
-	// GetActivityStreamsBcc returns the "bcc" property if it exists, and nil
-	// otherwise.
-	GetActivityStreamsBcc() ActivityStreamsBccProperty
-	// GetActivityStreamsBto returns the "bto" property if it exists, and nil
-	// otherwise.
-	GetActivityStreamsBto() ActivityStreamsBtoProperty
-	// GetActivityStreamsCc returns the "cc" property if it exists, and nil
-	// otherwise.
-	GetActivityStreamsCc() ActivityStreamsCcProperty
-	// GetActivityStreamsContent returns the "content" property if it exists,
+	// GetActivityStreamsHeight returns the "height" property if it exists,
 	// and nil otherwise.
-	GetActivityStreamsContent() ActivityStreamsContentProperty
-	// GetActivityStreamsContext returns the "context" property if it exists,
-	// and nil otherwise.
-	GetActivityStreamsContext() ActivityStreamsContextProperty
-	// GetActivityStreamsDuration returns the "duration" property if it
-	// exists, and nil otherwise.
-	GetActivityStreamsDuration() ActivityStreamsDurationProperty
-	// GetActivityStreamsEndTime returns the "endTime" property if it exists,
-	// and nil otherwise.
-	GetActivityStreamsEndTime() ActivityStreamsEndTimeProperty
-	// GetActivityStreamsGenerator returns the "generator" property if it
-	// exists, and nil otherwise.
-	GetActivityStreamsGenerator() ActivityStreamsGeneratorProperty
-	// GetActivityStreamsIcon returns the "icon" property if it exists, and
+	GetActivityStreamsHeight() ActivityStreamsHeightProperty
+	// GetActivityStreamsHref returns the "href" property if it exists, and
 	// nil otherwise.
-	GetActivityStreamsIcon() ActivityStreamsIconProperty
-	// GetActivityStreamsImage returns the "image" property if it exists, and
-	// nil otherwise.
-	GetActivityStreamsImage() ActivityStreamsImageProperty
-	// GetActivityStreamsInReplyTo returns the "inReplyTo" property if it
+	GetActivityStreamsHref() ActivityStreamsHrefProperty
+	// GetActivityStreamsHreflang returns the "hreflang" property if it
 	// exists, and nil otherwise.
-	GetActivityStreamsInReplyTo() ActivityStreamsInReplyToProperty
-	// GetActivityStreamsLikes returns the "likes" property if it exists, and
-	// nil otherwise.
-	GetActivityStreamsLikes() ActivityStreamsLikesProperty
-	// GetActivityStreamsLocation returns the "location" property if it
-	// exists, and nil otherwise.
-	GetActivityStreamsLocation() ActivityStreamsLocationProperty
+	GetActivityStreamsHreflang() ActivityStreamsHreflangProperty
 	// GetActivityStreamsMediaType returns the "mediaType" property if it
 	// exists, and nil otherwise.
 	GetActivityStreamsMediaType() ActivityStreamsMediaTypeProperty
 	// GetActivityStreamsName returns the "name" property if it exists, and
 	// nil otherwise.
 	GetActivityStreamsName() ActivityStreamsNameProperty
-	// GetActivityStreamsObject returns the "object" property if it exists,
-	// and nil otherwise.
-	GetActivityStreamsObject() ActivityStreamsObjectProperty
 	// GetActivityStreamsPreview returns the "preview" property if it exists,
 	// and nil otherwise.
 	GetActivityStreamsPreview() ActivityStreamsPreviewProperty
-	// GetActivityStreamsPublished returns the "published" property if it
-	// exists, and nil otherwise.
-	GetActivityStreamsPublished() ActivityStreamsPublishedProperty
-	// GetActivityStreamsReplies returns the "replies" property if it exists,
-	// and nil otherwise.
-	GetActivityStreamsReplies() ActivityStreamsRepliesProperty
-	// GetActivityStreamsShares returns the "shares" property if it exists,
-	// and nil otherwise.
-	GetActivityStreamsShares() ActivityStreamsSharesProperty
-	// GetActivityStreamsSource returns the "source" property if it exists,
-	// and nil otherwise.
-	GetActivityStreamsSource() ActivityStreamsSourceProperty
-	// GetActivityStreamsStartTime returns the "startTime" property if it
-	// exists, and nil otherwise.
-	GetActivityStreamsStartTime() ActivityStreamsStartTimeProperty
+	// GetActivityStreamsRel returns the "rel" property if it exists, and nil
+	// otherwise.
+	GetActivityStreamsRel() ActivityStreamsRelProperty
 	// GetActivityStreamsSummary returns the "summary" property if it exists,
 	// and nil otherwise.
 	GetActivityStreamsSummary() ActivityStreamsSummaryProperty
-	// GetActivityStreamsTag returns the "tag" property if it exists, and nil
-	// otherwise.
-	GetActivityStreamsTag() ActivityStreamsTagProperty
-	// GetActivityStreamsTo returns the "to" property if it exists, and nil
-	// otherwise.
-	GetActivityStreamsTo() ActivityStreamsToProperty
-	// GetActivityStreamsUpdated returns the "updated" property if it exists,
-	// and nil otherwise.
-	GetActivityStreamsUpdated() ActivityStreamsUpdatedProperty
-	// GetActivityStreamsUrl returns the "url" property if it exists, and nil
-	// otherwise.
-	GetActivityStreamsUrl() ActivityStreamsUrlProperty
+	// GetActivityStreamsWidth returns the "width" property if it exists, and
+	// nil otherwise.
+	GetActivityStreamsWidth() ActivityStreamsWidthProperty
 	// GetJSONLDId returns the "id" property if it exists, and nil otherwise.
 	GetJSONLDId() JSONLDIdProperty
 	// GetJSONLDType returns the "type" property if it exists, and nil
@@ -138,68 +75,26 @@ type TootHashtag interface {
 	// Serialize converts this into an interface representation suitable for
 	// marshalling into a text or binary format.
 	Serialize() (map[string]interface{}, error)
-	// SetActivityStreamsAltitude sets the "altitude" property.
-	SetActivityStreamsAltitude(i ActivityStreamsAltitudeProperty)
-	// SetActivityStreamsAttachment sets the "attachment" property.
-	SetActivityStreamsAttachment(i ActivityStreamsAttachmentProperty)
 	// SetActivityStreamsAttributedTo sets the "attributedTo" property.
 	SetActivityStreamsAttributedTo(i ActivityStreamsAttributedToProperty)
-	// SetActivityStreamsAudience sets the "audience" property.
-	SetActivityStreamsAudience(i ActivityStreamsAudienceProperty)
-	// SetActivityStreamsBcc sets the "bcc" property.
-	SetActivityStreamsBcc(i ActivityStreamsBccProperty)
-	// SetActivityStreamsBto sets the "bto" property.
-	SetActivityStreamsBto(i ActivityStreamsBtoProperty)
-	// SetActivityStreamsCc sets the "cc" property.
-	SetActivityStreamsCc(i ActivityStreamsCcProperty)
-	// SetActivityStreamsContent sets the "content" property.
-	SetActivityStreamsContent(i ActivityStreamsContentProperty)
-	// SetActivityStreamsContext sets the "context" property.
-	SetActivityStreamsContext(i ActivityStreamsContextProperty)
-	// SetActivityStreamsDuration sets the "duration" property.
-	SetActivityStreamsDuration(i ActivityStreamsDurationProperty)
-	// SetActivityStreamsEndTime sets the "endTime" property.
-	SetActivityStreamsEndTime(i ActivityStreamsEndTimeProperty)
-	// SetActivityStreamsGenerator sets the "generator" property.
-	SetActivityStreamsGenerator(i ActivityStreamsGeneratorProperty)
-	// SetActivityStreamsIcon sets the "icon" property.
-	SetActivityStreamsIcon(i ActivityStreamsIconProperty)
-	// SetActivityStreamsImage sets the "image" property.
-	SetActivityStreamsImage(i ActivityStreamsImageProperty)
-	// SetActivityStreamsInReplyTo sets the "inReplyTo" property.
-	SetActivityStreamsInReplyTo(i ActivityStreamsInReplyToProperty)
-	// SetActivityStreamsLikes sets the "likes" property.
-	SetActivityStreamsLikes(i ActivityStreamsLikesProperty)
-	// SetActivityStreamsLocation sets the "location" property.
-	SetActivityStreamsLocation(i ActivityStreamsLocationProperty)
+	// SetActivityStreamsHeight sets the "height" property.
+	SetActivityStreamsHeight(i ActivityStreamsHeightProperty)
+	// SetActivityStreamsHref sets the "href" property.
+	SetActivityStreamsHref(i ActivityStreamsHrefProperty)
+	// SetActivityStreamsHreflang sets the "hreflang" property.
+	SetActivityStreamsHreflang(i ActivityStreamsHreflangProperty)
 	// SetActivityStreamsMediaType sets the "mediaType" property.
 	SetActivityStreamsMediaType(i ActivityStreamsMediaTypeProperty)
 	// SetActivityStreamsName sets the "name" property.
 	SetActivityStreamsName(i ActivityStreamsNameProperty)
-	// SetActivityStreamsObject sets the "object" property.
-	SetActivityStreamsObject(i ActivityStreamsObjectProperty)
 	// SetActivityStreamsPreview sets the "preview" property.
 	SetActivityStreamsPreview(i ActivityStreamsPreviewProperty)
-	// SetActivityStreamsPublished sets the "published" property.
-	SetActivityStreamsPublished(i ActivityStreamsPublishedProperty)
-	// SetActivityStreamsReplies sets the "replies" property.
-	SetActivityStreamsReplies(i ActivityStreamsRepliesProperty)
-	// SetActivityStreamsShares sets the "shares" property.
-	SetActivityStreamsShares(i ActivityStreamsSharesProperty)
-	// SetActivityStreamsSource sets the "source" property.
-	SetActivityStreamsSource(i ActivityStreamsSourceProperty)
-	// SetActivityStreamsStartTime sets the "startTime" property.
-	SetActivityStreamsStartTime(i ActivityStreamsStartTimeProperty)
+	// SetActivityStreamsRel sets the "rel" property.
+	SetActivityStreamsRel(i ActivityStreamsRelProperty)
 	// SetActivityStreamsSummary sets the "summary" property.
 	SetActivityStreamsSummary(i ActivityStreamsSummaryProperty)
-	// SetActivityStreamsTag sets the "tag" property.
-	SetActivityStreamsTag(i ActivityStreamsTagProperty)
-	// SetActivityStreamsTo sets the "to" property.
-	SetActivityStreamsTo(i ActivityStreamsToProperty)
-	// SetActivityStreamsUpdated sets the "updated" property.
-	SetActivityStreamsUpdated(i ActivityStreamsUpdatedProperty)
-	// SetActivityStreamsUrl sets the "url" property.
-	SetActivityStreamsUrl(i ActivityStreamsUrlProperty)
+	// SetActivityStreamsWidth sets the "width" property.
+	SetActivityStreamsWidth(i ActivityStreamsWidthProperty)
 	// SetJSONLDId sets the "id" property.
 	SetJSONLDId(i JSONLDIdProperty)
 	// SetJSONLDType sets the "type" property.

@@ -88,9 +88,6 @@ type privateManager interface {
 	// the "ActivityStreamsGroup" non-functional property in the
 	// vocabulary "ActivityStreams"
 	DeserializeGroupActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsGroup, error)
-	// DeserializeHashtagToot returns the deserialization method for the
-	// "TootHashtag" non-functional property in the vocabulary "Toot"
-	DeserializeHashtagToot() func(map[string]interface{}, map[string]string) (vocab.TootHashtag, error)
 	// DeserializeIdentityProofToot returns the deserialization method for the
 	// "TootIdentityProof" non-functional property in the vocabulary "Toot"
 	DeserializeIdentityProofToot() func(map[string]interface{}, map[string]string) (vocab.TootIdentityProof, error)

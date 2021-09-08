@@ -406,7 +406,7 @@ func DeserializeDislike(m map[string]interface{}, aliasMap map[string]string) (*
 // DislikeIsDisjointWith returns true if the other provided type is disjoint with
 // the Dislike type.
 func DislikeIsDisjointWith(other vocab.Type) bool {
-	disjointWith := []string{"Link", "Mention"}
+	disjointWith := []string{"Hashtag", "Link", "Mention"}
 	for _, disjoint := range disjointWith {
 		if disjoint == other.GetTypeName() {
 			return true

@@ -429,7 +429,7 @@ func NewActivityStreamsRead() *ActivityStreamsRead {
 // ReadIsDisjointWith returns true if the other provided type is disjoint with the
 // Read type.
 func ReadIsDisjointWith(other vocab.Type) bool {
-	disjointWith := []string{"Link", "Mention"}
+	disjointWith := []string{"Hashtag", "Link", "Mention"}
 	for _, disjoint := range disjointWith {
 		if disjoint == other.GetTypeName() {
 			return true

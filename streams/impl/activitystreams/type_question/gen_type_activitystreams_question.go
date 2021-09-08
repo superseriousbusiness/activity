@@ -470,7 +470,7 @@ func NewActivityStreamsQuestion() *ActivityStreamsQuestion {
 // QuestionIsDisjointWith returns true if the other provided type is disjoint with
 // the Question type.
 func QuestionIsDisjointWith(other vocab.Type) bool {
-	disjointWith := []string{"Link", "Mention"}
+	disjointWith := []string{"Hashtag", "Link", "Mention"}
 	for _, disjoint := range disjointWith {
 		if disjoint == other.GetTypeName() {
 			return true

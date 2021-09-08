@@ -227,9 +227,6 @@ type ActivityStreamsRelationshipPropertyIterator interface {
 	// GetTootEmoji returns the value of this property. When IsTootEmoji
 	// returns false, GetTootEmoji will return an arbitrary value.
 	GetTootEmoji() TootEmoji
-	// GetTootHashtag returns the value of this property. When IsTootHashtag
-	// returns false, GetTootHashtag will return an arbitrary value.
-	GetTootHashtag() TootHashtag
 	// GetTootIdentityProof returns the value of this property. When
 	// IsTootIdentityProof returns false, GetTootIdentityProof will return
 	// an arbitrary value.
@@ -475,10 +472,6 @@ type ActivityStreamsRelationshipPropertyIterator interface {
 	// true, use the GetTootEmoji and SetTootEmoji methods to access and
 	// set this property.
 	IsTootEmoji() bool
-	// IsTootHashtag returns true if this property has a type of "Hashtag".
-	// When true, use the GetTootHashtag and SetTootHashtag methods to
-	// access and set this property.
-	IsTootHashtag() bool
 	// IsTootIdentityProof returns true if this property has a type of
 	// "IdentityProof". When true, use the GetTootIdentityProof and
 	// SetTootIdentityProof methods to access and set this property.
@@ -671,9 +664,6 @@ type ActivityStreamsRelationshipPropertyIterator interface {
 	// SetTootEmoji sets the value of this property. Calling IsTootEmoji
 	// afterwards returns true.
 	SetTootEmoji(v TootEmoji)
-	// SetTootHashtag sets the value of this property. Calling IsTootHashtag
-	// afterwards returns true.
-	SetTootHashtag(v TootHashtag)
 	// SetTootIdentityProof sets the value of this property. Calling
 	// IsTootIdentityProof afterwards returns true.
 	SetTootIdentityProof(v TootIdentityProof)
@@ -921,10 +911,6 @@ type ActivityStreamsRelationshipProperty interface {
 	// property "relationship". Invalidates iterators that are traversing
 	// using Prev.
 	AppendTootEmoji(v TootEmoji)
-	// AppendTootHashtag appends a Hashtag value to the back of a list of the
-	// property "relationship". Invalidates iterators that are traversing
-	// using Prev.
-	AppendTootHashtag(v TootHashtag)
 	// AppendTootIdentityProof appends a IdentityProof value to the back of a
 	// list of the property "relationship". Invalidates iterators that are
 	// traversing using Prev.
@@ -1179,10 +1165,6 @@ type ActivityStreamsRelationshipProperty interface {
 	// property "relationship". Existing elements at that index and higher
 	// are shifted back once. Invalidates all iterators.
 	InsertTootEmoji(idx int, v TootEmoji)
-	// InsertTootHashtag inserts a Hashtag value at the specified index for a
-	// property "relationship". Existing elements at that index and higher
-	// are shifted back once. Invalidates all iterators.
-	InsertTootHashtag(idx int, v TootHashtag)
 	// InsertTootIdentityProof inserts a IdentityProof value at the specified
 	// index for a property "relationship". Existing elements at that
 	// index and higher are shifted back once. Invalidates all iterators.
@@ -1389,9 +1371,6 @@ type ActivityStreamsRelationshipProperty interface {
 	// PrependTootEmoji prepends a Emoji value to the front of a list of the
 	// property "relationship". Invalidates all iterators.
 	PrependTootEmoji(v TootEmoji)
-	// PrependTootHashtag prepends a Hashtag value to the front of a list of
-	// the property "relationship". Invalidates all iterators.
-	PrependTootHashtag(v TootHashtag)
 	// PrependTootIdentityProof prepends a IdentityProof value to the front of
 	// a list of the property "relationship". Invalidates all iterators.
 	PrependTootIdentityProof(v TootIdentityProof)
@@ -1628,10 +1607,6 @@ type ActivityStreamsRelationshipProperty interface {
 	// property "relationship". Panics if the index is out of bounds.
 	// Invalidates all iterators.
 	SetTootEmoji(idx int, v TootEmoji)
-	// SetTootHashtag sets a Hashtag value to be at the specified index for
-	// the property "relationship". Panics if the index is out of bounds.
-	// Invalidates all iterators.
-	SetTootHashtag(idx int, v TootHashtag)
 	// SetTootIdentityProof sets a IdentityProof value to be at the specified
 	// index for the property "relationship". Panics if the index is out
 	// of bounds. Invalidates all iterators.

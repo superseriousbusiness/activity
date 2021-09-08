@@ -462,7 +462,7 @@ func DeserializeGroup(m map[string]interface{}, aliasMap map[string]string) (*Ac
 // GroupIsDisjointWith returns true if the other provided type is disjoint with
 // the Group type.
 func GroupIsDisjointWith(other vocab.Type) bool {
-	disjointWith := []string{"Link", "Mention"}
+	disjointWith := []string{"Hashtag", "Link", "Mention"}
 	for _, disjoint := range disjointWith {
 		if disjoint == other.GetTypeName() {
 			return true

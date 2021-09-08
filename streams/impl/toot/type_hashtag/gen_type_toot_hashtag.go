@@ -23,39 +23,18 @@ import (
 //     "type": "Note"
 //   }
 type TootHashtag struct {
-	ActivityStreamsAltitude     vocab.ActivityStreamsAltitudeProperty
-	ActivityStreamsAttachment   vocab.ActivityStreamsAttachmentProperty
 	ActivityStreamsAttributedTo vocab.ActivityStreamsAttributedToProperty
-	ActivityStreamsAudience     vocab.ActivityStreamsAudienceProperty
-	ActivityStreamsBcc          vocab.ActivityStreamsBccProperty
-	ActivityStreamsBto          vocab.ActivityStreamsBtoProperty
-	ActivityStreamsCc           vocab.ActivityStreamsCcProperty
-	ActivityStreamsContent      vocab.ActivityStreamsContentProperty
-	ActivityStreamsContext      vocab.ActivityStreamsContextProperty
-	ActivityStreamsDuration     vocab.ActivityStreamsDurationProperty
-	ActivityStreamsEndTime      vocab.ActivityStreamsEndTimeProperty
-	ActivityStreamsGenerator    vocab.ActivityStreamsGeneratorProperty
-	ActivityStreamsIcon         vocab.ActivityStreamsIconProperty
+	ActivityStreamsHeight       vocab.ActivityStreamsHeightProperty
+	ActivityStreamsHref         vocab.ActivityStreamsHrefProperty
+	ActivityStreamsHreflang     vocab.ActivityStreamsHreflangProperty
 	JSONLDId                    vocab.JSONLDIdProperty
-	ActivityStreamsImage        vocab.ActivityStreamsImageProperty
-	ActivityStreamsInReplyTo    vocab.ActivityStreamsInReplyToProperty
-	ActivityStreamsLikes        vocab.ActivityStreamsLikesProperty
-	ActivityStreamsLocation     vocab.ActivityStreamsLocationProperty
 	ActivityStreamsMediaType    vocab.ActivityStreamsMediaTypeProperty
 	ActivityStreamsName         vocab.ActivityStreamsNameProperty
-	ActivityStreamsObject       vocab.ActivityStreamsObjectProperty
 	ActivityStreamsPreview      vocab.ActivityStreamsPreviewProperty
-	ActivityStreamsPublished    vocab.ActivityStreamsPublishedProperty
-	ActivityStreamsReplies      vocab.ActivityStreamsRepliesProperty
-	ActivityStreamsShares       vocab.ActivityStreamsSharesProperty
-	ActivityStreamsSource       vocab.ActivityStreamsSourceProperty
-	ActivityStreamsStartTime    vocab.ActivityStreamsStartTimeProperty
+	ActivityStreamsRel          vocab.ActivityStreamsRelProperty
 	ActivityStreamsSummary      vocab.ActivityStreamsSummaryProperty
-	ActivityStreamsTag          vocab.ActivityStreamsTagProperty
-	ActivityStreamsTo           vocab.ActivityStreamsToProperty
 	JSONLDType                  vocab.JSONLDTypeProperty
-	ActivityStreamsUpdated      vocab.ActivityStreamsUpdatedProperty
-	ActivityStreamsUrl          vocab.ActivityStreamsUrlProperty
+	ActivityStreamsWidth        vocab.ActivityStreamsWidthProperty
 	alias                       string
 	unknown                     map[string]interface{}
 }
@@ -97,95 +76,30 @@ func DeserializeHashtag(m map[string]interface{}, aliasMap map[string]string) (*
 		return nil, fmt.Errorf("\"type\" property is unrecognized type: %T", typeValue)
 	}
 	// Begin: Known property deserialization
-	if p, err := mgr.DeserializeAltitudePropertyActivityStreams()(m, aliasMap); err != nil {
-		return nil, err
-	} else if p != nil {
-		this.ActivityStreamsAltitude = p
-	}
-	if p, err := mgr.DeserializeAttachmentPropertyActivityStreams()(m, aliasMap); err != nil {
-		return nil, err
-	} else if p != nil {
-		this.ActivityStreamsAttachment = p
-	}
 	if p, err := mgr.DeserializeAttributedToPropertyActivityStreams()(m, aliasMap); err != nil {
 		return nil, err
 	} else if p != nil {
 		this.ActivityStreamsAttributedTo = p
 	}
-	if p, err := mgr.DeserializeAudiencePropertyActivityStreams()(m, aliasMap); err != nil {
+	if p, err := mgr.DeserializeHeightPropertyActivityStreams()(m, aliasMap); err != nil {
 		return nil, err
 	} else if p != nil {
-		this.ActivityStreamsAudience = p
+		this.ActivityStreamsHeight = p
 	}
-	if p, err := mgr.DeserializeBccPropertyActivityStreams()(m, aliasMap); err != nil {
+	if p, err := mgr.DeserializeHrefPropertyActivityStreams()(m, aliasMap); err != nil {
 		return nil, err
 	} else if p != nil {
-		this.ActivityStreamsBcc = p
+		this.ActivityStreamsHref = p
 	}
-	if p, err := mgr.DeserializeBtoPropertyActivityStreams()(m, aliasMap); err != nil {
+	if p, err := mgr.DeserializeHreflangPropertyActivityStreams()(m, aliasMap); err != nil {
 		return nil, err
 	} else if p != nil {
-		this.ActivityStreamsBto = p
-	}
-	if p, err := mgr.DeserializeCcPropertyActivityStreams()(m, aliasMap); err != nil {
-		return nil, err
-	} else if p != nil {
-		this.ActivityStreamsCc = p
-	}
-	if p, err := mgr.DeserializeContentPropertyActivityStreams()(m, aliasMap); err != nil {
-		return nil, err
-	} else if p != nil {
-		this.ActivityStreamsContent = p
-	}
-	if p, err := mgr.DeserializeContextPropertyActivityStreams()(m, aliasMap); err != nil {
-		return nil, err
-	} else if p != nil {
-		this.ActivityStreamsContext = p
-	}
-	if p, err := mgr.DeserializeDurationPropertyActivityStreams()(m, aliasMap); err != nil {
-		return nil, err
-	} else if p != nil {
-		this.ActivityStreamsDuration = p
-	}
-	if p, err := mgr.DeserializeEndTimePropertyActivityStreams()(m, aliasMap); err != nil {
-		return nil, err
-	} else if p != nil {
-		this.ActivityStreamsEndTime = p
-	}
-	if p, err := mgr.DeserializeGeneratorPropertyActivityStreams()(m, aliasMap); err != nil {
-		return nil, err
-	} else if p != nil {
-		this.ActivityStreamsGenerator = p
-	}
-	if p, err := mgr.DeserializeIconPropertyActivityStreams()(m, aliasMap); err != nil {
-		return nil, err
-	} else if p != nil {
-		this.ActivityStreamsIcon = p
+		this.ActivityStreamsHreflang = p
 	}
 	if p, err := mgr.DeserializeIdPropertyJSONLD()(m, aliasMap); err != nil {
 		return nil, err
 	} else if p != nil {
 		this.JSONLDId = p
-	}
-	if p, err := mgr.DeserializeImagePropertyActivityStreams()(m, aliasMap); err != nil {
-		return nil, err
-	} else if p != nil {
-		this.ActivityStreamsImage = p
-	}
-	if p, err := mgr.DeserializeInReplyToPropertyActivityStreams()(m, aliasMap); err != nil {
-		return nil, err
-	} else if p != nil {
-		this.ActivityStreamsInReplyTo = p
-	}
-	if p, err := mgr.DeserializeLikesPropertyActivityStreams()(m, aliasMap); err != nil {
-		return nil, err
-	} else if p != nil {
-		this.ActivityStreamsLikes = p
-	}
-	if p, err := mgr.DeserializeLocationPropertyActivityStreams()(m, aliasMap); err != nil {
-		return nil, err
-	} else if p != nil {
-		this.ActivityStreamsLocation = p
 	}
 	if p, err := mgr.DeserializeMediaTypePropertyActivityStreams()(m, aliasMap); err != nil {
 		return nil, err
@@ -197,113 +111,45 @@ func DeserializeHashtag(m map[string]interface{}, aliasMap map[string]string) (*
 	} else if p != nil {
 		this.ActivityStreamsName = p
 	}
-	if p, err := mgr.DeserializeObjectPropertyActivityStreams()(m, aliasMap); err != nil {
-		return nil, err
-	} else if p != nil {
-		this.ActivityStreamsObject = p
-	}
 	if p, err := mgr.DeserializePreviewPropertyActivityStreams()(m, aliasMap); err != nil {
 		return nil, err
 	} else if p != nil {
 		this.ActivityStreamsPreview = p
 	}
-	if p, err := mgr.DeserializePublishedPropertyActivityStreams()(m, aliasMap); err != nil {
+	if p, err := mgr.DeserializeRelPropertyActivityStreams()(m, aliasMap); err != nil {
 		return nil, err
 	} else if p != nil {
-		this.ActivityStreamsPublished = p
-	}
-	if p, err := mgr.DeserializeRepliesPropertyActivityStreams()(m, aliasMap); err != nil {
-		return nil, err
-	} else if p != nil {
-		this.ActivityStreamsReplies = p
-	}
-	if p, err := mgr.DeserializeSharesPropertyActivityStreams()(m, aliasMap); err != nil {
-		return nil, err
-	} else if p != nil {
-		this.ActivityStreamsShares = p
-	}
-	if p, err := mgr.DeserializeSourcePropertyActivityStreams()(m, aliasMap); err != nil {
-		return nil, err
-	} else if p != nil {
-		this.ActivityStreamsSource = p
-	}
-	if p, err := mgr.DeserializeStartTimePropertyActivityStreams()(m, aliasMap); err != nil {
-		return nil, err
-	} else if p != nil {
-		this.ActivityStreamsStartTime = p
+		this.ActivityStreamsRel = p
 	}
 	if p, err := mgr.DeserializeSummaryPropertyActivityStreams()(m, aliasMap); err != nil {
 		return nil, err
 	} else if p != nil {
 		this.ActivityStreamsSummary = p
 	}
-	if p, err := mgr.DeserializeTagPropertyActivityStreams()(m, aliasMap); err != nil {
-		return nil, err
-	} else if p != nil {
-		this.ActivityStreamsTag = p
-	}
-	if p, err := mgr.DeserializeToPropertyActivityStreams()(m, aliasMap); err != nil {
-		return nil, err
-	} else if p != nil {
-		this.ActivityStreamsTo = p
-	}
 	if p, err := mgr.DeserializeTypePropertyJSONLD()(m, aliasMap); err != nil {
 		return nil, err
 	} else if p != nil {
 		this.JSONLDType = p
 	}
-	if p, err := mgr.DeserializeUpdatedPropertyActivityStreams()(m, aliasMap); err != nil {
+	if p, err := mgr.DeserializeWidthPropertyActivityStreams()(m, aliasMap); err != nil {
 		return nil, err
 	} else if p != nil {
-		this.ActivityStreamsUpdated = p
-	}
-	if p, err := mgr.DeserializeUrlPropertyActivityStreams()(m, aliasMap); err != nil {
-		return nil, err
-	} else if p != nil {
-		this.ActivityStreamsUrl = p
+		this.ActivityStreamsWidth = p
 	}
 	// End: Known property deserialization
 
 	// Begin: Unknown deserialization
 	for k, v := range m {
 		// Begin: Code that ensures a property name is unknown
-		if k == "altitude" {
+		if k == "attributedTo" {
 			continue
-		} else if k == "attachment" {
+		} else if k == "height" {
 			continue
-		} else if k == "attributedTo" {
+		} else if k == "href" {
 			continue
-		} else if k == "audience" {
-			continue
-		} else if k == "bcc" {
-			continue
-		} else if k == "bto" {
-			continue
-		} else if k == "cc" {
-			continue
-		} else if k == "content" {
-			continue
-		} else if k == "contentMap" {
-			continue
-		} else if k == "context" {
-			continue
-		} else if k == "duration" {
-			continue
-		} else if k == "endTime" {
-			continue
-		} else if k == "generator" {
-			continue
-		} else if k == "icon" {
+		} else if k == "hreflang" {
 			continue
 		} else if k == "id" {
-			continue
-		} else if k == "image" {
-			continue
-		} else if k == "inReplyTo" {
-			continue
-		} else if k == "likes" {
-			continue
-		} else if k == "location" {
 			continue
 		} else if k == "mediaType" {
 			continue
@@ -311,33 +157,17 @@ func DeserializeHashtag(m map[string]interface{}, aliasMap map[string]string) (*
 			continue
 		} else if k == "nameMap" {
 			continue
-		} else if k == "object" {
-			continue
 		} else if k == "preview" {
 			continue
-		} else if k == "published" {
-			continue
-		} else if k == "replies" {
-			continue
-		} else if k == "shares" {
-			continue
-		} else if k == "source" {
-			continue
-		} else if k == "startTime" {
+		} else if k == "rel" {
 			continue
 		} else if k == "summary" {
 			continue
 		} else if k == "summaryMap" {
 			continue
-		} else if k == "tag" {
-			continue
-		} else if k == "to" {
-			continue
 		} else if k == "type" {
 			continue
-		} else if k == "updated" {
-			continue
-		} else if k == "url" {
+		} else if k == "width" {
 			continue
 		} // End: Code that ensures a property name is unknown
 
@@ -351,7 +181,7 @@ func DeserializeHashtag(m map[string]interface{}, aliasMap map[string]string) (*
 // HashtagIsDisjointWith returns true if the other provided type is disjoint with
 // the Hashtag type.
 func HashtagIsDisjointWith(other vocab.Type) bool {
-	disjointWith := []string{"Link", "Mention"}
+	disjointWith := []string{"Accept", "Activity", "Add", "Announce", "Application", "Arrive", "Article", "Audio", "Block", "Collection", "CollectionPage", "Create", "Delete", "Dislike", "Document", "Emoji", "Event", "Flag", "Follow", "Group", "IdentityProof", "Ignore", "Image", "IntransitiveActivity", "Invite", "Join", "Leave", "Like", "Listen", "Move", "Note", "Object", "Offer", "OrderedCollection", "OrderedCollectionPage", "OrderedCollectionPage", "Organization", "Page", "Person", "Place", "Profile", "Question", "Read", "Reject", "Relationship", "Remove", "Service", "TentativeAccept", "TentativeReject", "Tombstone", "Travel", "Undo", "Update", "Video", "View"}
 	for _, disjoint := range disjointWith {
 		if disjoint == other.GetTypeName() {
 			return true
@@ -390,7 +220,7 @@ func NewTootHashtag() *TootHashtag {
 
 // TootHashtagExtends returns true if the Hashtag type extends from the other type.
 func TootHashtagExtends(other vocab.Type) bool {
-	extensions := []string{"Object"}
+	extensions := []string{"Link"}
 	for _, ext := range extensions {
 		if ext == other.GetTypeName() {
 			return true
@@ -399,105 +229,28 @@ func TootHashtagExtends(other vocab.Type) bool {
 	return false
 }
 
-// GetActivityStreamsAltitude returns the "altitude" property if it exists, and
-// nil otherwise.
-func (this TootHashtag) GetActivityStreamsAltitude() vocab.ActivityStreamsAltitudeProperty {
-	return this.ActivityStreamsAltitude
-}
-
-// GetActivityStreamsAttachment returns the "attachment" property if it exists,
-// and nil otherwise.
-func (this TootHashtag) GetActivityStreamsAttachment() vocab.ActivityStreamsAttachmentProperty {
-	return this.ActivityStreamsAttachment
-}
-
 // GetActivityStreamsAttributedTo returns the "attributedTo" property if it
 // exists, and nil otherwise.
 func (this TootHashtag) GetActivityStreamsAttributedTo() vocab.ActivityStreamsAttributedToProperty {
 	return this.ActivityStreamsAttributedTo
 }
 
-// GetActivityStreamsAudience returns the "audience" property if it exists, and
+// GetActivityStreamsHeight returns the "height" property if it exists, and nil
+// otherwise.
+func (this TootHashtag) GetActivityStreamsHeight() vocab.ActivityStreamsHeightProperty {
+	return this.ActivityStreamsHeight
+}
+
+// GetActivityStreamsHref returns the "href" property if it exists, and nil
+// otherwise.
+func (this TootHashtag) GetActivityStreamsHref() vocab.ActivityStreamsHrefProperty {
+	return this.ActivityStreamsHref
+}
+
+// GetActivityStreamsHreflang returns the "hreflang" property if it exists, and
 // nil otherwise.
-func (this TootHashtag) GetActivityStreamsAudience() vocab.ActivityStreamsAudienceProperty {
-	return this.ActivityStreamsAudience
-}
-
-// GetActivityStreamsBcc returns the "bcc" property if it exists, and nil
-// otherwise.
-func (this TootHashtag) GetActivityStreamsBcc() vocab.ActivityStreamsBccProperty {
-	return this.ActivityStreamsBcc
-}
-
-// GetActivityStreamsBto returns the "bto" property if it exists, and nil
-// otherwise.
-func (this TootHashtag) GetActivityStreamsBto() vocab.ActivityStreamsBtoProperty {
-	return this.ActivityStreamsBto
-}
-
-// GetActivityStreamsCc returns the "cc" property if it exists, and nil otherwise.
-func (this TootHashtag) GetActivityStreamsCc() vocab.ActivityStreamsCcProperty {
-	return this.ActivityStreamsCc
-}
-
-// GetActivityStreamsContent returns the "content" property if it exists, and nil
-// otherwise.
-func (this TootHashtag) GetActivityStreamsContent() vocab.ActivityStreamsContentProperty {
-	return this.ActivityStreamsContent
-}
-
-// GetActivityStreamsContext returns the "context" property if it exists, and nil
-// otherwise.
-func (this TootHashtag) GetActivityStreamsContext() vocab.ActivityStreamsContextProperty {
-	return this.ActivityStreamsContext
-}
-
-// GetActivityStreamsDuration returns the "duration" property if it exists, and
-// nil otherwise.
-func (this TootHashtag) GetActivityStreamsDuration() vocab.ActivityStreamsDurationProperty {
-	return this.ActivityStreamsDuration
-}
-
-// GetActivityStreamsEndTime returns the "endTime" property if it exists, and nil
-// otherwise.
-func (this TootHashtag) GetActivityStreamsEndTime() vocab.ActivityStreamsEndTimeProperty {
-	return this.ActivityStreamsEndTime
-}
-
-// GetActivityStreamsGenerator returns the "generator" property if it exists, and
-// nil otherwise.
-func (this TootHashtag) GetActivityStreamsGenerator() vocab.ActivityStreamsGeneratorProperty {
-	return this.ActivityStreamsGenerator
-}
-
-// GetActivityStreamsIcon returns the "icon" property if it exists, and nil
-// otherwise.
-func (this TootHashtag) GetActivityStreamsIcon() vocab.ActivityStreamsIconProperty {
-	return this.ActivityStreamsIcon
-}
-
-// GetActivityStreamsImage returns the "image" property if it exists, and nil
-// otherwise.
-func (this TootHashtag) GetActivityStreamsImage() vocab.ActivityStreamsImageProperty {
-	return this.ActivityStreamsImage
-}
-
-// GetActivityStreamsInReplyTo returns the "inReplyTo" property if it exists, and
-// nil otherwise.
-func (this TootHashtag) GetActivityStreamsInReplyTo() vocab.ActivityStreamsInReplyToProperty {
-	return this.ActivityStreamsInReplyTo
-}
-
-// GetActivityStreamsLikes returns the "likes" property if it exists, and nil
-// otherwise.
-func (this TootHashtag) GetActivityStreamsLikes() vocab.ActivityStreamsLikesProperty {
-	return this.ActivityStreamsLikes
-}
-
-// GetActivityStreamsLocation returns the "location" property if it exists, and
-// nil otherwise.
-func (this TootHashtag) GetActivityStreamsLocation() vocab.ActivityStreamsLocationProperty {
-	return this.ActivityStreamsLocation
+func (this TootHashtag) GetActivityStreamsHreflang() vocab.ActivityStreamsHreflangProperty {
+	return this.ActivityStreamsHreflang
 }
 
 // GetActivityStreamsMediaType returns the "mediaType" property if it exists, and
@@ -512,46 +265,16 @@ func (this TootHashtag) GetActivityStreamsName() vocab.ActivityStreamsNameProper
 	return this.ActivityStreamsName
 }
 
-// GetActivityStreamsObject returns the "object" property if it exists, and nil
-// otherwise.
-func (this TootHashtag) GetActivityStreamsObject() vocab.ActivityStreamsObjectProperty {
-	return this.ActivityStreamsObject
-}
-
 // GetActivityStreamsPreview returns the "preview" property if it exists, and nil
 // otherwise.
 func (this TootHashtag) GetActivityStreamsPreview() vocab.ActivityStreamsPreviewProperty {
 	return this.ActivityStreamsPreview
 }
 
-// GetActivityStreamsPublished returns the "published" property if it exists, and
-// nil otherwise.
-func (this TootHashtag) GetActivityStreamsPublished() vocab.ActivityStreamsPublishedProperty {
-	return this.ActivityStreamsPublished
-}
-
-// GetActivityStreamsReplies returns the "replies" property if it exists, and nil
+// GetActivityStreamsRel returns the "rel" property if it exists, and nil
 // otherwise.
-func (this TootHashtag) GetActivityStreamsReplies() vocab.ActivityStreamsRepliesProperty {
-	return this.ActivityStreamsReplies
-}
-
-// GetActivityStreamsShares returns the "shares" property if it exists, and nil
-// otherwise.
-func (this TootHashtag) GetActivityStreamsShares() vocab.ActivityStreamsSharesProperty {
-	return this.ActivityStreamsShares
-}
-
-// GetActivityStreamsSource returns the "source" property if it exists, and nil
-// otherwise.
-func (this TootHashtag) GetActivityStreamsSource() vocab.ActivityStreamsSourceProperty {
-	return this.ActivityStreamsSource
-}
-
-// GetActivityStreamsStartTime returns the "startTime" property if it exists, and
-// nil otherwise.
-func (this TootHashtag) GetActivityStreamsStartTime() vocab.ActivityStreamsStartTimeProperty {
-	return this.ActivityStreamsStartTime
+func (this TootHashtag) GetActivityStreamsRel() vocab.ActivityStreamsRelProperty {
+	return this.ActivityStreamsRel
 }
 
 // GetActivityStreamsSummary returns the "summary" property if it exists, and nil
@@ -560,27 +283,10 @@ func (this TootHashtag) GetActivityStreamsSummary() vocab.ActivityStreamsSummary
 	return this.ActivityStreamsSummary
 }
 
-// GetActivityStreamsTag returns the "tag" property if it exists, and nil
+// GetActivityStreamsWidth returns the "width" property if it exists, and nil
 // otherwise.
-func (this TootHashtag) GetActivityStreamsTag() vocab.ActivityStreamsTagProperty {
-	return this.ActivityStreamsTag
-}
-
-// GetActivityStreamsTo returns the "to" property if it exists, and nil otherwise.
-func (this TootHashtag) GetActivityStreamsTo() vocab.ActivityStreamsToProperty {
-	return this.ActivityStreamsTo
-}
-
-// GetActivityStreamsUpdated returns the "updated" property if it exists, and nil
-// otherwise.
-func (this TootHashtag) GetActivityStreamsUpdated() vocab.ActivityStreamsUpdatedProperty {
-	return this.ActivityStreamsUpdated
-}
-
-// GetActivityStreamsUrl returns the "url" property if it exists, and nil
-// otherwise.
-func (this TootHashtag) GetActivityStreamsUrl() vocab.ActivityStreamsUrlProperty {
-	return this.ActivityStreamsUrl
+func (this TootHashtag) GetActivityStreamsWidth() vocab.ActivityStreamsWidthProperty {
+	return this.ActivityStreamsWidth
 }
 
 // GetJSONLDId returns the "id" property if it exists, and nil otherwise.
@@ -618,39 +324,18 @@ func (this TootHashtag) IsExtending(other vocab.Type) bool {
 // alias used to import the type and its properties.
 func (this TootHashtag) JSONLDContext() map[string]string {
 	m := map[string]string{"http://joinmastodon.org/ns": this.alias}
-	m = this.helperJSONLDContext(this.ActivityStreamsAltitude, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsAttachment, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsAttributedTo, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsAudience, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsBcc, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsBto, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsCc, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsContent, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsContext, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsDuration, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsEndTime, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsGenerator, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsIcon, m)
+	m = this.helperJSONLDContext(this.ActivityStreamsHeight, m)
+	m = this.helperJSONLDContext(this.ActivityStreamsHref, m)
+	m = this.helperJSONLDContext(this.ActivityStreamsHreflang, m)
 	m = this.helperJSONLDContext(this.JSONLDId, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsImage, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsInReplyTo, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsLikes, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsLocation, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsMediaType, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsName, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsObject, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsPreview, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsPublished, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsReplies, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsShares, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsSource, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsStartTime, m)
+	m = this.helperJSONLDContext(this.ActivityStreamsRel, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsSummary, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsTag, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsTo, m)
 	m = this.helperJSONLDContext(this.JSONLDType, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsUpdated, m)
-	m = this.helperJSONLDContext(this.ActivityStreamsUrl, m)
+	m = this.helperJSONLDContext(this.ActivityStreamsWidth, m)
 
 	return m
 }
@@ -659,34 +344,6 @@ func (this TootHashtag) JSONLDContext() map[string]string {
 // determination.
 func (this TootHashtag) LessThan(o vocab.TootHashtag) bool {
 	// Begin: Compare known properties
-	// Compare property "altitude"
-	if lhs, rhs := this.ActivityStreamsAltitude, o.GetActivityStreamsAltitude(); lhs != nil && rhs != nil {
-		if lhs.LessThan(rhs) {
-			return true
-		} else if rhs.LessThan(lhs) {
-			return false
-		}
-	} else if lhs == nil && rhs != nil {
-		// Nil is less than anything else
-		return true
-	} else if rhs != nil && rhs == nil {
-		// Anything else is greater than nil
-		return false
-	} // Else: Both are nil
-	// Compare property "attachment"
-	if lhs, rhs := this.ActivityStreamsAttachment, o.GetActivityStreamsAttachment(); lhs != nil && rhs != nil {
-		if lhs.LessThan(rhs) {
-			return true
-		} else if rhs.LessThan(lhs) {
-			return false
-		}
-	} else if lhs == nil && rhs != nil {
-		// Nil is less than anything else
-		return true
-	} else if rhs != nil && rhs == nil {
-		// Anything else is greater than nil
-		return false
-	} // Else: Both are nil
 	// Compare property "attributedTo"
 	if lhs, rhs := this.ActivityStreamsAttributedTo, o.GetActivityStreamsAttributedTo(); lhs != nil && rhs != nil {
 		if lhs.LessThan(rhs) {
@@ -701,8 +358,8 @@ func (this TootHashtag) LessThan(o vocab.TootHashtag) bool {
 		// Anything else is greater than nil
 		return false
 	} // Else: Both are nil
-	// Compare property "audience"
-	if lhs, rhs := this.ActivityStreamsAudience, o.GetActivityStreamsAudience(); lhs != nil && rhs != nil {
+	// Compare property "height"
+	if lhs, rhs := this.ActivityStreamsHeight, o.GetActivityStreamsHeight(); lhs != nil && rhs != nil {
 		if lhs.LessThan(rhs) {
 			return true
 		} else if rhs.LessThan(lhs) {
@@ -715,8 +372,8 @@ func (this TootHashtag) LessThan(o vocab.TootHashtag) bool {
 		// Anything else is greater than nil
 		return false
 	} // Else: Both are nil
-	// Compare property "bcc"
-	if lhs, rhs := this.ActivityStreamsBcc, o.GetActivityStreamsBcc(); lhs != nil && rhs != nil {
+	// Compare property "href"
+	if lhs, rhs := this.ActivityStreamsHref, o.GetActivityStreamsHref(); lhs != nil && rhs != nil {
 		if lhs.LessThan(rhs) {
 			return true
 		} else if rhs.LessThan(lhs) {
@@ -729,106 +386,8 @@ func (this TootHashtag) LessThan(o vocab.TootHashtag) bool {
 		// Anything else is greater than nil
 		return false
 	} // Else: Both are nil
-	// Compare property "bto"
-	if lhs, rhs := this.ActivityStreamsBto, o.GetActivityStreamsBto(); lhs != nil && rhs != nil {
-		if lhs.LessThan(rhs) {
-			return true
-		} else if rhs.LessThan(lhs) {
-			return false
-		}
-	} else if lhs == nil && rhs != nil {
-		// Nil is less than anything else
-		return true
-	} else if rhs != nil && rhs == nil {
-		// Anything else is greater than nil
-		return false
-	} // Else: Both are nil
-	// Compare property "cc"
-	if lhs, rhs := this.ActivityStreamsCc, o.GetActivityStreamsCc(); lhs != nil && rhs != nil {
-		if lhs.LessThan(rhs) {
-			return true
-		} else if rhs.LessThan(lhs) {
-			return false
-		}
-	} else if lhs == nil && rhs != nil {
-		// Nil is less than anything else
-		return true
-	} else if rhs != nil && rhs == nil {
-		// Anything else is greater than nil
-		return false
-	} // Else: Both are nil
-	// Compare property "content"
-	if lhs, rhs := this.ActivityStreamsContent, o.GetActivityStreamsContent(); lhs != nil && rhs != nil {
-		if lhs.LessThan(rhs) {
-			return true
-		} else if rhs.LessThan(lhs) {
-			return false
-		}
-	} else if lhs == nil && rhs != nil {
-		// Nil is less than anything else
-		return true
-	} else if rhs != nil && rhs == nil {
-		// Anything else is greater than nil
-		return false
-	} // Else: Both are nil
-	// Compare property "context"
-	if lhs, rhs := this.ActivityStreamsContext, o.GetActivityStreamsContext(); lhs != nil && rhs != nil {
-		if lhs.LessThan(rhs) {
-			return true
-		} else if rhs.LessThan(lhs) {
-			return false
-		}
-	} else if lhs == nil && rhs != nil {
-		// Nil is less than anything else
-		return true
-	} else if rhs != nil && rhs == nil {
-		// Anything else is greater than nil
-		return false
-	} // Else: Both are nil
-	// Compare property "duration"
-	if lhs, rhs := this.ActivityStreamsDuration, o.GetActivityStreamsDuration(); lhs != nil && rhs != nil {
-		if lhs.LessThan(rhs) {
-			return true
-		} else if rhs.LessThan(lhs) {
-			return false
-		}
-	} else if lhs == nil && rhs != nil {
-		// Nil is less than anything else
-		return true
-	} else if rhs != nil && rhs == nil {
-		// Anything else is greater than nil
-		return false
-	} // Else: Both are nil
-	// Compare property "endTime"
-	if lhs, rhs := this.ActivityStreamsEndTime, o.GetActivityStreamsEndTime(); lhs != nil && rhs != nil {
-		if lhs.LessThan(rhs) {
-			return true
-		} else if rhs.LessThan(lhs) {
-			return false
-		}
-	} else if lhs == nil && rhs != nil {
-		// Nil is less than anything else
-		return true
-	} else if rhs != nil && rhs == nil {
-		// Anything else is greater than nil
-		return false
-	} // Else: Both are nil
-	// Compare property "generator"
-	if lhs, rhs := this.ActivityStreamsGenerator, o.GetActivityStreamsGenerator(); lhs != nil && rhs != nil {
-		if lhs.LessThan(rhs) {
-			return true
-		} else if rhs.LessThan(lhs) {
-			return false
-		}
-	} else if lhs == nil && rhs != nil {
-		// Nil is less than anything else
-		return true
-	} else if rhs != nil && rhs == nil {
-		// Anything else is greater than nil
-		return false
-	} // Else: Both are nil
-	// Compare property "icon"
-	if lhs, rhs := this.ActivityStreamsIcon, o.GetActivityStreamsIcon(); lhs != nil && rhs != nil {
+	// Compare property "hreflang"
+	if lhs, rhs := this.ActivityStreamsHreflang, o.GetActivityStreamsHreflang(); lhs != nil && rhs != nil {
 		if lhs.LessThan(rhs) {
 			return true
 		} else if rhs.LessThan(lhs) {
@@ -843,62 +402,6 @@ func (this TootHashtag) LessThan(o vocab.TootHashtag) bool {
 	} // Else: Both are nil
 	// Compare property "id"
 	if lhs, rhs := this.JSONLDId, o.GetJSONLDId(); lhs != nil && rhs != nil {
-		if lhs.LessThan(rhs) {
-			return true
-		} else if rhs.LessThan(lhs) {
-			return false
-		}
-	} else if lhs == nil && rhs != nil {
-		// Nil is less than anything else
-		return true
-	} else if rhs != nil && rhs == nil {
-		// Anything else is greater than nil
-		return false
-	} // Else: Both are nil
-	// Compare property "image"
-	if lhs, rhs := this.ActivityStreamsImage, o.GetActivityStreamsImage(); lhs != nil && rhs != nil {
-		if lhs.LessThan(rhs) {
-			return true
-		} else if rhs.LessThan(lhs) {
-			return false
-		}
-	} else if lhs == nil && rhs != nil {
-		// Nil is less than anything else
-		return true
-	} else if rhs != nil && rhs == nil {
-		// Anything else is greater than nil
-		return false
-	} // Else: Both are nil
-	// Compare property "inReplyTo"
-	if lhs, rhs := this.ActivityStreamsInReplyTo, o.GetActivityStreamsInReplyTo(); lhs != nil && rhs != nil {
-		if lhs.LessThan(rhs) {
-			return true
-		} else if rhs.LessThan(lhs) {
-			return false
-		}
-	} else if lhs == nil && rhs != nil {
-		// Nil is less than anything else
-		return true
-	} else if rhs != nil && rhs == nil {
-		// Anything else is greater than nil
-		return false
-	} // Else: Both are nil
-	// Compare property "likes"
-	if lhs, rhs := this.ActivityStreamsLikes, o.GetActivityStreamsLikes(); lhs != nil && rhs != nil {
-		if lhs.LessThan(rhs) {
-			return true
-		} else if rhs.LessThan(lhs) {
-			return false
-		}
-	} else if lhs == nil && rhs != nil {
-		// Nil is less than anything else
-		return true
-	} else if rhs != nil && rhs == nil {
-		// Anything else is greater than nil
-		return false
-	} // Else: Both are nil
-	// Compare property "location"
-	if lhs, rhs := this.ActivityStreamsLocation, o.GetActivityStreamsLocation(); lhs != nil && rhs != nil {
 		if lhs.LessThan(rhs) {
 			return true
 		} else if rhs.LessThan(lhs) {
@@ -939,20 +442,6 @@ func (this TootHashtag) LessThan(o vocab.TootHashtag) bool {
 		// Anything else is greater than nil
 		return false
 	} // Else: Both are nil
-	// Compare property "object"
-	if lhs, rhs := this.ActivityStreamsObject, o.GetActivityStreamsObject(); lhs != nil && rhs != nil {
-		if lhs.LessThan(rhs) {
-			return true
-		} else if rhs.LessThan(lhs) {
-			return false
-		}
-	} else if lhs == nil && rhs != nil {
-		// Nil is less than anything else
-		return true
-	} else if rhs != nil && rhs == nil {
-		// Anything else is greater than nil
-		return false
-	} // Else: Both are nil
 	// Compare property "preview"
 	if lhs, rhs := this.ActivityStreamsPreview, o.GetActivityStreamsPreview(); lhs != nil && rhs != nil {
 		if lhs.LessThan(rhs) {
@@ -967,64 +456,8 @@ func (this TootHashtag) LessThan(o vocab.TootHashtag) bool {
 		// Anything else is greater than nil
 		return false
 	} // Else: Both are nil
-	// Compare property "published"
-	if lhs, rhs := this.ActivityStreamsPublished, o.GetActivityStreamsPublished(); lhs != nil && rhs != nil {
-		if lhs.LessThan(rhs) {
-			return true
-		} else if rhs.LessThan(lhs) {
-			return false
-		}
-	} else if lhs == nil && rhs != nil {
-		// Nil is less than anything else
-		return true
-	} else if rhs != nil && rhs == nil {
-		// Anything else is greater than nil
-		return false
-	} // Else: Both are nil
-	// Compare property "replies"
-	if lhs, rhs := this.ActivityStreamsReplies, o.GetActivityStreamsReplies(); lhs != nil && rhs != nil {
-		if lhs.LessThan(rhs) {
-			return true
-		} else if rhs.LessThan(lhs) {
-			return false
-		}
-	} else if lhs == nil && rhs != nil {
-		// Nil is less than anything else
-		return true
-	} else if rhs != nil && rhs == nil {
-		// Anything else is greater than nil
-		return false
-	} // Else: Both are nil
-	// Compare property "shares"
-	if lhs, rhs := this.ActivityStreamsShares, o.GetActivityStreamsShares(); lhs != nil && rhs != nil {
-		if lhs.LessThan(rhs) {
-			return true
-		} else if rhs.LessThan(lhs) {
-			return false
-		}
-	} else if lhs == nil && rhs != nil {
-		// Nil is less than anything else
-		return true
-	} else if rhs != nil && rhs == nil {
-		// Anything else is greater than nil
-		return false
-	} // Else: Both are nil
-	// Compare property "source"
-	if lhs, rhs := this.ActivityStreamsSource, o.GetActivityStreamsSource(); lhs != nil && rhs != nil {
-		if lhs.LessThan(rhs) {
-			return true
-		} else if rhs.LessThan(lhs) {
-			return false
-		}
-	} else if lhs == nil && rhs != nil {
-		// Nil is less than anything else
-		return true
-	} else if rhs != nil && rhs == nil {
-		// Anything else is greater than nil
-		return false
-	} // Else: Both are nil
-	// Compare property "startTime"
-	if lhs, rhs := this.ActivityStreamsStartTime, o.GetActivityStreamsStartTime(); lhs != nil && rhs != nil {
+	// Compare property "rel"
+	if lhs, rhs := this.ActivityStreamsRel, o.GetActivityStreamsRel(); lhs != nil && rhs != nil {
 		if lhs.LessThan(rhs) {
 			return true
 		} else if rhs.LessThan(lhs) {
@@ -1051,34 +484,6 @@ func (this TootHashtag) LessThan(o vocab.TootHashtag) bool {
 		// Anything else is greater than nil
 		return false
 	} // Else: Both are nil
-	// Compare property "tag"
-	if lhs, rhs := this.ActivityStreamsTag, o.GetActivityStreamsTag(); lhs != nil && rhs != nil {
-		if lhs.LessThan(rhs) {
-			return true
-		} else if rhs.LessThan(lhs) {
-			return false
-		}
-	} else if lhs == nil && rhs != nil {
-		// Nil is less than anything else
-		return true
-	} else if rhs != nil && rhs == nil {
-		// Anything else is greater than nil
-		return false
-	} // Else: Both are nil
-	// Compare property "to"
-	if lhs, rhs := this.ActivityStreamsTo, o.GetActivityStreamsTo(); lhs != nil && rhs != nil {
-		if lhs.LessThan(rhs) {
-			return true
-		} else if rhs.LessThan(lhs) {
-			return false
-		}
-	} else if lhs == nil && rhs != nil {
-		// Nil is less than anything else
-		return true
-	} else if rhs != nil && rhs == nil {
-		// Anything else is greater than nil
-		return false
-	} // Else: Both are nil
 	// Compare property "type"
 	if lhs, rhs := this.JSONLDType, o.GetJSONLDType(); lhs != nil && rhs != nil {
 		if lhs.LessThan(rhs) {
@@ -1093,22 +498,8 @@ func (this TootHashtag) LessThan(o vocab.TootHashtag) bool {
 		// Anything else is greater than nil
 		return false
 	} // Else: Both are nil
-	// Compare property "updated"
-	if lhs, rhs := this.ActivityStreamsUpdated, o.GetActivityStreamsUpdated(); lhs != nil && rhs != nil {
-		if lhs.LessThan(rhs) {
-			return true
-		} else if rhs.LessThan(lhs) {
-			return false
-		}
-	} else if lhs == nil && rhs != nil {
-		// Nil is less than anything else
-		return true
-	} else if rhs != nil && rhs == nil {
-		// Anything else is greater than nil
-		return false
-	} // Else: Both are nil
-	// Compare property "url"
-	if lhs, rhs := this.ActivityStreamsUrl, o.GetActivityStreamsUrl(); lhs != nil && rhs != nil {
+	// Compare property "width"
+	if lhs, rhs := this.ActivityStreamsWidth, o.GetActivityStreamsWidth(); lhs != nil && rhs != nil {
 		if lhs.LessThan(rhs) {
 			return true
 		} else if rhs.LessThan(lhs) {
@@ -1144,22 +535,6 @@ func (this TootHashtag) Serialize() (map[string]interface{}, error) {
 	}
 	m["type"] = typeName
 	// Begin: Serialize known properties
-	// Maybe serialize property "altitude"
-	if this.ActivityStreamsAltitude != nil {
-		if i, err := this.ActivityStreamsAltitude.Serialize(); err != nil {
-			return nil, err
-		} else if i != nil {
-			m[this.ActivityStreamsAltitude.Name()] = i
-		}
-	}
-	// Maybe serialize property "attachment"
-	if this.ActivityStreamsAttachment != nil {
-		if i, err := this.ActivityStreamsAttachment.Serialize(); err != nil {
-			return nil, err
-		} else if i != nil {
-			m[this.ActivityStreamsAttachment.Name()] = i
-		}
-	}
 	// Maybe serialize property "attributedTo"
 	if this.ActivityStreamsAttributedTo != nil {
 		if i, err := this.ActivityStreamsAttributedTo.Serialize(); err != nil {
@@ -1168,84 +543,28 @@ func (this TootHashtag) Serialize() (map[string]interface{}, error) {
 			m[this.ActivityStreamsAttributedTo.Name()] = i
 		}
 	}
-	// Maybe serialize property "audience"
-	if this.ActivityStreamsAudience != nil {
-		if i, err := this.ActivityStreamsAudience.Serialize(); err != nil {
+	// Maybe serialize property "height"
+	if this.ActivityStreamsHeight != nil {
+		if i, err := this.ActivityStreamsHeight.Serialize(); err != nil {
 			return nil, err
 		} else if i != nil {
-			m[this.ActivityStreamsAudience.Name()] = i
+			m[this.ActivityStreamsHeight.Name()] = i
 		}
 	}
-	// Maybe serialize property "bcc"
-	if this.ActivityStreamsBcc != nil {
-		if i, err := this.ActivityStreamsBcc.Serialize(); err != nil {
+	// Maybe serialize property "href"
+	if this.ActivityStreamsHref != nil {
+		if i, err := this.ActivityStreamsHref.Serialize(); err != nil {
 			return nil, err
 		} else if i != nil {
-			m[this.ActivityStreamsBcc.Name()] = i
+			m[this.ActivityStreamsHref.Name()] = i
 		}
 	}
-	// Maybe serialize property "bto"
-	if this.ActivityStreamsBto != nil {
-		if i, err := this.ActivityStreamsBto.Serialize(); err != nil {
+	// Maybe serialize property "hreflang"
+	if this.ActivityStreamsHreflang != nil {
+		if i, err := this.ActivityStreamsHreflang.Serialize(); err != nil {
 			return nil, err
 		} else if i != nil {
-			m[this.ActivityStreamsBto.Name()] = i
-		}
-	}
-	// Maybe serialize property "cc"
-	if this.ActivityStreamsCc != nil {
-		if i, err := this.ActivityStreamsCc.Serialize(); err != nil {
-			return nil, err
-		} else if i != nil {
-			m[this.ActivityStreamsCc.Name()] = i
-		}
-	}
-	// Maybe serialize property "content"
-	if this.ActivityStreamsContent != nil {
-		if i, err := this.ActivityStreamsContent.Serialize(); err != nil {
-			return nil, err
-		} else if i != nil {
-			m[this.ActivityStreamsContent.Name()] = i
-		}
-	}
-	// Maybe serialize property "context"
-	if this.ActivityStreamsContext != nil {
-		if i, err := this.ActivityStreamsContext.Serialize(); err != nil {
-			return nil, err
-		} else if i != nil {
-			m[this.ActivityStreamsContext.Name()] = i
-		}
-	}
-	// Maybe serialize property "duration"
-	if this.ActivityStreamsDuration != nil {
-		if i, err := this.ActivityStreamsDuration.Serialize(); err != nil {
-			return nil, err
-		} else if i != nil {
-			m[this.ActivityStreamsDuration.Name()] = i
-		}
-	}
-	// Maybe serialize property "endTime"
-	if this.ActivityStreamsEndTime != nil {
-		if i, err := this.ActivityStreamsEndTime.Serialize(); err != nil {
-			return nil, err
-		} else if i != nil {
-			m[this.ActivityStreamsEndTime.Name()] = i
-		}
-	}
-	// Maybe serialize property "generator"
-	if this.ActivityStreamsGenerator != nil {
-		if i, err := this.ActivityStreamsGenerator.Serialize(); err != nil {
-			return nil, err
-		} else if i != nil {
-			m[this.ActivityStreamsGenerator.Name()] = i
-		}
-	}
-	// Maybe serialize property "icon"
-	if this.ActivityStreamsIcon != nil {
-		if i, err := this.ActivityStreamsIcon.Serialize(); err != nil {
-			return nil, err
-		} else if i != nil {
-			m[this.ActivityStreamsIcon.Name()] = i
+			m[this.ActivityStreamsHreflang.Name()] = i
 		}
 	}
 	// Maybe serialize property "id"
@@ -1254,38 +573,6 @@ func (this TootHashtag) Serialize() (map[string]interface{}, error) {
 			return nil, err
 		} else if i != nil {
 			m[this.JSONLDId.Name()] = i
-		}
-	}
-	// Maybe serialize property "image"
-	if this.ActivityStreamsImage != nil {
-		if i, err := this.ActivityStreamsImage.Serialize(); err != nil {
-			return nil, err
-		} else if i != nil {
-			m[this.ActivityStreamsImage.Name()] = i
-		}
-	}
-	// Maybe serialize property "inReplyTo"
-	if this.ActivityStreamsInReplyTo != nil {
-		if i, err := this.ActivityStreamsInReplyTo.Serialize(); err != nil {
-			return nil, err
-		} else if i != nil {
-			m[this.ActivityStreamsInReplyTo.Name()] = i
-		}
-	}
-	// Maybe serialize property "likes"
-	if this.ActivityStreamsLikes != nil {
-		if i, err := this.ActivityStreamsLikes.Serialize(); err != nil {
-			return nil, err
-		} else if i != nil {
-			m[this.ActivityStreamsLikes.Name()] = i
-		}
-	}
-	// Maybe serialize property "location"
-	if this.ActivityStreamsLocation != nil {
-		if i, err := this.ActivityStreamsLocation.Serialize(); err != nil {
-			return nil, err
-		} else if i != nil {
-			m[this.ActivityStreamsLocation.Name()] = i
 		}
 	}
 	// Maybe serialize property "mediaType"
@@ -1304,14 +591,6 @@ func (this TootHashtag) Serialize() (map[string]interface{}, error) {
 			m[this.ActivityStreamsName.Name()] = i
 		}
 	}
-	// Maybe serialize property "object"
-	if this.ActivityStreamsObject != nil {
-		if i, err := this.ActivityStreamsObject.Serialize(); err != nil {
-			return nil, err
-		} else if i != nil {
-			m[this.ActivityStreamsObject.Name()] = i
-		}
-	}
 	// Maybe serialize property "preview"
 	if this.ActivityStreamsPreview != nil {
 		if i, err := this.ActivityStreamsPreview.Serialize(); err != nil {
@@ -1320,44 +599,12 @@ func (this TootHashtag) Serialize() (map[string]interface{}, error) {
 			m[this.ActivityStreamsPreview.Name()] = i
 		}
 	}
-	// Maybe serialize property "published"
-	if this.ActivityStreamsPublished != nil {
-		if i, err := this.ActivityStreamsPublished.Serialize(); err != nil {
+	// Maybe serialize property "rel"
+	if this.ActivityStreamsRel != nil {
+		if i, err := this.ActivityStreamsRel.Serialize(); err != nil {
 			return nil, err
 		} else if i != nil {
-			m[this.ActivityStreamsPublished.Name()] = i
-		}
-	}
-	// Maybe serialize property "replies"
-	if this.ActivityStreamsReplies != nil {
-		if i, err := this.ActivityStreamsReplies.Serialize(); err != nil {
-			return nil, err
-		} else if i != nil {
-			m[this.ActivityStreamsReplies.Name()] = i
-		}
-	}
-	// Maybe serialize property "shares"
-	if this.ActivityStreamsShares != nil {
-		if i, err := this.ActivityStreamsShares.Serialize(); err != nil {
-			return nil, err
-		} else if i != nil {
-			m[this.ActivityStreamsShares.Name()] = i
-		}
-	}
-	// Maybe serialize property "source"
-	if this.ActivityStreamsSource != nil {
-		if i, err := this.ActivityStreamsSource.Serialize(); err != nil {
-			return nil, err
-		} else if i != nil {
-			m[this.ActivityStreamsSource.Name()] = i
-		}
-	}
-	// Maybe serialize property "startTime"
-	if this.ActivityStreamsStartTime != nil {
-		if i, err := this.ActivityStreamsStartTime.Serialize(); err != nil {
-			return nil, err
-		} else if i != nil {
-			m[this.ActivityStreamsStartTime.Name()] = i
+			m[this.ActivityStreamsRel.Name()] = i
 		}
 	}
 	// Maybe serialize property "summary"
@@ -1368,22 +615,6 @@ func (this TootHashtag) Serialize() (map[string]interface{}, error) {
 			m[this.ActivityStreamsSummary.Name()] = i
 		}
 	}
-	// Maybe serialize property "tag"
-	if this.ActivityStreamsTag != nil {
-		if i, err := this.ActivityStreamsTag.Serialize(); err != nil {
-			return nil, err
-		} else if i != nil {
-			m[this.ActivityStreamsTag.Name()] = i
-		}
-	}
-	// Maybe serialize property "to"
-	if this.ActivityStreamsTo != nil {
-		if i, err := this.ActivityStreamsTo.Serialize(); err != nil {
-			return nil, err
-		} else if i != nil {
-			m[this.ActivityStreamsTo.Name()] = i
-		}
-	}
 	// Maybe serialize property "type"
 	if this.JSONLDType != nil {
 		if i, err := this.JSONLDType.Serialize(); err != nil {
@@ -1392,20 +623,12 @@ func (this TootHashtag) Serialize() (map[string]interface{}, error) {
 			m[this.JSONLDType.Name()] = i
 		}
 	}
-	// Maybe serialize property "updated"
-	if this.ActivityStreamsUpdated != nil {
-		if i, err := this.ActivityStreamsUpdated.Serialize(); err != nil {
+	// Maybe serialize property "width"
+	if this.ActivityStreamsWidth != nil {
+		if i, err := this.ActivityStreamsWidth.Serialize(); err != nil {
 			return nil, err
 		} else if i != nil {
-			m[this.ActivityStreamsUpdated.Name()] = i
-		}
-	}
-	// Maybe serialize property "url"
-	if this.ActivityStreamsUrl != nil {
-		if i, err := this.ActivityStreamsUrl.Serialize(); err != nil {
-			return nil, err
-		} else if i != nil {
-			m[this.ActivityStreamsUrl.Name()] = i
+			m[this.ActivityStreamsWidth.Name()] = i
 		}
 	}
 	// End: Serialize known properties
@@ -1422,89 +645,24 @@ func (this TootHashtag) Serialize() (map[string]interface{}, error) {
 	return m, nil
 }
 
-// SetActivityStreamsAltitude sets the "altitude" property.
-func (this *TootHashtag) SetActivityStreamsAltitude(i vocab.ActivityStreamsAltitudeProperty) {
-	this.ActivityStreamsAltitude = i
-}
-
-// SetActivityStreamsAttachment sets the "attachment" property.
-func (this *TootHashtag) SetActivityStreamsAttachment(i vocab.ActivityStreamsAttachmentProperty) {
-	this.ActivityStreamsAttachment = i
-}
-
 // SetActivityStreamsAttributedTo sets the "attributedTo" property.
 func (this *TootHashtag) SetActivityStreamsAttributedTo(i vocab.ActivityStreamsAttributedToProperty) {
 	this.ActivityStreamsAttributedTo = i
 }
 
-// SetActivityStreamsAudience sets the "audience" property.
-func (this *TootHashtag) SetActivityStreamsAudience(i vocab.ActivityStreamsAudienceProperty) {
-	this.ActivityStreamsAudience = i
+// SetActivityStreamsHeight sets the "height" property.
+func (this *TootHashtag) SetActivityStreamsHeight(i vocab.ActivityStreamsHeightProperty) {
+	this.ActivityStreamsHeight = i
 }
 
-// SetActivityStreamsBcc sets the "bcc" property.
-func (this *TootHashtag) SetActivityStreamsBcc(i vocab.ActivityStreamsBccProperty) {
-	this.ActivityStreamsBcc = i
+// SetActivityStreamsHref sets the "href" property.
+func (this *TootHashtag) SetActivityStreamsHref(i vocab.ActivityStreamsHrefProperty) {
+	this.ActivityStreamsHref = i
 }
 
-// SetActivityStreamsBto sets the "bto" property.
-func (this *TootHashtag) SetActivityStreamsBto(i vocab.ActivityStreamsBtoProperty) {
-	this.ActivityStreamsBto = i
-}
-
-// SetActivityStreamsCc sets the "cc" property.
-func (this *TootHashtag) SetActivityStreamsCc(i vocab.ActivityStreamsCcProperty) {
-	this.ActivityStreamsCc = i
-}
-
-// SetActivityStreamsContent sets the "content" property.
-func (this *TootHashtag) SetActivityStreamsContent(i vocab.ActivityStreamsContentProperty) {
-	this.ActivityStreamsContent = i
-}
-
-// SetActivityStreamsContext sets the "context" property.
-func (this *TootHashtag) SetActivityStreamsContext(i vocab.ActivityStreamsContextProperty) {
-	this.ActivityStreamsContext = i
-}
-
-// SetActivityStreamsDuration sets the "duration" property.
-func (this *TootHashtag) SetActivityStreamsDuration(i vocab.ActivityStreamsDurationProperty) {
-	this.ActivityStreamsDuration = i
-}
-
-// SetActivityStreamsEndTime sets the "endTime" property.
-func (this *TootHashtag) SetActivityStreamsEndTime(i vocab.ActivityStreamsEndTimeProperty) {
-	this.ActivityStreamsEndTime = i
-}
-
-// SetActivityStreamsGenerator sets the "generator" property.
-func (this *TootHashtag) SetActivityStreamsGenerator(i vocab.ActivityStreamsGeneratorProperty) {
-	this.ActivityStreamsGenerator = i
-}
-
-// SetActivityStreamsIcon sets the "icon" property.
-func (this *TootHashtag) SetActivityStreamsIcon(i vocab.ActivityStreamsIconProperty) {
-	this.ActivityStreamsIcon = i
-}
-
-// SetActivityStreamsImage sets the "image" property.
-func (this *TootHashtag) SetActivityStreamsImage(i vocab.ActivityStreamsImageProperty) {
-	this.ActivityStreamsImage = i
-}
-
-// SetActivityStreamsInReplyTo sets the "inReplyTo" property.
-func (this *TootHashtag) SetActivityStreamsInReplyTo(i vocab.ActivityStreamsInReplyToProperty) {
-	this.ActivityStreamsInReplyTo = i
-}
-
-// SetActivityStreamsLikes sets the "likes" property.
-func (this *TootHashtag) SetActivityStreamsLikes(i vocab.ActivityStreamsLikesProperty) {
-	this.ActivityStreamsLikes = i
-}
-
-// SetActivityStreamsLocation sets the "location" property.
-func (this *TootHashtag) SetActivityStreamsLocation(i vocab.ActivityStreamsLocationProperty) {
-	this.ActivityStreamsLocation = i
+// SetActivityStreamsHreflang sets the "hreflang" property.
+func (this *TootHashtag) SetActivityStreamsHreflang(i vocab.ActivityStreamsHreflangProperty) {
+	this.ActivityStreamsHreflang = i
 }
 
 // SetActivityStreamsMediaType sets the "mediaType" property.
@@ -1517,39 +675,14 @@ func (this *TootHashtag) SetActivityStreamsName(i vocab.ActivityStreamsNamePrope
 	this.ActivityStreamsName = i
 }
 
-// SetActivityStreamsObject sets the "object" property.
-func (this *TootHashtag) SetActivityStreamsObject(i vocab.ActivityStreamsObjectProperty) {
-	this.ActivityStreamsObject = i
-}
-
 // SetActivityStreamsPreview sets the "preview" property.
 func (this *TootHashtag) SetActivityStreamsPreview(i vocab.ActivityStreamsPreviewProperty) {
 	this.ActivityStreamsPreview = i
 }
 
-// SetActivityStreamsPublished sets the "published" property.
-func (this *TootHashtag) SetActivityStreamsPublished(i vocab.ActivityStreamsPublishedProperty) {
-	this.ActivityStreamsPublished = i
-}
-
-// SetActivityStreamsReplies sets the "replies" property.
-func (this *TootHashtag) SetActivityStreamsReplies(i vocab.ActivityStreamsRepliesProperty) {
-	this.ActivityStreamsReplies = i
-}
-
-// SetActivityStreamsShares sets the "shares" property.
-func (this *TootHashtag) SetActivityStreamsShares(i vocab.ActivityStreamsSharesProperty) {
-	this.ActivityStreamsShares = i
-}
-
-// SetActivityStreamsSource sets the "source" property.
-func (this *TootHashtag) SetActivityStreamsSource(i vocab.ActivityStreamsSourceProperty) {
-	this.ActivityStreamsSource = i
-}
-
-// SetActivityStreamsStartTime sets the "startTime" property.
-func (this *TootHashtag) SetActivityStreamsStartTime(i vocab.ActivityStreamsStartTimeProperty) {
-	this.ActivityStreamsStartTime = i
+// SetActivityStreamsRel sets the "rel" property.
+func (this *TootHashtag) SetActivityStreamsRel(i vocab.ActivityStreamsRelProperty) {
+	this.ActivityStreamsRel = i
 }
 
 // SetActivityStreamsSummary sets the "summary" property.
@@ -1557,24 +690,9 @@ func (this *TootHashtag) SetActivityStreamsSummary(i vocab.ActivityStreamsSummar
 	this.ActivityStreamsSummary = i
 }
 
-// SetActivityStreamsTag sets the "tag" property.
-func (this *TootHashtag) SetActivityStreamsTag(i vocab.ActivityStreamsTagProperty) {
-	this.ActivityStreamsTag = i
-}
-
-// SetActivityStreamsTo sets the "to" property.
-func (this *TootHashtag) SetActivityStreamsTo(i vocab.ActivityStreamsToProperty) {
-	this.ActivityStreamsTo = i
-}
-
-// SetActivityStreamsUpdated sets the "updated" property.
-func (this *TootHashtag) SetActivityStreamsUpdated(i vocab.ActivityStreamsUpdatedProperty) {
-	this.ActivityStreamsUpdated = i
-}
-
-// SetActivityStreamsUrl sets the "url" property.
-func (this *TootHashtag) SetActivityStreamsUrl(i vocab.ActivityStreamsUrlProperty) {
-	this.ActivityStreamsUrl = i
+// SetActivityStreamsWidth sets the "width" property.
+func (this *TootHashtag) SetActivityStreamsWidth(i vocab.ActivityStreamsWidthProperty) {
+	this.ActivityStreamsWidth = i
 }
 
 // SetJSONLDId sets the "id" property.

@@ -364,7 +364,7 @@ func DeserializeEmoji(m map[string]interface{}, aliasMap map[string]string) (*To
 // EmojiIsDisjointWith returns true if the other provided type is disjoint with
 // the Emoji type.
 func EmojiIsDisjointWith(other vocab.Type) bool {
-	disjointWith := []string{"Link", "Mention"}
+	disjointWith := []string{"Hashtag", "Link", "Mention"}
 	for _, disjoint := range disjointWith {
 		if disjoint == other.GetTypeName() {
 			return true

@@ -212,7 +212,7 @@ func LinkIsDisjointWith(other vocab.Type) bool {
 // type. Note that it returns false if the types are the same; see the
 // "IsOrExtendsLink" variant instead.
 func LinkIsExtendedBy(other vocab.Type) bool {
-	extensions := []string{"Mention"}
+	extensions := []string{"Hashtag", "Mention"}
 	for _, ext := range extensions {
 		if ext == other.GetTypeName() {
 			return true

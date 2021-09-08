@@ -241,9 +241,6 @@ type ActivityStreamsDescribesProperty interface {
 	// GetTootEmoji returns the value of this property. When IsTootEmoji
 	// returns false, GetTootEmoji will return an arbitrary value.
 	GetTootEmoji() TootEmoji
-	// GetTootHashtag returns the value of this property. When IsTootHashtag
-	// returns false, GetTootHashtag will return an arbitrary value.
-	GetTootHashtag() TootHashtag
 	// GetTootIdentityProof returns the value of this property. When
 	// IsTootIdentityProof returns false, GetTootIdentityProof will return
 	// an arbitrary value.
@@ -489,10 +486,6 @@ type ActivityStreamsDescribesProperty interface {
 	// true, use the GetTootEmoji and SetTootEmoji methods to access and
 	// set this property.
 	IsTootEmoji() bool
-	// IsTootHashtag returns true if this property has a type of "Hashtag".
-	// When true, use the GetTootHashtag and SetTootHashtag methods to
-	// access and set this property.
-	IsTootHashtag() bool
 	// IsTootIdentityProof returns true if this property has a type of
 	// "IdentityProof". When true, use the GetTootIdentityProof and
 	// SetTootIdentityProof methods to access and set this property.
@@ -686,9 +679,6 @@ type ActivityStreamsDescribesProperty interface {
 	// SetTootEmoji sets the value of this property. Calling IsTootEmoji
 	// afterwards returns true.
 	SetTootEmoji(v TootEmoji)
-	// SetTootHashtag sets the value of this property. Calling IsTootHashtag
-	// afterwards returns true.
-	SetTootHashtag(v TootHashtag)
 	// SetTootIdentityProof sets the value of this property. Calling
 	// IsTootIdentityProof afterwards returns true.
 	SetTootIdentityProof(v TootIdentityProof)

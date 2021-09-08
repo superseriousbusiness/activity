@@ -410,7 +410,7 @@ func DeserializeIgnore(m map[string]interface{}, aliasMap map[string]string) (*A
 // IgnoreIsDisjointWith returns true if the other provided type is disjoint with
 // the Ignore type.
 func IgnoreIsDisjointWith(other vocab.Type) bool {
-	disjointWith := []string{"Link", "Mention"}
+	disjointWith := []string{"Hashtag", "Link", "Mention"}
 	for _, disjoint := range disjointWith {
 		if disjoint == other.GetTypeName() {
 			return true

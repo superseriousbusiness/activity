@@ -84,8 +84,8 @@
       ],
       "subClassOf": {
         "type": "owl:Class",
-        "url": "https://www.w3.org/ns/activitystreams#Object",
-        "name": "as:Object"
+        "url": "https://www.w3.org/ns/activitystreams#Link",
+        "name": "as:Link"
       },
       "disjointWith": [],
       "name": "Hashtag",
