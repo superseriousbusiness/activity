@@ -13,6 +13,11 @@ func NewTootEmoji() vocab.TootEmoji {
 	return typeemoji.NewTootEmoji()
 }
 
+// NewTootHashtag creates a new TootHashtag
+func NewTootHashtag() vocab.TootHashtag {
+	return typehashtag.NewTootHashtag()
+}
+
 // NewTootIdentityProof creates a new TootIdentityProof
 func NewTootIdentityProof() vocab.TootIdentityProof {
 	return typeidentityproof.NewTootIdentityProof()

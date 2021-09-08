@@ -15,6 +15,13 @@ func TootEmojiIsExtendedBy(other vocab.Type) bool {
 	return typeemoji.EmojiIsExtendedBy(other)
 }
 
+// TootHashtagIsExtendedBy returns true if the other's type extends from Hashtag.
+// Note that it returns false if the types are the same; see the "IsOrExtends"
+// variant instead.
+func TootHashtagIsExtendedBy(other vocab.Type) bool {
+	return typehashtag.HashtagIsExtendedBy(other)
+}
+
 // TootIdentityProofIsExtendedBy returns true if the other's type extends from
 // IdentityProof. Note that it returns false if the types are the same; see
 // the "IsOrExtends" variant instead.

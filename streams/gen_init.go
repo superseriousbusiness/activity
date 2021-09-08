@@ -351,6 +351,7 @@ func init() {
 	propertysignaturevalue.SetManager(mgr)
 	propertyvoterscount.SetManager(mgr)
 	typeemoji.SetManager(mgr)
+	typehashtag.SetManager(mgr)
 	typeidentityproof.SetManager(mgr)
 	propertyowner.SetManager(mgr)
 	propertypublickey.SetManager(mgr)
@@ -419,6 +420,7 @@ func init() {
 	typeticketdependency.SetTypePropertyConstructor(NewJSONLDTypeProperty)
 	typepropertyvalue.SetTypePropertyConstructor(NewJSONLDTypeProperty)
 	typeemoji.SetTypePropertyConstructor(NewJSONLDTypeProperty)
+	typehashtag.SetTypePropertyConstructor(NewJSONLDTypeProperty)
 	typeidentityproof.SetTypePropertyConstructor(NewJSONLDTypeProperty)
 	typepublickey.SetTypePropertyConstructor(NewJSONLDTypeProperty)
 }

@@ -14,6 +14,12 @@ func IsOrExtendsTootEmoji(other vocab.Type) bool {
 	return typeemoji.IsOrExtendsEmoji(other)
 }
 
+// IsOrExtendsTootHashtag returns true if the other provided type is the Hashtag
+// type or extends from the Hashtag type.
+func IsOrExtendsTootHashtag(other vocab.Type) bool {
+	return typehashtag.IsOrExtendsHashtag(other)
+}
+
 // IsOrExtendsTootIdentityProof returns true if the other provided type is the
 // IdentityProof type or extends from the IdentityProof type.
 func IsOrExtendsTootIdentityProof(other vocab.Type) bool {

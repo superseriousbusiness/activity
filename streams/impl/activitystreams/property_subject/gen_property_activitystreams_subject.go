@@ -25,10 +25,8 @@ type ActivityStreamsSubjectProperty struct {
 	activitystreamsArticleMember               vocab.ActivityStreamsArticle
 	activitystreamsAudioMember                 vocab.ActivityStreamsAudio
 	activitystreamsBlockMember                 vocab.ActivityStreamsBlock
-	forgefedBranchMember                       vocab.ForgeFedBranch
 	activitystreamsCollectionMember            vocab.ActivityStreamsCollection
 	activitystreamsCollectionPageMember        vocab.ActivityStreamsCollectionPage
-	forgefedCommitMember                       vocab.ForgeFedCommit
 	activitystreamsCreateMember                vocab.ActivityStreamsCreate
 	activitystreamsDeleteMember                vocab.ActivityStreamsDelete
 	activitystreamsDislikeMember               vocab.ActivityStreamsDislike
@@ -38,6 +36,7 @@ type ActivityStreamsSubjectProperty struct {
 	activitystreamsFlagMember                  vocab.ActivityStreamsFlag
 	activitystreamsFollowMember                vocab.ActivityStreamsFollow
 	activitystreamsGroupMember                 vocab.ActivityStreamsGroup
+	tootHashtagMember                          vocab.TootHashtag
 	tootIdentityProofMember                    vocab.TootIdentityProof
 	activitystreamsIgnoreMember                vocab.ActivityStreamsIgnore
 	activitystreamsImageMember                 vocab.ActivityStreamsImage
@@ -65,12 +64,9 @@ type ActivityStreamsSubjectProperty struct {
 	activitystreamsRejectMember                vocab.ActivityStreamsReject
 	activitystreamsRelationshipMember          vocab.ActivityStreamsRelationship
 	activitystreamsRemoveMember                vocab.ActivityStreamsRemove
-	forgefedRepositoryMember                   vocab.ForgeFedRepository
 	activitystreamsServiceMember               vocab.ActivityStreamsService
 	activitystreamsTentativeAcceptMember       vocab.ActivityStreamsTentativeAccept
 	activitystreamsTentativeRejectMember       vocab.ActivityStreamsTentativeReject
-	forgefedTicketMember                       vocab.ForgeFedTicket
-	forgefedTicketDependencyMember             vocab.ForgeFedTicketDependency
 	activitystreamsTombstoneMember             vocab.ActivityStreamsTombstone
 	activitystreamsTravelMember                vocab.ActivityStreamsTravel
 	activitystreamsUndoMember                  vocab.ActivityStreamsUndo
@@ -176,12 +172,6 @@ func DeserializeSubjectProperty(m map[string]interface{}, aliasMap map[string]st
 					alias:                      alias,
 				}
 				return this, nil
-			} else if v, err := mgr.DeserializeBranchForgeFed()(m, aliasMap); err == nil {
-				this := &ActivityStreamsSubjectProperty{
-					alias:                alias,
-					forgefedBranchMember: v,
-				}
-				return this, nil
 			} else if v, err := mgr.DeserializeCollectionActivityStreams()(m, aliasMap); err == nil {
 				this := &ActivityStreamsSubjectProperty{
 					activitystreamsCollectionMember: v,
@@ -192,12 +182,6 @@ func DeserializeSubjectProperty(m map[string]interface{}, aliasMap map[string]st
 				this := &ActivityStreamsSubjectProperty{
 					activitystreamsCollectionPageMember: v,
 					alias:                               alias,
-				}
-				return this, nil
-			} else if v, err := mgr.DeserializeCommitForgeFed()(m, aliasMap); err == nil {
-				this := &ActivityStreamsSubjectProperty{
-					alias:                alias,
-					forgefedCommitMember: v,
 				}
 				return this, nil
 			} else if v, err := mgr.DeserializeCreateActivityStreams()(m, aliasMap); err == nil {
@@ -252,6 +236,12 @@ func DeserializeSubjectProperty(m map[string]interface{}, aliasMap map[string]st
 				this := &ActivityStreamsSubjectProperty{
 					activitystreamsGroupMember: v,
 					alias:                      alias,
+				}
+				return this, nil
+			} else if v, err := mgr.DeserializeHashtagToot()(m, aliasMap); err == nil {
+				this := &ActivityStreamsSubjectProperty{
+					alias:             alias,
+					tootHashtagMember: v,
 				}
 				return this, nil
 			} else if v, err := mgr.DeserializeIdentityProofToot()(m, aliasMap); err == nil {
@@ -416,12 +406,6 @@ func DeserializeSubjectProperty(m map[string]interface{}, aliasMap map[string]st
 					alias:                       alias,
 				}
 				return this, nil
-			} else if v, err := mgr.DeserializeRepositoryForgeFed()(m, aliasMap); err == nil {
-				this := &ActivityStreamsSubjectProperty{
-					alias:                    alias,
-					forgefedRepositoryMember: v,
-				}
-				return this, nil
 			} else if v, err := mgr.DeserializeServiceActivityStreams()(m, aliasMap); err == nil {
 				this := &ActivityStreamsSubjectProperty{
 					activitystreamsServiceMember: v,
@@ -438,18 +422,6 @@ func DeserializeSubjectProperty(m map[string]interface{}, aliasMap map[string]st
 				this := &ActivityStreamsSubjectProperty{
 					activitystreamsTentativeRejectMember: v,
 					alias:                                alias,
-				}
-				return this, nil
-			} else if v, err := mgr.DeserializeTicketForgeFed()(m, aliasMap); err == nil {
-				this := &ActivityStreamsSubjectProperty{
-					alias:                alias,
-					forgefedTicketMember: v,
-				}
-				return this, nil
-			} else if v, err := mgr.DeserializeTicketDependencyForgeFed()(m, aliasMap); err == nil {
-				this := &ActivityStreamsSubjectProperty{
-					alias:                          alias,
-					forgefedTicketDependencyMember: v,
 				}
 				return this, nil
 			} else if v, err := mgr.DeserializeTombstoneActivityStreams()(m, aliasMap); err == nil {
@@ -518,10 +490,8 @@ func (this *ActivityStreamsSubjectProperty) Clear() {
 	this.activitystreamsArticleMember = nil
 	this.activitystreamsAudioMember = nil
 	this.activitystreamsBlockMember = nil
-	this.forgefedBranchMember = nil
 	this.activitystreamsCollectionMember = nil
 	this.activitystreamsCollectionPageMember = nil
-	this.forgefedCommitMember = nil
 	this.activitystreamsCreateMember = nil
 	this.activitystreamsDeleteMember = nil
 	this.activitystreamsDislikeMember = nil
@@ -531,6 +501,7 @@ func (this *ActivityStreamsSubjectProperty) Clear() {
 	this.activitystreamsFlagMember = nil
 	this.activitystreamsFollowMember = nil
 	this.activitystreamsGroupMember = nil
+	this.tootHashtagMember = nil
 	this.tootIdentityProofMember = nil
 	this.activitystreamsIgnoreMember = nil
 	this.activitystreamsImageMember = nil
@@ -558,12 +529,9 @@ func (this *ActivityStreamsSubjectProperty) Clear() {
 	this.activitystreamsRejectMember = nil
 	this.activitystreamsRelationshipMember = nil
 	this.activitystreamsRemoveMember = nil
-	this.forgefedRepositoryMember = nil
 	this.activitystreamsServiceMember = nil
 	this.activitystreamsTentativeAcceptMember = nil
 	this.activitystreamsTentativeRejectMember = nil
-	this.forgefedTicketMember = nil
-	this.forgefedTicketDependencyMember = nil
 	this.activitystreamsTombstoneMember = nil
 	this.activitystreamsTravelMember = nil
 	this.activitystreamsUndoMember = nil
@@ -952,44 +920,6 @@ func (this ActivityStreamsSubjectProperty) GetActivityStreamsView() vocab.Activi
 	return this.activitystreamsViewMember
 }
 
-// GetForgeFedBranch returns the value of this property. When IsForgeFedBranch
-// returns false, GetForgeFedBranch will return an arbitrary value.
-func (this ActivityStreamsSubjectProperty) GetForgeFedBranch() vocab.ForgeFedBranch {
-	return this.forgefedBranchMember
-}
-
-// GetForgeFedCommit returns the value of this property. When IsForgeFedCommit
-// returns false, GetForgeFedCommit will return an arbitrary value.
-func (this ActivityStreamsSubjectProperty) GetForgeFedCommit() vocab.ForgeFedCommit {
-	return this.forgefedCommitMember
-}
-
-// GetForgeFedPush returns the value of this property. When IsForgeFedPush returns
-// false, GetForgeFedPush will return an arbitrary value.
-func (this ActivityStreamsSubjectProperty) GetForgeFedPush() vocab.ForgeFedPush {
-	return this.forgefedPushMember
-}
-
-// GetForgeFedRepository returns the value of this property. When
-// IsForgeFedRepository returns false, GetForgeFedRepository will return an
-// arbitrary value.
-func (this ActivityStreamsSubjectProperty) GetForgeFedRepository() vocab.ForgeFedRepository {
-	return this.forgefedRepositoryMember
-}
-
-// GetForgeFedTicket returns the value of this property. When IsForgeFedTicket
-// returns false, GetForgeFedTicket will return an arbitrary value.
-func (this ActivityStreamsSubjectProperty) GetForgeFedTicket() vocab.ForgeFedTicket {
-	return this.forgefedTicketMember
-}
-
-// GetForgeFedTicketDependency returns the value of this property. When
-// IsForgeFedTicketDependency returns false, GetForgeFedTicketDependency will
-// return an arbitrary value.
-func (this ActivityStreamsSubjectProperty) GetForgeFedTicketDependency() vocab.ForgeFedTicketDependency {
-	return this.forgefedTicketDependencyMember
-}
-
 // GetIRI returns the IRI of this property. When IsIRI returns false, GetIRI will
 // return an arbitrary value.
 func (this ActivityStreamsSubjectProperty) GetIRI() *url.URL {
@@ -1007,6 +937,12 @@ func (this ActivityStreamsSubjectProperty) GetSchemaPropertyValue() vocab.Schema
 // false, GetTootEmoji will return an arbitrary value.
 func (this ActivityStreamsSubjectProperty) GetTootEmoji() vocab.TootEmoji {
 	return this.tootEmojiMember
+}
+
+// GetTootHashtag returns the value of this property. When IsTootHashtag returns
+// false, GetTootHashtag will return an arbitrary value.
+func (this ActivityStreamsSubjectProperty) GetTootHashtag() vocab.TootHashtag {
+	return this.tootHashtagMember
 }
 
 // GetTootIdentityProof returns the value of this property. When
@@ -1052,17 +988,11 @@ func (this ActivityStreamsSubjectProperty) GetType() vocab.Type {
 	if this.IsActivityStreamsBlock() {
 		return this.GetActivityStreamsBlock()
 	}
-	if this.IsForgeFedBranch() {
-		return this.GetForgeFedBranch()
-	}
 	if this.IsActivityStreamsCollection() {
 		return this.GetActivityStreamsCollection()
 	}
 	if this.IsActivityStreamsCollectionPage() {
 		return this.GetActivityStreamsCollectionPage()
-	}
-	if this.IsForgeFedCommit() {
-		return this.GetForgeFedCommit()
 	}
 	if this.IsActivityStreamsCreate() {
 		return this.GetActivityStreamsCreate()
@@ -1090,6 +1020,9 @@ func (this ActivityStreamsSubjectProperty) GetType() vocab.Type {
 	}
 	if this.IsActivityStreamsGroup() {
 		return this.GetActivityStreamsGroup()
+	}
+	if this.IsTootHashtag() {
+		return this.GetTootHashtag()
 	}
 	if this.IsTootIdentityProof() {
 		return this.GetTootIdentityProof()
@@ -1172,9 +1105,6 @@ func (this ActivityStreamsSubjectProperty) GetType() vocab.Type {
 	if this.IsActivityStreamsRemove() {
 		return this.GetActivityStreamsRemove()
 	}
-	if this.IsForgeFedRepository() {
-		return this.GetForgeFedRepository()
-	}
 	if this.IsActivityStreamsService() {
 		return this.GetActivityStreamsService()
 	}
@@ -1183,12 +1113,6 @@ func (this ActivityStreamsSubjectProperty) GetType() vocab.Type {
 	}
 	if this.IsActivityStreamsTentativeReject() {
 		return this.GetActivityStreamsTentativeReject()
-	}
-	if this.IsForgeFedTicket() {
-		return this.GetForgeFedTicket()
-	}
-	if this.IsForgeFedTicketDependency() {
-		return this.GetForgeFedTicketDependency()
 	}
 	if this.IsActivityStreamsTombstone() {
 		return this.GetActivityStreamsTombstone()
@@ -1225,10 +1149,8 @@ func (this ActivityStreamsSubjectProperty) HasAny() bool {
 		this.IsActivityStreamsArticle() ||
 		this.IsActivityStreamsAudio() ||
 		this.IsActivityStreamsBlock() ||
-		this.IsForgeFedBranch() ||
 		this.IsActivityStreamsCollection() ||
 		this.IsActivityStreamsCollectionPage() ||
-		this.IsForgeFedCommit() ||
 		this.IsActivityStreamsCreate() ||
 		this.IsActivityStreamsDelete() ||
 		this.IsActivityStreamsDislike() ||
@@ -1238,6 +1160,7 @@ func (this ActivityStreamsSubjectProperty) HasAny() bool {
 		this.IsActivityStreamsFlag() ||
 		this.IsActivityStreamsFollow() ||
 		this.IsActivityStreamsGroup() ||
+		this.IsTootHashtag() ||
 		this.IsTootIdentityProof() ||
 		this.IsActivityStreamsIgnore() ||
 		this.IsActivityStreamsImage() ||
@@ -1265,12 +1188,9 @@ func (this ActivityStreamsSubjectProperty) HasAny() bool {
 		this.IsActivityStreamsReject() ||
 		this.IsActivityStreamsRelationship() ||
 		this.IsActivityStreamsRemove() ||
-		this.IsForgeFedRepository() ||
 		this.IsActivityStreamsService() ||
 		this.IsActivityStreamsTentativeAccept() ||
 		this.IsActivityStreamsTentativeReject() ||
-		this.IsForgeFedTicket() ||
-		this.IsForgeFedTicketDependency() ||
 		this.IsActivityStreamsTombstone() ||
 		this.IsActivityStreamsTravel() ||
 		this.IsActivityStreamsUndo() ||
@@ -1663,48 +1583,6 @@ func (this ActivityStreamsSubjectProperty) IsActivityStreamsView() bool {
 	return this.activitystreamsViewMember != nil
 }
 
-// IsForgeFedBranch returns true if this property has a type of "Branch". When
-// true, use the GetForgeFedBranch and SetForgeFedBranch methods to access and
-// set this property.
-func (this ActivityStreamsSubjectProperty) IsForgeFedBranch() bool {
-	return this.forgefedBranchMember != nil
-}
-
-// IsForgeFedCommit returns true if this property has a type of "Commit". When
-// true, use the GetForgeFedCommit and SetForgeFedCommit methods to access and
-// set this property.
-func (this ActivityStreamsSubjectProperty) IsForgeFedCommit() bool {
-	return this.forgefedCommitMember != nil
-}
-
-// IsForgeFedPush returns true if this property has a type of "Push". When true,
-// use the GetForgeFedPush and SetForgeFedPush methods to access and set this
-// property.
-func (this ActivityStreamsSubjectProperty) IsForgeFedPush() bool {
-	return this.forgefedPushMember != nil
-}
-
-// IsForgeFedRepository returns true if this property has a type of "Repository".
-// When true, use the GetForgeFedRepository and SetForgeFedRepository methods
-// to access and set this property.
-func (this ActivityStreamsSubjectProperty) IsForgeFedRepository() bool {
-	return this.forgefedRepositoryMember != nil
-}
-
-// IsForgeFedTicket returns true if this property has a type of "Ticket". When
-// true, use the GetForgeFedTicket and SetForgeFedTicket methods to access and
-// set this property.
-func (this ActivityStreamsSubjectProperty) IsForgeFedTicket() bool {
-	return this.forgefedTicketMember != nil
-}
-
-// IsForgeFedTicketDependency returns true if this property has a type of
-// "TicketDependency". When true, use the GetForgeFedTicketDependency and
-// SetForgeFedTicketDependency methods to access and set this property.
-func (this ActivityStreamsSubjectProperty) IsForgeFedTicketDependency() bool {
-	return this.forgefedTicketDependencyMember != nil
-}
-
 // IsIRI returns true if this property is an IRI. When true, use GetIRI and SetIRI
 // to access and set this property
 func (this ActivityStreamsSubjectProperty) IsIRI() bool {
@@ -1722,6 +1600,13 @@ func (this ActivityStreamsSubjectProperty) IsSchemaPropertyValue() bool {
 // the GetTootEmoji and SetTootEmoji methods to access and set this property.
 func (this ActivityStreamsSubjectProperty) IsTootEmoji() bool {
 	return this.tootEmojiMember != nil
+}
+
+// IsTootHashtag returns true if this property has a type of "Hashtag". When true,
+// use the GetTootHashtag and SetTootHashtag methods to access and set this
+// property.
+func (this ActivityStreamsSubjectProperty) IsTootHashtag() bool {
+	return this.tootHashtagMember != nil
 }
 
 // IsTootIdentityProof returns true if this property has a type of
@@ -1759,14 +1644,10 @@ func (this ActivityStreamsSubjectProperty) JSONLDContext() map[string]string {
 		child = this.GetActivityStreamsAudio().JSONLDContext()
 	} else if this.IsActivityStreamsBlock() {
 		child = this.GetActivityStreamsBlock().JSONLDContext()
-	} else if this.IsForgeFedBranch() {
-		child = this.GetForgeFedBranch().JSONLDContext()
 	} else if this.IsActivityStreamsCollection() {
 		child = this.GetActivityStreamsCollection().JSONLDContext()
 	} else if this.IsActivityStreamsCollectionPage() {
 		child = this.GetActivityStreamsCollectionPage().JSONLDContext()
-	} else if this.IsForgeFedCommit() {
-		child = this.GetForgeFedCommit().JSONLDContext()
 	} else if this.IsActivityStreamsCreate() {
 		child = this.GetActivityStreamsCreate().JSONLDContext()
 	} else if this.IsActivityStreamsDelete() {
@@ -1785,6 +1666,8 @@ func (this ActivityStreamsSubjectProperty) JSONLDContext() map[string]string {
 		child = this.GetActivityStreamsFollow().JSONLDContext()
 	} else if this.IsActivityStreamsGroup() {
 		child = this.GetActivityStreamsGroup().JSONLDContext()
+	} else if this.IsTootHashtag() {
+		child = this.GetTootHashtag().JSONLDContext()
 	} else if this.IsTootIdentityProof() {
 		child = this.GetTootIdentityProof().JSONLDContext()
 	} else if this.IsActivityStreamsIgnore() {
@@ -1839,18 +1722,12 @@ func (this ActivityStreamsSubjectProperty) JSONLDContext() map[string]string {
 		child = this.GetActivityStreamsRelationship().JSONLDContext()
 	} else if this.IsActivityStreamsRemove() {
 		child = this.GetActivityStreamsRemove().JSONLDContext()
-	} else if this.IsForgeFedRepository() {
-		child = this.GetForgeFedRepository().JSONLDContext()
 	} else if this.IsActivityStreamsService() {
 		child = this.GetActivityStreamsService().JSONLDContext()
 	} else if this.IsActivityStreamsTentativeAccept() {
 		child = this.GetActivityStreamsTentativeAccept().JSONLDContext()
 	} else if this.IsActivityStreamsTentativeReject() {
 		child = this.GetActivityStreamsTentativeReject().JSONLDContext()
-	} else if this.IsForgeFedTicket() {
-		child = this.GetForgeFedTicket().JSONLDContext()
-	} else if this.IsForgeFedTicketDependency() {
-		child = this.GetForgeFedTicketDependency().JSONLDContext()
 	} else if this.IsActivityStreamsTombstone() {
 		child = this.GetActivityStreamsTombstone().JSONLDContext()
 	} else if this.IsActivityStreamsTravel() {
@@ -1912,101 +1789,98 @@ func (this ActivityStreamsSubjectProperty) KindIndex() int {
 	if this.IsActivityStreamsBlock() {
 		return 10
 	}
-	if this.IsForgeFedBranch() {
+	if this.IsActivityStreamsCollection() {
 		return 11
 	}
-	if this.IsActivityStreamsCollection() {
+	if this.IsActivityStreamsCollectionPage() {
 		return 12
 	}
-	if this.IsActivityStreamsCollectionPage() {
+	if this.IsActivityStreamsCreate() {
 		return 13
 	}
-	if this.IsForgeFedCommit() {
+	if this.IsActivityStreamsDelete() {
 		return 14
 	}
-	if this.IsActivityStreamsCreate() {
+	if this.IsActivityStreamsDislike() {
 		return 15
 	}
-	if this.IsActivityStreamsDelete() {
+	if this.IsActivityStreamsDocument() {
 		return 16
 	}
-	if this.IsActivityStreamsDislike() {
+	if this.IsTootEmoji() {
 		return 17
 	}
-	if this.IsActivityStreamsDocument() {
+	if this.IsActivityStreamsEvent() {
 		return 18
 	}
-	if this.IsTootEmoji() {
+	if this.IsActivityStreamsFlag() {
 		return 19
 	}
-	if this.IsActivityStreamsEvent() {
+	if this.IsActivityStreamsFollow() {
 		return 20
 	}
-	if this.IsActivityStreamsFlag() {
+	if this.IsActivityStreamsGroup() {
 		return 21
 	}
-	if this.IsActivityStreamsFollow() {
+	if this.IsTootHashtag() {
 		return 22
 	}
-	if this.IsActivityStreamsGroup() {
+	if this.IsTootIdentityProof() {
 		return 23
 	}
-	if this.IsTootIdentityProof() {
+	if this.IsActivityStreamsIgnore() {
 		return 24
 	}
-	if this.IsActivityStreamsIgnore() {
+	if this.IsActivityStreamsImage() {
 		return 25
 	}
-	if this.IsActivityStreamsImage() {
+	if this.IsActivityStreamsIntransitiveActivity() {
 		return 26
 	}
-	if this.IsActivityStreamsIntransitiveActivity() {
+	if this.IsActivityStreamsInvite() {
 		return 27
 	}
-	if this.IsActivityStreamsInvite() {
+	if this.IsActivityStreamsJoin() {
 		return 28
 	}
-	if this.IsActivityStreamsJoin() {
+	if this.IsActivityStreamsLeave() {
 		return 29
 	}
-	if this.IsActivityStreamsLeave() {
+	if this.IsActivityStreamsLike() {
 		return 30
 	}
-	if this.IsActivityStreamsLike() {
+	if this.IsActivityStreamsListen() {
 		return 31
 	}
-	if this.IsActivityStreamsListen() {
+	if this.IsActivityStreamsMention() {
 		return 32
 	}
-	if this.IsActivityStreamsMention() {
+	if this.IsActivityStreamsMove() {
 		return 33
 	}
-	if this.IsActivityStreamsMove() {
+	if this.IsActivityStreamsNote() {
 		return 34
 	}
-	if this.IsActivityStreamsNote() {
+	if this.IsActivityStreamsOffer() {
 		return 35
 	}
-	if this.IsActivityStreamsOffer() {
+	if this.IsActivityStreamsOrderedCollection() {
 		return 36
 	}
-	if this.IsActivityStreamsOrderedCollection() {
+	if this.IsActivityStreamsOrderedCollectionPage() {
 		return 37
 	}
-	if this.IsActivityStreamsOrderedCollectionPage() {
+	if this.IsActivityStreamsOrganization() {
 		return 38
 	}
-	if this.IsActivityStreamsOrganization() {
+	if this.IsActivityStreamsPage() {
 		return 39
 	}
-	if this.IsActivityStreamsPage() {
+	if this.IsActivityStreamsPerson() {
 		return 40
 	}
-	if this.IsActivityStreamsPerson() {
-		return 41
-	}
 	if this.IsActivityStreamsPlace() {
-		return 42
+		return 41
 	}
 	if this.IsActivityStreamsProfile() {
 		return 43
@@ -2107,14 +1981,10 @@ func (this ActivityStreamsSubjectProperty) LessThan(o vocab.ActivityStreamsSubje
 		return this.GetActivityStreamsAudio().LessThan(o.GetActivityStreamsAudio())
 	} else if this.IsActivityStreamsBlock() {
 		return this.GetActivityStreamsBlock().LessThan(o.GetActivityStreamsBlock())
-	} else if this.IsForgeFedBranch() {
-		return this.GetForgeFedBranch().LessThan(o.GetForgeFedBranch())
 	} else if this.IsActivityStreamsCollection() {
 		return this.GetActivityStreamsCollection().LessThan(o.GetActivityStreamsCollection())
 	} else if this.IsActivityStreamsCollectionPage() {
 		return this.GetActivityStreamsCollectionPage().LessThan(o.GetActivityStreamsCollectionPage())
-	} else if this.IsForgeFedCommit() {
-		return this.GetForgeFedCommit().LessThan(o.GetForgeFedCommit())
 	} else if this.IsActivityStreamsCreate() {
 		return this.GetActivityStreamsCreate().LessThan(o.GetActivityStreamsCreate())
 	} else if this.IsActivityStreamsDelete() {
@@ -2133,6 +2003,8 @@ func (this ActivityStreamsSubjectProperty) LessThan(o vocab.ActivityStreamsSubje
 		return this.GetActivityStreamsFollow().LessThan(o.GetActivityStreamsFollow())
 	} else if this.IsActivityStreamsGroup() {
 		return this.GetActivityStreamsGroup().LessThan(o.GetActivityStreamsGroup())
+	} else if this.IsTootHashtag() {
+		return this.GetTootHashtag().LessThan(o.GetTootHashtag())
 	} else if this.IsTootIdentityProof() {
 		return this.GetTootIdentityProof().LessThan(o.GetTootIdentityProof())
 	} else if this.IsActivityStreamsIgnore() {
@@ -2187,18 +2059,12 @@ func (this ActivityStreamsSubjectProperty) LessThan(o vocab.ActivityStreamsSubje
 		return this.GetActivityStreamsRelationship().LessThan(o.GetActivityStreamsRelationship())
 	} else if this.IsActivityStreamsRemove() {
 		return this.GetActivityStreamsRemove().LessThan(o.GetActivityStreamsRemove())
-	} else if this.IsForgeFedRepository() {
-		return this.GetForgeFedRepository().LessThan(o.GetForgeFedRepository())
 	} else if this.IsActivityStreamsService() {
 		return this.GetActivityStreamsService().LessThan(o.GetActivityStreamsService())
 	} else if this.IsActivityStreamsTentativeAccept() {
 		return this.GetActivityStreamsTentativeAccept().LessThan(o.GetActivityStreamsTentativeAccept())
 	} else if this.IsActivityStreamsTentativeReject() {
 		return this.GetActivityStreamsTentativeReject().LessThan(o.GetActivityStreamsTentativeReject())
-	} else if this.IsForgeFedTicket() {
-		return this.GetForgeFedTicket().LessThan(o.GetForgeFedTicket())
-	} else if this.IsForgeFedTicketDependency() {
-		return this.GetForgeFedTicketDependency().LessThan(o.GetForgeFedTicketDependency())
 	} else if this.IsActivityStreamsTombstone() {
 		return this.GetActivityStreamsTombstone().LessThan(o.GetActivityStreamsTombstone())
 	} else if this.IsActivityStreamsTravel() {
@@ -2253,14 +2119,10 @@ func (this ActivityStreamsSubjectProperty) Serialize() (interface{}, error) {
 		return this.GetActivityStreamsAudio().Serialize()
 	} else if this.IsActivityStreamsBlock() {
 		return this.GetActivityStreamsBlock().Serialize()
-	} else if this.IsForgeFedBranch() {
-		return this.GetForgeFedBranch().Serialize()
 	} else if this.IsActivityStreamsCollection() {
 		return this.GetActivityStreamsCollection().Serialize()
 	} else if this.IsActivityStreamsCollectionPage() {
 		return this.GetActivityStreamsCollectionPage().Serialize()
-	} else if this.IsForgeFedCommit() {
-		return this.GetForgeFedCommit().Serialize()
 	} else if this.IsActivityStreamsCreate() {
 		return this.GetActivityStreamsCreate().Serialize()
 	} else if this.IsActivityStreamsDelete() {
@@ -2279,6 +2141,8 @@ func (this ActivityStreamsSubjectProperty) Serialize() (interface{}, error) {
 		return this.GetActivityStreamsFollow().Serialize()
 	} else if this.IsActivityStreamsGroup() {
 		return this.GetActivityStreamsGroup().Serialize()
+	} else if this.IsTootHashtag() {
+		return this.GetTootHashtag().Serialize()
 	} else if this.IsTootIdentityProof() {
 		return this.GetTootIdentityProof().Serialize()
 	} else if this.IsActivityStreamsIgnore() {
@@ -2333,18 +2197,12 @@ func (this ActivityStreamsSubjectProperty) Serialize() (interface{}, error) {
 		return this.GetActivityStreamsRelationship().Serialize()
 	} else if this.IsActivityStreamsRemove() {
 		return this.GetActivityStreamsRemove().Serialize()
-	} else if this.IsForgeFedRepository() {
-		return this.GetForgeFedRepository().Serialize()
 	} else if this.IsActivityStreamsService() {
 		return this.GetActivityStreamsService().Serialize()
 	} else if this.IsActivityStreamsTentativeAccept() {
 		return this.GetActivityStreamsTentativeAccept().Serialize()
 	} else if this.IsActivityStreamsTentativeReject() {
 		return this.GetActivityStreamsTentativeReject().Serialize()
-	} else if this.IsForgeFedTicket() {
-		return this.GetForgeFedTicket().Serialize()
-	} else if this.IsForgeFedTicketDependency() {
-		return this.GetForgeFedTicketDependency().Serialize()
 	} else if this.IsActivityStreamsTombstone() {
 		return this.GetActivityStreamsTombstone().Serialize()
 	} else if this.IsActivityStreamsTravel() {
@@ -2741,48 +2599,6 @@ func (this *ActivityStreamsSubjectProperty) SetActivityStreamsView(v vocab.Activ
 	this.activitystreamsViewMember = v
 }
 
-// SetForgeFedBranch sets the value of this property. Calling IsForgeFedBranch
-// afterwards returns true.
-func (this *ActivityStreamsSubjectProperty) SetForgeFedBranch(v vocab.ForgeFedBranch) {
-	this.Clear()
-	this.forgefedBranchMember = v
-}
-
-// SetForgeFedCommit sets the value of this property. Calling IsForgeFedCommit
-// afterwards returns true.
-func (this *ActivityStreamsSubjectProperty) SetForgeFedCommit(v vocab.ForgeFedCommit) {
-	this.Clear()
-	this.forgefedCommitMember = v
-}
-
-// SetForgeFedPush sets the value of this property. Calling IsForgeFedPush
-// afterwards returns true.
-func (this *ActivityStreamsSubjectProperty) SetForgeFedPush(v vocab.ForgeFedPush) {
-	this.Clear()
-	this.forgefedPushMember = v
-}
-
-// SetForgeFedRepository sets the value of this property. Calling
-// IsForgeFedRepository afterwards returns true.
-func (this *ActivityStreamsSubjectProperty) SetForgeFedRepository(v vocab.ForgeFedRepository) {
-	this.Clear()
-	this.forgefedRepositoryMember = v
-}
-
-// SetForgeFedTicket sets the value of this property. Calling IsForgeFedTicket
-// afterwards returns true.
-func (this *ActivityStreamsSubjectProperty) SetForgeFedTicket(v vocab.ForgeFedTicket) {
-	this.Clear()
-	this.forgefedTicketMember = v
-}
-
-// SetForgeFedTicketDependency sets the value of this property. Calling
-// IsForgeFedTicketDependency afterwards returns true.
-func (this *ActivityStreamsSubjectProperty) SetForgeFedTicketDependency(v vocab.ForgeFedTicketDependency) {
-	this.Clear()
-	this.forgefedTicketDependencyMember = v
-}
-
 // SetIRI sets the value of this property. Calling IsIRI afterwards returns true.
 func (this *ActivityStreamsSubjectProperty) SetIRI(v *url.URL) {
 	this.Clear()
@@ -2801,6 +2617,13 @@ func (this *ActivityStreamsSubjectProperty) SetSchemaPropertyValue(v vocab.Schem
 func (this *ActivityStreamsSubjectProperty) SetTootEmoji(v vocab.TootEmoji) {
 	this.Clear()
 	this.tootEmojiMember = v
+}
+
+// SetTootHashtag sets the value of this property. Calling IsTootHashtag
+// afterwards returns true.
+func (this *ActivityStreamsSubjectProperty) SetTootHashtag(v vocab.TootHashtag) {
+	this.Clear()
+	this.tootHashtagMember = v
 }
 
 // SetTootIdentityProof sets the value of this property. Calling
@@ -2857,20 +2680,12 @@ func (this *ActivityStreamsSubjectProperty) SetType(t vocab.Type) error {
 		this.SetActivityStreamsBlock(v)
 		return nil
 	}
-	if v, ok := t.(vocab.ForgeFedBranch); ok {
-		this.SetForgeFedBranch(v)
-		return nil
-	}
 	if v, ok := t.(vocab.ActivityStreamsCollection); ok {
 		this.SetActivityStreamsCollection(v)
 		return nil
 	}
 	if v, ok := t.(vocab.ActivityStreamsCollectionPage); ok {
 		this.SetActivityStreamsCollectionPage(v)
-		return nil
-	}
-	if v, ok := t.(vocab.ForgeFedCommit); ok {
-		this.SetForgeFedCommit(v)
 		return nil
 	}
 	if v, ok := t.(vocab.ActivityStreamsCreate); ok {
@@ -2907,6 +2722,10 @@ func (this *ActivityStreamsSubjectProperty) SetType(t vocab.Type) error {
 	}
 	if v, ok := t.(vocab.ActivityStreamsGroup); ok {
 		this.SetActivityStreamsGroup(v)
+		return nil
+	}
+	if v, ok := t.(vocab.TootHashtag); ok {
+		this.SetTootHashtag(v)
 		return nil
 	}
 	if v, ok := t.(vocab.TootIdentityProof); ok {
@@ -3017,10 +2836,6 @@ func (this *ActivityStreamsSubjectProperty) SetType(t vocab.Type) error {
 		this.SetActivityStreamsRemove(v)
 		return nil
 	}
-	if v, ok := t.(vocab.ForgeFedRepository); ok {
-		this.SetForgeFedRepository(v)
-		return nil
-	}
 	if v, ok := t.(vocab.ActivityStreamsService); ok {
 		this.SetActivityStreamsService(v)
 		return nil
@@ -3031,14 +2846,6 @@ func (this *ActivityStreamsSubjectProperty) SetType(t vocab.Type) error {
 	}
 	if v, ok := t.(vocab.ActivityStreamsTentativeReject); ok {
 		this.SetActivityStreamsTentativeReject(v)
-		return nil
-	}
-	if v, ok := t.(vocab.ForgeFedTicket); ok {
-		this.SetForgeFedTicket(v)
-		return nil
-	}
-	if v, ok := t.(vocab.ForgeFedTicketDependency); ok {
-		this.SetForgeFedTicketDependency(v)
 		return nil
 	}
 	if v, ok := t.(vocab.ActivityStreamsTombstone); ok {

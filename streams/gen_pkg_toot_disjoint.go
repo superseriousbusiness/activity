@@ -13,6 +13,12 @@ func TootEmojiIsDisjointWith(other vocab.Type) bool {
 	return typeemoji.EmojiIsDisjointWith(other)
 }
 
+// TootHashtagIsDisjointWith returns true if Hashtag is disjoint with the other's
+// type.
+func TootHashtagIsDisjointWith(other vocab.Type) bool {
+	return typehashtag.HashtagIsDisjointWith(other)
+}
+
 // TootIdentityProofIsDisjointWith returns true if IdentityProof is disjoint with
 // the other's type.
 func TootIdentityProofIsDisjointWith(other vocab.Type) bool {

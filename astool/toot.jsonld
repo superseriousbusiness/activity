@@ -34,8 +34,8 @@
       "type": "owl:Class",
       "example": [
         {
-	  "type": "http://schema.org/CreativeWork",
-	  "mainEntity": {
+          "type": "http://schema.org/CreativeWork",
+          "mainEntity": {
             "id": "https://example.com/@alice/hello-world",
             "type": "Note",
             "content": "Hello world :Kappa:",
@@ -52,7 +52,7 @@
               }
             ]
           }
-	}
+        }
       ],
       "subClassOf": {
         "type": "owl:Class",
@@ -64,13 +64,40 @@
       "url": "https://docs.joinmastodon.org/development/activitypub/#custom-emojis"
     },
     {
+      "id": "http://joinmastodon.org/ns#Hashtag",
+      "type": "owl:Class",
+      "example": [
+        {
+          "mainEntity": {
+            "id": "https://example.com/@alice/hello-world",
+            "type": "Note",
+            "content": "example",
+            "tag": [
+              {
+                "href": "https://example.com/hashtag/example",
+                "type": "Hashtag",
+                "name": "#example"
+              }
+            ]
+          }
+        }
+      ],
+      "subClassOf": {
+        "type": "owl:Class",
+        "url": "https://www.w3.org/ns/activitystreams#Object",
+        "name": "as:Object"
+      },
+      "disjointWith": [],
+      "name": "Hashtag",
+      "url": "https://docs.joinmastodon.org/development/activitypub/#hashtag"
+    },
+    {
       "id": "http://joinmastodon.org/ns#featured",
       "type": [
         "rdf:Property",
         "owl:FunctionalProperty"
       ],
-      "example": {
-      },
+      "example": {},
       "domain": {
         "type": "owl:Class",
         "unionOf": [
@@ -119,8 +146,7 @@
         "rdf:Property",
         "owl:FunctionalProperty"
       ],
-      "example": {
-      },
+      "example": {},
       "domain": {
         "type": "owl:Class",
         "unionOf": [
@@ -143,8 +169,7 @@
         "rdf:Property",
         "owl:FunctionalProperty"
       ],
-      "example": {
-      },
+      "example": {},
       "domain": {
         "type": "owl:Class",
         "unionOf": [
@@ -164,8 +189,7 @@
     {
       "id": "http://joinmastodon.org/ns#IdentityProof",
       "type": "owl:Class",
-      "example": {
-      },
+      "example": {},
       "subClassOf": {
         "type": "owl:Class",
         "url": "https://www.w3.org/ns/activitystreams#Object",
@@ -180,8 +204,7 @@
         "rdf:Property",
         "owl:FunctionalProperty"
       ],
-      "example": {
-      },
+      "example": {},
       "domain": {
         "type": "owl:Class",
         "unionOf": [
@@ -204,8 +227,7 @@
         "rdf:Property",
         "owl:FunctionalProperty"
       ],
-      "example": {
-      },
+      "example": {},
       "domain": {
         "type": "owl:Class",
         "unionOf": [
@@ -228,8 +250,7 @@
         "rdf:Property",
         "owl:FunctionalProperty"
       ],
-      "example": {
-      },
+      "example": {},
       "domain": {
         "type": "owl:Class",
         "unionOf": [
