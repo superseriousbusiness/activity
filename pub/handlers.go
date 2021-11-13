@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/go-fed/activity/streams"
+	"github.com/superseriousbusiness/activity/streams"
 )
 
 var ErrNotFound = errors.New("go-fed/activity: ActivityStreams data not found")

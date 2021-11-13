@@ -4,8 +4,8 @@ package propertyrel
 
 import (
 	"fmt"
-	rfc5988 "github.com/go-fed/activity/streams/values/rfc5988"
-	vocab "github.com/go-fed/activity/streams/vocab"
+	rfc5988 "github.com/superseriousbusiness/activity/streams/values/rfc5988"
+	vocab "github.com/superseriousbusiness/activity/streams/vocab"
 	"net/url"
 )
 

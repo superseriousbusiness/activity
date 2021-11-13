@@ -2,9 +2,10 @@ package gen
 
 import (
 	"fmt"
-	"github.com/dave/jennifer/jen"
-	"github.com/go-fed/activity/astool/codegen"
 	"sync"
+
+	"github.com/dave/jennifer/jen"
+	"github.com/superseriousbusiness/activity/astool/codegen"
 )
 
 const (

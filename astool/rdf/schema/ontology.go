@@ -2,9 +2,10 @@ package schema
 
 import (
 	"fmt"
-	"github.com/go-fed/activity/astool/rdf"
 	neturl "net/url"
 	"strings"
+
+	"github.com/superseriousbusiness/activity/astool/rdf"
 )
 
 const (

@@ -1,9 +1,10 @@
 package streams
 
 import (
-	"github.com/go-fed/activity/streams/vocab"
 	"net/url"
 	"time"
+
+	"github.com/superseriousbusiness/activity/streams/vocab"
 )
 
 func MustParseURL(s string) *url.URL {

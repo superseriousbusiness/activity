@@ -5,7 +5,7 @@ package streams
 import (
 	"context"
 	"errors"
-	vocab "github.com/go-fed/activity/streams/vocab"
+	vocab "github.com/superseriousbusiness/activity/streams/vocab"
 )
 
 // ErrNoCallbackMatch indicates a Resolver could not match the ActivityStreams value to a callback function.

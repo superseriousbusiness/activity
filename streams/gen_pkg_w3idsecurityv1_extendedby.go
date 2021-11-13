@@ -3,8 +3,8 @@
 package streams
 
 import (
-	typepublickey "github.com/go-fed/activity/streams/impl/w3idsecurityv1/type_publickey"
-	vocab "github.com/go-fed/activity/streams/vocab"
+	typepublickey "github.com/superseriousbusiness/activity/streams/impl/w3idsecurityv1/type_publickey"
+	vocab "github.com/superseriousbusiness/activity/streams/vocab"
 )
 
 // W3IDSecurityV1PublicKeyIsExtendedBy returns true if the other's type extends

@@ -3,13 +3,13 @@
 package streams
 
 import (
-	typebranch "github.com/go-fed/activity/streams/impl/forgefed/type_branch"
-	typecommit "github.com/go-fed/activity/streams/impl/forgefed/type_commit"
-	typepush "github.com/go-fed/activity/streams/impl/forgefed/type_push"
-	typerepository "github.com/go-fed/activity/streams/impl/forgefed/type_repository"
-	typeticket "github.com/go-fed/activity/streams/impl/forgefed/type_ticket"
-	typeticketdependency "github.com/go-fed/activity/streams/impl/forgefed/type_ticketdependency"
-	vocab "github.com/go-fed/activity/streams/vocab"
+	typebranch "github.com/superseriousbusiness/activity/streams/impl/forgefed/type_branch"
+	typecommit "github.com/superseriousbusiness/activity/streams/impl/forgefed/type_commit"
+	typepush "github.com/superseriousbusiness/activity/streams/impl/forgefed/type_push"
+	typerepository "github.com/superseriousbusiness/activity/streams/impl/forgefed/type_repository"
+	typeticket "github.com/superseriousbusiness/activity/streams/impl/forgefed/type_ticket"
+	typeticketdependency "github.com/superseriousbusiness/activity/streams/impl/forgefed/type_ticketdependency"
+	vocab "github.com/superseriousbusiness/activity/streams/vocab"
 )
 
 // ForgeFedBranchIsDisjointWith returns true if Branch is disjoint with the

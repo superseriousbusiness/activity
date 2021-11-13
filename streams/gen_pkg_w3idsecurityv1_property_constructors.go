@@ -3,10 +3,10 @@
 package streams
 
 import (
-	propertyowner "github.com/go-fed/activity/streams/impl/w3idsecurityv1/property_owner"
-	propertypublickey "github.com/go-fed/activity/streams/impl/w3idsecurityv1/property_publickey"
-	propertypublickeypem "github.com/go-fed/activity/streams/impl/w3idsecurityv1/property_publickeypem"
-	vocab "github.com/go-fed/activity/streams/vocab"
+	propertyowner "github.com/superseriousbusiness/activity/streams/impl/w3idsecurityv1/property_owner"
+	propertypublickey "github.com/superseriousbusiness/activity/streams/impl/w3idsecurityv1/property_publickey"
+	propertypublickeypem "github.com/superseriousbusiness/activity/streams/impl/w3idsecurityv1/property_publickeypem"
+	vocab "github.com/superseriousbusiness/activity/streams/vocab"
 )
 
 // NewW3IDSecurityV1W3IDSecurityV1OwnerProperty creates a new

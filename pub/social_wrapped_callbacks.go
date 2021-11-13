@@ -3,9 +3,10 @@ package pub
 import (
 	"context"
 	"fmt"
-	"github.com/go-fed/activity/streams"
-	"github.com/go-fed/activity/streams/vocab"
 	"net/url"
+
+	"github.com/superseriousbusiness/activity/streams"
+	"github.com/superseriousbusiness/activity/streams/vocab"
 )
 
 // SocialWrappedCallbacks lists the callback functions that already have some

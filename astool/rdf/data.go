@@ -3,9 +3,10 @@ package rdf
 import (
 	"bytes"
 	"fmt"
-	"github.com/dave/jennifer/jen"
-	"github.com/go-fed/activity/astool/codegen"
 	"net/url"
+
+	"github.com/dave/jennifer/jen"
+	"github.com/superseriousbusiness/activity/astool/codegen"
 )
 
 // ParsedVocabulary is the internal data structure produced after parsing the

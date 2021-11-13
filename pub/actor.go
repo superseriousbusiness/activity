@@ -2,9 +2,10 @@ package pub
 
 import (
 	"context"
-	"github.com/go-fed/activity/streams/vocab"
 	"net/http"
 	"net/url"
+
+	"github.com/superseriousbusiness/activity/streams/vocab"
 )
 
 // Actor represents ActivityPub's actor concept. It conceptually has an inbox

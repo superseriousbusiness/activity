@@ -4,8 +4,8 @@ package propertymanuallyapprovesfollowers
 
 import (
 	"fmt"
-	boolean "github.com/go-fed/activity/streams/values/boolean"
-	vocab "github.com/go-fed/activity/streams/vocab"
+	boolean "github.com/superseriousbusiness/activity/streams/values/boolean"
+	vocab "github.com/superseriousbusiness/activity/streams/vocab"
 	"net/url"
 )
 

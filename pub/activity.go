@@ -1,7 +1,7 @@
 package pub
 
 import (
-	"github.com/go-fed/activity/streams/vocab"
+	"github.com/superseriousbusiness/activity/streams/vocab"
 )
 
 // Activity represents any ActivityStreams Activity type.

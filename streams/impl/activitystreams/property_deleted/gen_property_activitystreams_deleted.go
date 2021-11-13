@@ -4,8 +4,8 @@ package propertydeleted
 
 import (
 	"fmt"
-	datetime "github.com/go-fed/activity/streams/values/dateTime"
-	vocab "github.com/go-fed/activity/streams/vocab"
+	datetime "github.com/superseriousbusiness/activity/streams/values/dateTime"
+	vocab "github.com/superseriousbusiness/activity/streams/vocab"
 	"net/url"
 	"time"
 )

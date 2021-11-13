@@ -4,9 +4,9 @@ package propertyunits
 
 import (
 	"fmt"
-	anyuri "github.com/go-fed/activity/streams/values/anyURI"
-	string1 "github.com/go-fed/activity/streams/values/string"
-	vocab "github.com/go-fed/activity/streams/vocab"
+	anyuri "github.com/superseriousbusiness/activity/streams/values/anyURI"
+	string1 "github.com/superseriousbusiness/activity/streams/values/string"
+	vocab "github.com/superseriousbusiness/activity/streams/vocab"
 	"net/url"
 )
 

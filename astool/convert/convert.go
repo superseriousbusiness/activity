@@ -3,14 +3,15 @@ package convert
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/dave/jennifer/jen"
-	"github.com/go-fed/activity/astool/codegen"
-	"github.com/go-fed/activity/astool/gen"
-	"github.com/go-fed/activity/astool/rdf"
-	"github.com/go-fed/activity/astool/rdf/xsd"
 	"net/url"
 	"sort"
 	"strings"
+
+	"github.com/dave/jennifer/jen"
+	"github.com/superseriousbusiness/activity/astool/codegen"
+	"github.com/superseriousbusiness/activity/astool/gen"
+	"github.com/superseriousbusiness/activity/astool/rdf"
+	"github.com/superseriousbusiness/activity/astool/rdf/xsd"
 )
 
 const (

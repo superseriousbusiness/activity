@@ -4,9 +4,9 @@ package propertycontent
 
 import (
 	"fmt"
-	langstring "github.com/go-fed/activity/streams/values/langString"
-	string1 "github.com/go-fed/activity/streams/values/string"
-	vocab "github.com/go-fed/activity/streams/vocab"
+	langstring "github.com/superseriousbusiness/activity/streams/values/langString"
+	string1 "github.com/superseriousbusiness/activity/streams/values/string"
+	vocab "github.com/superseriousbusiness/activity/streams/vocab"
 	"net/url"
 )
 

@@ -4,18 +4,19 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
-	"github.com/go-fed/activity/astool/convert"
-	"github.com/go-fed/activity/astool/gen"
-	"github.com/go-fed/activity/astool/rdf"
-	"github.com/go-fed/activity/astool/rdf/owl"
-	"github.com/go-fed/activity/astool/rdf/rdfs"
-	"github.com/go-fed/activity/astool/rdf/rfc"
-	"github.com/go-fed/activity/astool/rdf/schema"
-	"github.com/go-fed/activity/astool/rdf/xsd"
 	"io"
 	"io/ioutil"
 	"os"
 	"strings"
+
+	"github.com/superseriousbusiness/activity/astool/convert"
+	"github.com/superseriousbusiness/activity/astool/gen"
+	"github.com/superseriousbusiness/activity/astool/rdf"
+	"github.com/superseriousbusiness/activity/astool/rdf/owl"
+	"github.com/superseriousbusiness/activity/astool/rdf/rdfs"
+	"github.com/superseriousbusiness/activity/astool/rdf/rfc"
+	"github.com/superseriousbusiness/activity/astool/rdf/schema"
+	"github.com/superseriousbusiness/activity/astool/rdf/xsd"
 )
 
 const (

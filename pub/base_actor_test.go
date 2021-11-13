@@ -2,13 +2,14 @@ package pub
 
 import (
 	"context"
-	"github.com/go-fed/activity/streams/vocab"
-	"github.com/golang/mock/gomock"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"testing"
+
+	"github.com/golang/mock/gomock"
+	"github.com/superseriousbusiness/activity/streams/vocab"
 )
 
 // TestBaseActorSocialProtocol tests the Actor returned with NewCustomActor

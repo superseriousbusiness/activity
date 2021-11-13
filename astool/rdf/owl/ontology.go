@@ -2,8 +2,9 @@ package owl
 
 import (
 	"fmt"
-	"github.com/go-fed/activity/astool/rdf"
 	"strings"
+
+	"github.com/superseriousbusiness/activity/astool/rdf"
 )
 
 const (

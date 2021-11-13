@@ -4,8 +4,8 @@ package propertyhreflang
 
 import (
 	"fmt"
-	bcp47 "github.com/go-fed/activity/streams/values/bcp47"
-	vocab "github.com/go-fed/activity/streams/vocab"
+	bcp47 "github.com/superseriousbusiness/activity/streams/values/bcp47"
+	vocab "github.com/superseriousbusiness/activity/streams/vocab"
 	"net/url"
 )
 
