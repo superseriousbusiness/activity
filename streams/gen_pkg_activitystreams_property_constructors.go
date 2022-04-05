@@ -41,6 +41,7 @@ import (
 	propertylikes "github.com/go-fed/activity/streams/impl/activitystreams/property_likes"
 	propertylocation "github.com/go-fed/activity/streams/impl/activitystreams/property_location"
 	propertylongitude "github.com/go-fed/activity/streams/impl/activitystreams/property_longitude"
+	propertymanuallyapprovesfollowers "github.com/go-fed/activity/streams/impl/activitystreams/property_manuallyapprovesfollowers"
 	propertymediatype "github.com/go-fed/activity/streams/impl/activitystreams/property_mediatype"
 	propertyname "github.com/go-fed/activity/streams/impl/activitystreams/property_name"
 	propertynext "github.com/go-fed/activity/streams/impl/activitystreams/property_next"
@@ -59,6 +60,7 @@ import (
 	propertyrelationship "github.com/go-fed/activity/streams/impl/activitystreams/property_relationship"
 	propertyreplies "github.com/go-fed/activity/streams/impl/activitystreams/property_replies"
 	propertyresult "github.com/go-fed/activity/streams/impl/activitystreams/property_result"
+	propertysensitive "github.com/go-fed/activity/streams/impl/activitystreams/property_sensitive"
 	propertyshares "github.com/go-fed/activity/streams/impl/activitystreams/property_shares"
 	propertysource "github.com/go-fed/activity/streams/impl/activitystreams/property_source"
 	propertystartindex "github.com/go-fed/activity/streams/impl/activitystreams/property_startindex"
@@ -305,6 +307,12 @@ func NewActivityStreamsLongitudeProperty() vocab.ActivityStreamsLongitudePropert
 	return propertylongitude.NewActivityStreamsLongitudeProperty()
 }
 
+// NewActivityStreamsActivityStreamsManuallyApprovesFollowersProperty creates a
+// new ActivityStreamsManuallyApprovesFollowersProperty
+func NewActivityStreamsManuallyApprovesFollowersProperty() vocab.ActivityStreamsManuallyApprovesFollowersProperty {
+	return propertymanuallyapprovesfollowers.NewActivityStreamsManuallyApprovesFollowersProperty()
+}
+
 // NewActivityStreamsActivityStreamsMediaTypeProperty creates a new
 // ActivityStreamsMediaTypeProperty
 func NewActivityStreamsMediaTypeProperty() vocab.ActivityStreamsMediaTypeProperty {
@@ -411,6 +419,12 @@ func NewActivityStreamsRepliesProperty() vocab.ActivityStreamsRepliesProperty {
 // ActivityStreamsResultProperty
 func NewActivityStreamsResultProperty() vocab.ActivityStreamsResultProperty {
 	return propertyresult.NewActivityStreamsResultProperty()
+}
+
+// NewActivityStreamsActivityStreamsSensitiveProperty creates a new
+// ActivityStreamsSensitiveProperty
+func NewActivityStreamsSensitiveProperty() vocab.ActivityStreamsSensitiveProperty {
+	return propertysensitive.NewActivityStreamsSensitiveProperty()
 }
 
 // NewActivityStreamsActivityStreamsSharesProperty creates a new

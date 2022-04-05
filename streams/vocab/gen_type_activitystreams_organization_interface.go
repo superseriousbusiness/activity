@@ -73,6 +73,10 @@ type ActivityStreamsOrganization interface {
 	// GetActivityStreamsLocation returns the "location" property if it
 	// exists, and nil otherwise.
 	GetActivityStreamsLocation() ActivityStreamsLocationProperty
+	// GetActivityStreamsManuallyApprovesFollowers returns the
+	// "manuallyApprovesFollowers" property if it exists, and nil
+	// otherwise.
+	GetActivityStreamsManuallyApprovesFollowers() ActivityStreamsManuallyApprovesFollowersProperty
 	// GetActivityStreamsMediaType returns the "mediaType" property if it
 	// exists, and nil otherwise.
 	GetActivityStreamsMediaType() ActivityStreamsMediaTypeProperty
@@ -97,6 +101,9 @@ type ActivityStreamsOrganization interface {
 	// GetActivityStreamsReplies returns the "replies" property if it exists,
 	// and nil otherwise.
 	GetActivityStreamsReplies() ActivityStreamsRepliesProperty
+	// GetActivityStreamsSensitive returns the "sensitive" property if it
+	// exists, and nil otherwise.
+	GetActivityStreamsSensitive() ActivityStreamsSensitiveProperty
 	// GetActivityStreamsShares returns the "shares" property if it exists,
 	// and nil otherwise.
 	GetActivityStreamsShares() ActivityStreamsSharesProperty
@@ -212,6 +219,9 @@ type ActivityStreamsOrganization interface {
 	SetActivityStreamsLikes(i ActivityStreamsLikesProperty)
 	// SetActivityStreamsLocation sets the "location" property.
 	SetActivityStreamsLocation(i ActivityStreamsLocationProperty)
+	// SetActivityStreamsManuallyApprovesFollowers sets the
+	// "manuallyApprovesFollowers" property.
+	SetActivityStreamsManuallyApprovesFollowers(i ActivityStreamsManuallyApprovesFollowersProperty)
 	// SetActivityStreamsMediaType sets the "mediaType" property.
 	SetActivityStreamsMediaType(i ActivityStreamsMediaTypeProperty)
 	// SetActivityStreamsName sets the "name" property.
@@ -229,6 +239,8 @@ type ActivityStreamsOrganization interface {
 	SetActivityStreamsPublished(i ActivityStreamsPublishedProperty)
 	// SetActivityStreamsReplies sets the "replies" property.
 	SetActivityStreamsReplies(i ActivityStreamsRepliesProperty)
+	// SetActivityStreamsSensitive sets the "sensitive" property.
+	SetActivityStreamsSensitive(i ActivityStreamsSensitiveProperty)
 	// SetActivityStreamsShares sets the "shares" property.
 	SetActivityStreamsShares(i ActivityStreamsSharesProperty)
 	// SetActivityStreamsSource sets the "source" property.

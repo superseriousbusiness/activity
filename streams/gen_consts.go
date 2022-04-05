@@ -362,6 +362,9 @@ var ActivityStreamsLocationPropertyName string = "location"
 // ActivityStreamsLongitudePropertyName is the string literal of the name for the longitude property in the ActivityStreams vocabulary.
 var ActivityStreamsLongitudePropertyName string = "longitude"
 
+// ActivityStreamsManuallyApprovesFollowersPropertyName is the string literal of the name for the manuallyApprovesFollowers property in the ActivityStreams vocabulary.
+var ActivityStreamsManuallyApprovesFollowersPropertyName string = "manuallyApprovesFollowers"
+
 // ActivityStreamsMediaTypePropertyName is the string literal of the name for the mediaType property in the ActivityStreams vocabulary.
 var ActivityStreamsMediaTypePropertyName string = "mediaType"
 
@@ -433,6 +436,9 @@ var ActivityStreamsRepliesPropertyName string = "replies"
 
 // ActivityStreamsResultPropertyName is the string literal of the name for the result property in the ActivityStreams vocabulary.
 var ActivityStreamsResultPropertyName string = "result"
+
+// ActivityStreamsSensitivePropertyName is the string literal of the name for the sensitive property in the ActivityStreams vocabulary.
+var ActivityStreamsSensitivePropertyName string = "sensitive"
 
 // ActivityStreamsSharesPropertyName is the string literal of the name for the shares property in the ActivityStreams vocabulary.
 var ActivityStreamsSharesPropertyName string = "shares"
