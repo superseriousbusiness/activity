@@ -16,54 +16,56 @@ import (
 //     "type": "Person"
 //   }
 type ActivityStreamsPerson struct {
-	ActivityStreamsAltitude          vocab.ActivityStreamsAltitudeProperty
-	ActivityStreamsAttachment        vocab.ActivityStreamsAttachmentProperty
-	ActivityStreamsAttributedTo      vocab.ActivityStreamsAttributedToProperty
-	ActivityStreamsAudience          vocab.ActivityStreamsAudienceProperty
-	ActivityStreamsBcc               vocab.ActivityStreamsBccProperty
-	ActivityStreamsBto               vocab.ActivityStreamsBtoProperty
-	ActivityStreamsCc                vocab.ActivityStreamsCcProperty
-	ActivityStreamsContent           vocab.ActivityStreamsContentProperty
-	ActivityStreamsContext           vocab.ActivityStreamsContextProperty
-	TootDiscoverable                 vocab.TootDiscoverableProperty
-	ActivityStreamsDuration          vocab.ActivityStreamsDurationProperty
-	ActivityStreamsEndTime           vocab.ActivityStreamsEndTimeProperty
-	TootFeatured                     vocab.TootFeaturedProperty
-	ActivityStreamsFollowers         vocab.ActivityStreamsFollowersProperty
-	ActivityStreamsFollowing         vocab.ActivityStreamsFollowingProperty
-	ActivityStreamsGenerator         vocab.ActivityStreamsGeneratorProperty
-	ActivityStreamsIcon              vocab.ActivityStreamsIconProperty
-	JSONLDId                         vocab.JSONLDIdProperty
-	ActivityStreamsImage             vocab.ActivityStreamsImageProperty
-	ActivityStreamsInReplyTo         vocab.ActivityStreamsInReplyToProperty
-	ActivityStreamsInbox             vocab.ActivityStreamsInboxProperty
-	ActivityStreamsLiked             vocab.ActivityStreamsLikedProperty
-	ActivityStreamsLikes             vocab.ActivityStreamsLikesProperty
-	ActivityStreamsLocation          vocab.ActivityStreamsLocationProperty
-	ActivityStreamsMediaType         vocab.ActivityStreamsMediaTypeProperty
-	ActivityStreamsName              vocab.ActivityStreamsNameProperty
-	ActivityStreamsObject            vocab.ActivityStreamsObjectProperty
-	ActivityStreamsOutbox            vocab.ActivityStreamsOutboxProperty
-	ActivityStreamsPreferredUsername vocab.ActivityStreamsPreferredUsernameProperty
-	ActivityStreamsPreview           vocab.ActivityStreamsPreviewProperty
-	W3IDSecurityV1PublicKey          vocab.W3IDSecurityV1PublicKeyProperty
-	ActivityStreamsPublished         vocab.ActivityStreamsPublishedProperty
-	ActivityStreamsReplies           vocab.ActivityStreamsRepliesProperty
-	ActivityStreamsShares            vocab.ActivityStreamsSharesProperty
-	ActivityStreamsSource            vocab.ActivityStreamsSourceProperty
-	ActivityStreamsStartTime         vocab.ActivityStreamsStartTimeProperty
-	ActivityStreamsStreams           vocab.ActivityStreamsStreamsProperty
-	ActivityStreamsSummary           vocab.ActivityStreamsSummaryProperty
-	ActivityStreamsTag               vocab.ActivityStreamsTagProperty
-	ForgeFedTeam                     vocab.ForgeFedTeamProperty
-	ForgeFedTicketsTrackedBy         vocab.ForgeFedTicketsTrackedByProperty
-	ActivityStreamsTo                vocab.ActivityStreamsToProperty
-	ForgeFedTracksTicketsFor         vocab.ForgeFedTracksTicketsForProperty
-	JSONLDType                       vocab.JSONLDTypeProperty
-	ActivityStreamsUpdated           vocab.ActivityStreamsUpdatedProperty
-	ActivityStreamsUrl               vocab.ActivityStreamsUrlProperty
-	alias                            string
-	unknown                          map[string]interface{}
+	ActivityStreamsAltitude                  vocab.ActivityStreamsAltitudeProperty
+	ActivityStreamsAttachment                vocab.ActivityStreamsAttachmentProperty
+	ActivityStreamsAttributedTo              vocab.ActivityStreamsAttributedToProperty
+	ActivityStreamsAudience                  vocab.ActivityStreamsAudienceProperty
+	ActivityStreamsBcc                       vocab.ActivityStreamsBccProperty
+	ActivityStreamsBto                       vocab.ActivityStreamsBtoProperty
+	ActivityStreamsCc                        vocab.ActivityStreamsCcProperty
+	ActivityStreamsContent                   vocab.ActivityStreamsContentProperty
+	ActivityStreamsContext                   vocab.ActivityStreamsContextProperty
+	TootDiscoverable                         vocab.TootDiscoverableProperty
+	ActivityStreamsDuration                  vocab.ActivityStreamsDurationProperty
+	ActivityStreamsEndTime                   vocab.ActivityStreamsEndTimeProperty
+	TootFeatured                             vocab.TootFeaturedProperty
+	ActivityStreamsFollowers                 vocab.ActivityStreamsFollowersProperty
+	ActivityStreamsFollowing                 vocab.ActivityStreamsFollowingProperty
+	ActivityStreamsGenerator                 vocab.ActivityStreamsGeneratorProperty
+	ActivityStreamsIcon                      vocab.ActivityStreamsIconProperty
+	JSONLDId                                 vocab.JSONLDIdProperty
+	ActivityStreamsImage                     vocab.ActivityStreamsImageProperty
+	ActivityStreamsInReplyTo                 vocab.ActivityStreamsInReplyToProperty
+	ActivityStreamsInbox                     vocab.ActivityStreamsInboxProperty
+	ActivityStreamsLiked                     vocab.ActivityStreamsLikedProperty
+	ActivityStreamsLikes                     vocab.ActivityStreamsLikesProperty
+	ActivityStreamsLocation                  vocab.ActivityStreamsLocationProperty
+	ActivityStreamsManuallyApprovesFollowers vocab.ActivityStreamsManuallyApprovesFollowersProperty
+	ActivityStreamsMediaType                 vocab.ActivityStreamsMediaTypeProperty
+	ActivityStreamsName                      vocab.ActivityStreamsNameProperty
+	ActivityStreamsObject                    vocab.ActivityStreamsObjectProperty
+	ActivityStreamsOutbox                    vocab.ActivityStreamsOutboxProperty
+	ActivityStreamsPreferredUsername         vocab.ActivityStreamsPreferredUsernameProperty
+	ActivityStreamsPreview                   vocab.ActivityStreamsPreviewProperty
+	W3IDSecurityV1PublicKey                  vocab.W3IDSecurityV1PublicKeyProperty
+	ActivityStreamsPublished                 vocab.ActivityStreamsPublishedProperty
+	ActivityStreamsReplies                   vocab.ActivityStreamsRepliesProperty
+	ActivityStreamsSensitive                 vocab.ActivityStreamsSensitiveProperty
+	ActivityStreamsShares                    vocab.ActivityStreamsSharesProperty
+	ActivityStreamsSource                    vocab.ActivityStreamsSourceProperty
+	ActivityStreamsStartTime                 vocab.ActivityStreamsStartTimeProperty
+	ActivityStreamsStreams                   vocab.ActivityStreamsStreamsProperty
+	ActivityStreamsSummary                   vocab.ActivityStreamsSummaryProperty
+	ActivityStreamsTag                       vocab.ActivityStreamsTagProperty
+	ForgeFedTeam                             vocab.ForgeFedTeamProperty
+	ForgeFedTicketsTrackedBy                 vocab.ForgeFedTicketsTrackedByProperty
+	ActivityStreamsTo                        vocab.ActivityStreamsToProperty
+	ForgeFedTracksTicketsFor                 vocab.ForgeFedTracksTicketsForProperty
+	JSONLDType                               vocab.JSONLDTypeProperty
+	ActivityStreamsUpdated                   vocab.ActivityStreamsUpdatedProperty
+	ActivityStreamsUrl                       vocab.ActivityStreamsUrlProperty
+	alias                                    string
+	unknown                                  map[string]interface{}
 }
 
 // ActivityStreamsPersonExtends returns true if the Person type extends from the
@@ -235,6 +237,11 @@ func DeserializePerson(m map[string]interface{}, aliasMap map[string]string) (*A
 	} else if p != nil {
 		this.ActivityStreamsLocation = p
 	}
+	if p, err := mgr.DeserializeManuallyApprovesFollowersPropertyActivityStreams()(m, aliasMap); err != nil {
+		return nil, err
+	} else if p != nil {
+		this.ActivityStreamsManuallyApprovesFollowers = p
+	}
 	if p, err := mgr.DeserializeMediaTypePropertyActivityStreams()(m, aliasMap); err != nil {
 		return nil, err
 	} else if p != nil {
@@ -279,6 +286,11 @@ func DeserializePerson(m map[string]interface{}, aliasMap map[string]string) (*A
 		return nil, err
 	} else if p != nil {
 		this.ActivityStreamsReplies = p
+	}
+	if p, err := mgr.DeserializeSensitivePropertyActivityStreams()(m, aliasMap); err != nil {
+		return nil, err
+	} else if p != nil {
+		this.ActivityStreamsSensitive = p
 	}
 	if p, err := mgr.DeserializeSharesPropertyActivityStreams()(m, aliasMap); err != nil {
 		return nil, err
@@ -400,6 +412,8 @@ func DeserializePerson(m map[string]interface{}, aliasMap map[string]string) (*A
 			continue
 		} else if k == "location" {
 			continue
+		} else if k == "manuallyApprovesFollowers" {
+			continue
 		} else if k == "mediaType" {
 			continue
 		} else if k == "name" {
@@ -421,6 +435,8 @@ func DeserializePerson(m map[string]interface{}, aliasMap map[string]string) (*A
 		} else if k == "published" {
 			continue
 		} else if k == "replies" {
+			continue
+		} else if k == "sensitive" {
 			continue
 		} else if k == "shares" {
 			continue
@@ -624,6 +640,12 @@ func (this ActivityStreamsPerson) GetActivityStreamsLocation() vocab.ActivityStr
 	return this.ActivityStreamsLocation
 }
 
+// GetActivityStreamsManuallyApprovesFollowers returns the
+// "manuallyApprovesFollowers" property if it exists, and nil otherwise.
+func (this ActivityStreamsPerson) GetActivityStreamsManuallyApprovesFollowers() vocab.ActivityStreamsManuallyApprovesFollowersProperty {
+	return this.ActivityStreamsManuallyApprovesFollowers
+}
+
 // GetActivityStreamsMediaType returns the "mediaType" property if it exists, and
 // nil otherwise.
 func (this ActivityStreamsPerson) GetActivityStreamsMediaType() vocab.ActivityStreamsMediaTypeProperty {
@@ -670,6 +692,12 @@ func (this ActivityStreamsPerson) GetActivityStreamsPublished() vocab.ActivitySt
 // otherwise.
 func (this ActivityStreamsPerson) GetActivityStreamsReplies() vocab.ActivityStreamsRepliesProperty {
 	return this.ActivityStreamsReplies
+}
+
+// GetActivityStreamsSensitive returns the "sensitive" property if it exists, and
+// nil otherwise.
+func (this ActivityStreamsPerson) GetActivityStreamsSensitive() vocab.ActivityStreamsSensitiveProperty {
+	return this.ActivityStreamsSensitive
 }
 
 // GetActivityStreamsShares returns the "shares" property if it exists, and nil
@@ -818,6 +846,7 @@ func (this ActivityStreamsPerson) JSONLDContext() map[string]string {
 	m = this.helperJSONLDContext(this.ActivityStreamsLiked, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsLikes, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsLocation, m)
+	m = this.helperJSONLDContext(this.ActivityStreamsManuallyApprovesFollowers, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsMediaType, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsName, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsObject, m)
@@ -827,6 +856,7 @@ func (this ActivityStreamsPerson) JSONLDContext() map[string]string {
 	m = this.helperJSONLDContext(this.W3IDSecurityV1PublicKey, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsPublished, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsReplies, m)
+	m = this.helperJSONLDContext(this.ActivityStreamsSensitive, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsShares, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsSource, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsStartTime, m)
@@ -1184,6 +1214,20 @@ func (this ActivityStreamsPerson) LessThan(o vocab.ActivityStreamsPerson) bool {
 		// Anything else is greater than nil
 		return false
 	} // Else: Both are nil
+	// Compare property "manuallyApprovesFollowers"
+	if lhs, rhs := this.ActivityStreamsManuallyApprovesFollowers, o.GetActivityStreamsManuallyApprovesFollowers(); lhs != nil && rhs != nil {
+		if lhs.LessThan(rhs) {
+			return true
+		} else if rhs.LessThan(lhs) {
+			return false
+		}
+	} else if lhs == nil && rhs != nil {
+		// Nil is less than anything else
+		return true
+	} else if rhs != nil && rhs == nil {
+		// Anything else is greater than nil
+		return false
+	} // Else: Both are nil
 	// Compare property "mediaType"
 	if lhs, rhs := this.ActivityStreamsMediaType, o.GetActivityStreamsMediaType(); lhs != nil && rhs != nil {
 		if lhs.LessThan(rhs) {
@@ -1298,6 +1342,20 @@ func (this ActivityStreamsPerson) LessThan(o vocab.ActivityStreamsPerson) bool {
 	} // Else: Both are nil
 	// Compare property "replies"
 	if lhs, rhs := this.ActivityStreamsReplies, o.GetActivityStreamsReplies(); lhs != nil && rhs != nil {
+		if lhs.LessThan(rhs) {
+			return true
+		} else if rhs.LessThan(lhs) {
+			return false
+		}
+	} else if lhs == nil && rhs != nil {
+		// Nil is less than anything else
+		return true
+	} else if rhs != nil && rhs == nil {
+		// Anything else is greater than nil
+		return false
+	} // Else: Both are nil
+	// Compare property "sensitive"
+	if lhs, rhs := this.ActivityStreamsSensitive, o.GetActivityStreamsSensitive(); lhs != nil && rhs != nil {
 		if lhs.LessThan(rhs) {
 			return true
 		} else if rhs.LessThan(lhs) {
@@ -1707,6 +1765,14 @@ func (this ActivityStreamsPerson) Serialize() (map[string]interface{}, error) {
 			m[this.ActivityStreamsLocation.Name()] = i
 		}
 	}
+	// Maybe serialize property "manuallyApprovesFollowers"
+	if this.ActivityStreamsManuallyApprovesFollowers != nil {
+		if i, err := this.ActivityStreamsManuallyApprovesFollowers.Serialize(); err != nil {
+			return nil, err
+		} else if i != nil {
+			m[this.ActivityStreamsManuallyApprovesFollowers.Name()] = i
+		}
+	}
 	// Maybe serialize property "mediaType"
 	if this.ActivityStreamsMediaType != nil {
 		if i, err := this.ActivityStreamsMediaType.Serialize(); err != nil {
@@ -1777,6 +1843,14 @@ func (this ActivityStreamsPerson) Serialize() (map[string]interface{}, error) {
 			return nil, err
 		} else if i != nil {
 			m[this.ActivityStreamsReplies.Name()] = i
+		}
+	}
+	// Maybe serialize property "sensitive"
+	if this.ActivityStreamsSensitive != nil {
+		if i, err := this.ActivityStreamsSensitive.Serialize(); err != nil {
+			return nil, err
+		} else if i != nil {
+			m[this.ActivityStreamsSensitive.Name()] = i
 		}
 	}
 	// Maybe serialize property "shares"
@@ -2002,6 +2076,12 @@ func (this *ActivityStreamsPerson) SetActivityStreamsLocation(i vocab.ActivitySt
 	this.ActivityStreamsLocation = i
 }
 
+// SetActivityStreamsManuallyApprovesFollowers sets the
+// "manuallyApprovesFollowers" property.
+func (this *ActivityStreamsPerson) SetActivityStreamsManuallyApprovesFollowers(i vocab.ActivityStreamsManuallyApprovesFollowersProperty) {
+	this.ActivityStreamsManuallyApprovesFollowers = i
+}
+
 // SetActivityStreamsMediaType sets the "mediaType" property.
 func (this *ActivityStreamsPerson) SetActivityStreamsMediaType(i vocab.ActivityStreamsMediaTypeProperty) {
 	this.ActivityStreamsMediaType = i
@@ -2040,6 +2120,11 @@ func (this *ActivityStreamsPerson) SetActivityStreamsPublished(i vocab.ActivityS
 // SetActivityStreamsReplies sets the "replies" property.
 func (this *ActivityStreamsPerson) SetActivityStreamsReplies(i vocab.ActivityStreamsRepliesProperty) {
 	this.ActivityStreamsReplies = i
+}
+
+// SetActivityStreamsSensitive sets the "sensitive" property.
+func (this *ActivityStreamsPerson) SetActivityStreamsSensitive(i vocab.ActivityStreamsSensitiveProperty) {
+	this.ActivityStreamsSensitive = i
 }
 
 // SetActivityStreamsShares sets the "shares" property.

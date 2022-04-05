@@ -41,6 +41,7 @@ import (
 	propertylikes "github.com/go-fed/activity/streams/impl/activitystreams/property_likes"
 	propertylocation "github.com/go-fed/activity/streams/impl/activitystreams/property_location"
 	propertylongitude "github.com/go-fed/activity/streams/impl/activitystreams/property_longitude"
+	propertymanuallyapprovesfollowers "github.com/go-fed/activity/streams/impl/activitystreams/property_manuallyapprovesfollowers"
 	propertymediatype "github.com/go-fed/activity/streams/impl/activitystreams/property_mediatype"
 	propertyname "github.com/go-fed/activity/streams/impl/activitystreams/property_name"
 	propertynext "github.com/go-fed/activity/streams/impl/activitystreams/property_next"
@@ -59,6 +60,7 @@ import (
 	propertyrelationship "github.com/go-fed/activity/streams/impl/activitystreams/property_relationship"
 	propertyreplies "github.com/go-fed/activity/streams/impl/activitystreams/property_replies"
 	propertyresult "github.com/go-fed/activity/streams/impl/activitystreams/property_result"
+	propertysensitive "github.com/go-fed/activity/streams/impl/activitystreams/property_sensitive"
 	propertyshares "github.com/go-fed/activity/streams/impl/activitystreams/property_shares"
 	propertysource "github.com/go-fed/activity/streams/impl/activitystreams/property_source"
 	propertystartindex "github.com/go-fed/activity/streams/impl/activitystreams/property_startindex"
@@ -1323,6 +1325,20 @@ func (this Manager) DeserializeLongitudePropertyActivityStreams() func(map[strin
 	}
 }
 
+// DeserializeManuallyApprovesFollowersPropertyActivityStreams returns the
+// deserialization method for the
+// "ActivityStreamsManuallyApprovesFollowersProperty" non-functional property
+// in the vocabulary "ActivityStreams"
+func (this Manager) DeserializeManuallyApprovesFollowersPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsManuallyApprovesFollowersProperty, error) {
+	return func(m map[string]interface{}, aliasMap map[string]string) (vocab.ActivityStreamsManuallyApprovesFollowersProperty, error) {
+		i, err := propertymanuallyapprovesfollowers.DeserializeManuallyApprovesFollowersProperty(m, aliasMap)
+		if i == nil {
+			return nil, err
+		}
+		return i, err
+	}
+}
+
 // DeserializeMediaTypePropertyActivityStreams returns the deserialization method
 // for the "ActivityStreamsMediaTypeProperty" non-functional property in the
 // vocabulary "ActivityStreams"
@@ -1859,6 +1875,19 @@ func (this Manager) DeserializeRepositoryForgeFed() func(map[string]interface{},
 func (this Manager) DeserializeResultPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsResultProperty, error) {
 	return func(m map[string]interface{}, aliasMap map[string]string) (vocab.ActivityStreamsResultProperty, error) {
 		i, err := propertyresult.DeserializeResultProperty(m, aliasMap)
+		if i == nil {
+			return nil, err
+		}
+		return i, err
+	}
+}
+
+// DeserializeSensitivePropertyActivityStreams returns the deserialization method
+// for the "ActivityStreamsSensitiveProperty" non-functional property in the
+// vocabulary "ActivityStreams"
+func (this Manager) DeserializeSensitivePropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsSensitiveProperty, error) {
+	return func(m map[string]interface{}, aliasMap map[string]string) (vocab.ActivityStreamsSensitiveProperty, error) {
+		i, err := propertysensitive.DeserializeSensitiveProperty(m, aliasMap)
 		if i == nil {
 			return nil, err
 		}
