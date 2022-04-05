@@ -2,9 +2,10 @@ package pub
 
 import (
 	"context"
-	"github.com/go-fed/activity/streams/vocab"
 	"net/http"
 	"net/url"
+
+	"github.com/superseriousbusiness/activity/streams/vocab"
 )
 
 // DelegateActor contains the detailed interface an application must satisfy in

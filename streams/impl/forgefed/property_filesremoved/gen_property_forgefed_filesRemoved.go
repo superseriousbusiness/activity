@@ -4,8 +4,8 @@ package propertyfilesremoved
 
 import (
 	"fmt"
-	string1 "github.com/go-fed/activity/streams/values/string"
-	vocab "github.com/go-fed/activity/streams/vocab"
+	string1 "github.com/superseriousbusiness/activity/streams/values/string"
+	vocab "github.com/superseriousbusiness/activity/streams/vocab"
 	"net/url"
 )
 

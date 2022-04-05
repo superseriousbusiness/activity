@@ -5,9 +5,9 @@ import (
 	"net/url"
 	"testing"
 
-	"github.com/go-fed/activity/streams"
-	"github.com/go-fed/activity/streams/vocab"
 	"github.com/golang/mock/gomock"
+	"github.com/superseriousbusiness/activity/streams"
+	"github.com/superseriousbusiness/activity/streams/vocab"
 )
 
 // TestFederatedCallbacks tests the overriding functionality.

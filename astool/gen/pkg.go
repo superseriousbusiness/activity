@@ -2,11 +2,12 @@ package gen
 
 import (
 	"fmt"
-	"github.com/dave/jennifer/jen"
-	"github.com/go-fed/activity/astool/codegen"
 	"os"
 	"sort"
 	"strings"
+
+	"github.com/dave/jennifer/jen"
+	"github.com/superseriousbusiness/activity/astool/codegen"
 )
 
 // PackageManager manages the path and names of a package consisting of a public

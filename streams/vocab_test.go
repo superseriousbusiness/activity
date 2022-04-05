@@ -2,10 +2,11 @@ package streams
 
 import (
 	"encoding/json"
-	"github.com/go-fed/activity/streams/vocab"
-	"github.com/go-test/deep"
 	"reflect"
 	"testing"
+
+	"github.com/go-test/deep"
+	"github.com/superseriousbusiness/activity/streams/vocab"
 )
 
 // TestTable represents a test entry based on example data from a

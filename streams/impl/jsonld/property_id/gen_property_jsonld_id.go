@@ -4,8 +4,8 @@ package propertyid
 
 import (
 	"fmt"
-	anyuri "github.com/go-fed/activity/streams/values/anyURI"
-	vocab "github.com/go-fed/activity/streams/vocab"
+	anyuri "github.com/superseriousbusiness/activity/streams/values/anyURI"
+	vocab "github.com/superseriousbusiness/activity/streams/vocab"
 	"net/url"
 )
 

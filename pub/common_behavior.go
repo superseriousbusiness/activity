@@ -2,9 +2,10 @@ package pub
 
 import (
 	"context"
-	"github.com/go-fed/activity/streams/vocab"
 	"net/http"
 	"net/url"
+
+	"github.com/superseriousbusiness/activity/streams/vocab"
 )
 
 // Common contains functions required for both the Social API and Federating

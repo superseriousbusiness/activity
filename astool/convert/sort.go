@@ -1,7 +1,7 @@
 package convert
 
 import (
-	"github.com/go-fed/activity/astool/gen"
+	"github.com/superseriousbusiness/activity/astool/gen"
 )
 
 // sortableTypeGenerator is a TypeGenerator slice sorted by TypeName.

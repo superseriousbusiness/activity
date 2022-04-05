@@ -3,11 +3,12 @@ package streams
 import (
 	"context"
 	"encoding/json"
-	"github.com/go-fed/activity/streams/vocab"
-	"github.com/go-test/deep"
 	"net/url"
 	"sort"
 	"testing"
+
+	"github.com/go-test/deep"
+	"github.com/superseriousbusiness/activity/streams/vocab"
 )
 
 // IsKnownResolverError returns true if it is known that an example from

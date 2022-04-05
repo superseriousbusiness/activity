@@ -2,8 +2,9 @@ package pub
 
 import (
 	"context"
-	"github.com/go-fed/activity/streams/vocab"
 	"net/url"
+
+	"github.com/superseriousbusiness/activity/streams/vocab"
 )
 
 type Database interface {

@@ -5,7 +5,7 @@ package streams
 import (
 	"context"
 	"errors"
-	vocab "github.com/go-fed/activity/streams/vocab"
+	vocab "github.com/superseriousbusiness/activity/streams/vocab"
 )
 
 // TypeResolver resolves ActivityStreams values based on their type name.

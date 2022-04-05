@@ -1,8 +1,9 @@
 package pub
 
 import (
-	"github.com/go-fed/activity/streams/vocab"
 	"net/url"
+
+	"github.com/superseriousbusiness/activity/streams/vocab"
 )
 
 // inReplyToer is an ActivityStreams type with an 'inReplyTo' property

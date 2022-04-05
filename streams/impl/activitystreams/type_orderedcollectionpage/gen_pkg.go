@@ -2,7 +2,7 @@
 
 package typeorderedcollectionpage
 
-import vocab "github.com/go-fed/activity/streams/vocab"
+import vocab "github.com/superseriousbusiness/activity/streams/vocab"
 
 var mgr privateManager
 

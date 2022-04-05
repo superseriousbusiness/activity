@@ -4,8 +4,8 @@ package propertylongitude
 
 import (
 	"fmt"
-	float "github.com/go-fed/activity/streams/values/float"
-	vocab "github.com/go-fed/activity/streams/vocab"
+	float "github.com/superseriousbusiness/activity/streams/values/float"
+	vocab "github.com/superseriousbusiness/activity/streams/vocab"
 	"net/url"
 )
 

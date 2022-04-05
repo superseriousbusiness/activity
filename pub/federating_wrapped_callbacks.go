@@ -4,9 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/go-fed/activity/streams"
-	"github.com/go-fed/activity/streams/vocab"
 	"net/url"
+
+	"github.com/superseriousbusiness/activity/streams"
+	"github.com/superseriousbusiness/activity/streams/vocab"
 )
 
 // OnFollowBehavior enumerates the different default actions that the go-fed

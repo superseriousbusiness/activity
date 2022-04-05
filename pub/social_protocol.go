@@ -2,8 +2,9 @@ package pub
 
 import (
 	"context"
-	"github.com/go-fed/activity/streams/vocab"
 	"net/http"
+
+	"github.com/superseriousbusiness/activity/streams/vocab"
 )
 
 // SocialProtocol contains behaviors an application needs to satisfy for the

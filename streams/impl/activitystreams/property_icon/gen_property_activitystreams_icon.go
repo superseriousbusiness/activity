@@ -4,7 +4,7 @@ package propertyicon
 
 import (
 	"fmt"
-	vocab "github.com/go-fed/activity/streams/vocab"
+	vocab "github.com/superseriousbusiness/activity/streams/vocab"
 	"net/url"
 )
 

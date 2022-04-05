@@ -1,5 +1,7 @@
 # activity
 
+**THIS IS FORKED FROM https://github.com/go-fed/activity**!
+
 > Complete ActivityStreams-based ontologies plus middleware handlers implementing ActivityPub
 
 [![Build Status][Build-Status-Image]][Build-Status-Url] [![Go Reference][Go-Reference-Image]][Go-Reference-Url]

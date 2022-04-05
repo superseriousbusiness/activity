@@ -18,7 +18,7 @@ implement a few interfaces:
 
 ```golang
 import (
-  "github.com/go-fed/activity/pub"
+  "github.com/superseriousbusiness/activity/pub"
 )
 
 type myActivityPubApp struct { /* ... */ }

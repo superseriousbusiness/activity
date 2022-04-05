@@ -3,9 +3,9 @@
 package streams
 
 import (
-	typeemoji "github.com/go-fed/activity/streams/impl/toot/type_emoji"
-	typeidentityproof "github.com/go-fed/activity/streams/impl/toot/type_identityproof"
-	vocab "github.com/go-fed/activity/streams/vocab"
+	typeemoji "github.com/superseriousbusiness/activity/streams/impl/toot/type_emoji"
+	typeidentityproof "github.com/superseriousbusiness/activity/streams/impl/toot/type_identityproof"
+	vocab "github.com/superseriousbusiness/activity/streams/vocab"
 )
 
 // TootTootEmojiExtends returns true if Emoji extends from the other's type.

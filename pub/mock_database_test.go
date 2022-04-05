@@ -9,8 +9,8 @@ import (
 	url "net/url"
 	reflect "reflect"
 
-	vocab "github.com/go-fed/activity/streams/vocab"
 	gomock "github.com/golang/mock/gomock"
+	vocab "github.com/superseriousbusiness/activity/streams/vocab"
 )
 
 // MockDatabase is a mock of Database interface.

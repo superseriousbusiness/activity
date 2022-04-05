@@ -2,7 +2,7 @@
 
 package typepublickey
 
-import vocab "github.com/go-fed/activity/streams/vocab"
+import vocab "github.com/superseriousbusiness/activity/streams/vocab"
 
 // A public key represents a public cryptographical key for a user
 type W3IDSecurityV1PublicKey struct {
