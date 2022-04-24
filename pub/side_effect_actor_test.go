@@ -215,11 +215,10 @@ func TestPostInbox(t *testing.T) {
 		_, fp, _, db, _, a := setupFn(ctl)
 		inboxIRI := mustParse(testMyInboxIRI)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, inboxIRI),
+			db.EXPECT().Lock(ctx, inboxIRI).Return(func() {}, nil),
 			db.EXPECT().InboxContains(ctx, inboxIRI, mustParse(testFederatedActivityIRI)).Return(false, nil),
 			db.EXPECT().GetInbox(ctx, inboxIRI).Return(testEmptyOrderedCollection, nil),
 			db.EXPECT().SetInbox(ctx, testOrderedCollectionWithFederatedId).Return(nil),
-			db.EXPECT().Unlock(ctx, inboxIRI),
 		)
 		fp.EXPECT().FederatingCallbacks(ctx).Return(FederatingWrappedCallbacks{}, nil, nil)
 		fp.EXPECT().DefaultCallback(ctx, testListen).Return(nil)
@@ -235,9 +234,8 @@ func TestPostInbox(t *testing.T) {
 		_, _, _, db, _, a := setupFn(ctl)
 		inboxIRI := mustParse(testMyInboxIRI)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, inboxIRI),
+			db.EXPECT().Lock(ctx, inboxIRI).Return(func() {}, nil),
 			db.EXPECT().InboxContains(ctx, inboxIRI, mustParse(testFederatedActivityIRI)).Return(true, nil),
-			db.EXPECT().Unlock(ctx, inboxIRI),
 		)
 		// Run
 		err := a.PostInbox(ctx, inboxIRI, testListen)
@@ -251,11 +249,10 @@ func TestPostInbox(t *testing.T) {
 		_, fp, _, db, _, a := setupFn(ctl)
 		inboxIRI := mustParse(testMyInboxIRI)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, inboxIRI),
+			db.EXPECT().Lock(ctx, inboxIRI).Return(func() {}, nil),
 			db.EXPECT().InboxContains(ctx, inboxIRI, mustParse(testFederatedActivityIRI)).Return(false, nil),
 			db.EXPECT().GetInbox(ctx, inboxIRI).Return(testOrderedCollectionWithFederatedId2, nil),
 			db.EXPECT().SetInbox(ctx, testOrderedCollectionWithBothFederatedIds).Return(nil),
-			db.EXPECT().Unlock(ctx, inboxIRI),
 		)
 		fp.EXPECT().FederatingCallbacks(ctx).Return(FederatingWrappedCallbacks{}, nil, nil)
 		fp.EXPECT().DefaultCallback(ctx, testListen).Return(nil)
@@ -271,11 +268,10 @@ func TestPostInbox(t *testing.T) {
 		_, fp, _, db, _, a := setupFn(ctl)
 		inboxIRI := mustParse(testMyInboxIRI)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, inboxIRI),
+			db.EXPECT().Lock(ctx, inboxIRI).Return(func() {}, nil),
 			db.EXPECT().InboxContains(ctx, inboxIRI, mustParse(testFederatedActivityIRI)).Return(false, nil),
 			db.EXPECT().GetInbox(ctx, inboxIRI).Return(testEmptyOrderedCollection, nil),
 			db.EXPECT().SetInbox(ctx, testOrderedCollectionWithFederatedId).Return(nil),
-			db.EXPECT().Unlock(ctx, inboxIRI),
 		)
 		pass := false
 		fp.EXPECT().FederatingCallbacks(ctx).Return(FederatingWrappedCallbacks{}, []interface{}{
@@ -297,11 +293,10 @@ func TestPostInbox(t *testing.T) {
 		_, fp, _, db, _, a := setupFn(ctl)
 		inboxIRI := mustParse(testMyInboxIRI)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, inboxIRI),
+			db.EXPECT().Lock(ctx, inboxIRI).Return(func() {}, nil),
 			db.EXPECT().InboxContains(ctx, inboxIRI, mustParse(testFederatedActivityIRI)).Return(false, nil),
 			db.EXPECT().GetInbox(ctx, inboxIRI).Return(testEmptyOrderedCollection, nil),
 			db.EXPECT().SetInbox(ctx, testOrderedCollectionWithFederatedId).Return(nil),
-			db.EXPECT().Unlock(ctx, inboxIRI),
 		)
 		pass := false
 		fp.EXPECT().FederatingCallbacks(ctx).Return(FederatingWrappedCallbacks{}, []interface{}{
@@ -323,11 +318,10 @@ func TestPostInbox(t *testing.T) {
 		_, fp, _, db, _, a := setupFn(ctl)
 		inboxIRI := mustParse(testMyInboxIRI)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, inboxIRI),
+			db.EXPECT().Lock(ctx, inboxIRI).Return(func() {}, nil),
 			db.EXPECT().InboxContains(ctx, inboxIRI, mustParse(testFederatedActivityIRI)).Return(false, nil),
 			db.EXPECT().GetInbox(ctx, inboxIRI).Return(testEmptyOrderedCollection, nil),
 			db.EXPECT().SetInbox(ctx, testOrderedCollectionWithFederatedId).Return(nil),
-			db.EXPECT().Unlock(ctx, inboxIRI),
 		)
 		pass := false
 		fp.EXPECT().FederatingCallbacks(ctx).Return(FederatingWrappedCallbacks{
@@ -336,9 +330,8 @@ func TestPostInbox(t *testing.T) {
 				return nil
 			},
 		}, nil, nil)
-		db.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		db.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		db.EXPECT().Create(ctx, testFederatedNote)
-		db.EXPECT().Unlock(ctx, mustParse(testNoteId1))
 		// Run
 		err := a.PostInbox(ctx, inboxIRI, testCreate)
 		// Verify
@@ -372,9 +365,8 @@ func TestInboxForwarding(t *testing.T) {
 		defer ctl.Finish()
 		_, _, _, db, _, a := setupFn(ctl)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)).Return(func() {}, nil),
 			db.EXPECT().Exists(ctx, mustParse(testFederatedActivityIRI)).Return(true, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testFederatedActivityIRI)),
 		)
 		// Run
 		err := a.InboxForwarding(ctx, mustParse(testMyInboxIRI), testListen)
@@ -388,16 +380,13 @@ func TestInboxForwarding(t *testing.T) {
 		_, _, _, db, _, a := setupFn(ctl)
 		input := addToIds(testListen)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)).Return(func() {}, nil),
 			db.EXPECT().Exists(ctx, mustParse(testFederatedActivityIRI)).Return(false, nil),
 			db.EXPECT().Create(ctx, input).Return(nil),
-			db.EXPECT().Unlock(ctx, mustParse(testFederatedActivityIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testToIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testToIRI)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testToIRI)).Return(false, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testToIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testToIRI2)),
+			db.EXPECT().Lock(ctx, mustParse(testToIRI2)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testToIRI2)).Return(false, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testToIRI2)),
 		)
 		// Run
 		err := a.InboxForwarding(ctx, mustParse(testMyInboxIRI), input)
@@ -411,16 +400,13 @@ func TestInboxForwarding(t *testing.T) {
 		_, _, _, db, _, a := setupFn(ctl)
 		input := mustAddCcIds(testListen)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)).Return(func() {}, nil),
 			db.EXPECT().Exists(ctx, mustParse(testFederatedActivityIRI)).Return(false, nil),
 			db.EXPECT().Create(ctx, input).Return(nil),
-			db.EXPECT().Unlock(ctx, mustParse(testFederatedActivityIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testCcIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testCcIRI)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testCcIRI)).Return(false, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testCcIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testCcIRI2)),
+			db.EXPECT().Lock(ctx, mustParse(testCcIRI2)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testCcIRI2)).Return(false, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testCcIRI2)),
 		)
 		// Run
 		err := a.InboxForwarding(ctx, mustParse(testMyInboxIRI), input)
@@ -434,16 +420,13 @@ func TestInboxForwarding(t *testing.T) {
 		_, _, _, db, _, a := setupFn(ctl)
 		input := mustAddAudienceIds(testListen)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)).Return(func() {}, nil),
 			db.EXPECT().Exists(ctx, mustParse(testFederatedActivityIRI)).Return(false, nil),
 			db.EXPECT().Create(ctx, input).Return(nil),
-			db.EXPECT().Unlock(ctx, mustParse(testFederatedActivityIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testAudienceIRI)).Return(false, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testAudienceIRI2)).Return(false, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI2)),
 		)
 		// Run
 		err := a.InboxForwarding(ctx, mustParse(testMyInboxIRI), input)
@@ -457,22 +440,17 @@ func TestInboxForwarding(t *testing.T) {
 		_, _, _, db, _, a := setupFn(ctl)
 		input := addToIds(testListen)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)).Return(func() {}, nil),
 			db.EXPECT().Exists(ctx, mustParse(testFederatedActivityIRI)).Return(false, nil),
 			db.EXPECT().Create(ctx, input).Return(nil),
-			db.EXPECT().Unlock(ctx, mustParse(testFederatedActivityIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testToIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testToIRI)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testToIRI)).Return(true, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testToIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testToIRI2)),
+			db.EXPECT().Lock(ctx, mustParse(testToIRI2)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testToIRI2)).Return(true, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testToIRI2)),
-			db.EXPECT().Lock(ctx, mustParse(testToIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testToIRI)).Return(func() {}, nil),
 			db.EXPECT().Get(ctx, mustParse(testToIRI)).Return(testPerson, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testToIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testToIRI2)),
+			db.EXPECT().Lock(ctx, mustParse(testToIRI2)).Return(func() {}, nil),
 			db.EXPECT().Get(ctx, mustParse(testToIRI2)).Return(testService, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testToIRI2)),
 		)
 		// Run
 		err := a.InboxForwarding(ctx, mustParse(testMyInboxIRI), input)
@@ -486,22 +464,17 @@ func TestInboxForwarding(t *testing.T) {
 		_, _, _, db, _, a := setupFn(ctl)
 		input := mustAddCcIds(testListen)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)).Return(func() {}, nil),
 			db.EXPECT().Exists(ctx, mustParse(testFederatedActivityIRI)).Return(false, nil),
 			db.EXPECT().Create(ctx, input).Return(nil),
-			db.EXPECT().Unlock(ctx, mustParse(testFederatedActivityIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testCcIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testCcIRI)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testCcIRI)).Return(true, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testCcIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testCcIRI2)),
+			db.EXPECT().Lock(ctx, mustParse(testCcIRI2)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testCcIRI2)).Return(true, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testCcIRI2)),
-			db.EXPECT().Lock(ctx, mustParse(testCcIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testCcIRI)).Return(func() {}, nil),
 			db.EXPECT().Get(ctx, mustParse(testCcIRI)).Return(testPerson, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testCcIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testCcIRI2)),
+			db.EXPECT().Lock(ctx, mustParse(testCcIRI2)).Return(func() {}, nil),
 			db.EXPECT().Get(ctx, mustParse(testCcIRI2)).Return(testService, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testCcIRI2)),
 		)
 		// Run
 		err := a.InboxForwarding(ctx, mustParse(testMyInboxIRI), input)
@@ -515,22 +488,17 @@ func TestInboxForwarding(t *testing.T) {
 		_, _, _, db, _, a := setupFn(ctl)
 		input := mustAddAudienceIds(testListen)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)).Return(func() {}, nil),
 			db.EXPECT().Exists(ctx, mustParse(testFederatedActivityIRI)).Return(false, nil),
 			db.EXPECT().Create(ctx, input).Return(nil),
-			db.EXPECT().Unlock(ctx, mustParse(testFederatedActivityIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testAudienceIRI)).Return(true, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testAudienceIRI2)).Return(true, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI2)),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil),
 			db.EXPECT().Get(ctx, mustParse(testAudienceIRI)).Return(testPerson, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)).Return(func() {}, nil),
 			db.EXPECT().Get(ctx, mustParse(testAudienceIRI2)).Return(testService, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI2)),
 		)
 		// Run
 		err := a.InboxForwarding(ctx, mustParse(testMyInboxIRI), input)
@@ -547,38 +515,29 @@ func TestInboxForwarding(t *testing.T) {
 		mockTPortTag := NewMockTransport(ctl)
 		mockTPortTag2 := NewMockTransport(ctl)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)).Return(func() {}, nil),
 			db.EXPECT().Exists(ctx, mustParse(testFederatedActivityIRI)).Return(false, nil),
 			db.EXPECT().Create(ctx, input).Return(nil),
-			db.EXPECT().Unlock(ctx, mustParse(testFederatedActivityIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testAudienceIRI)).Return(true, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testAudienceIRI2)).Return(true, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI2)),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil),
 			db.EXPECT().Get(ctx, mustParse(testAudienceIRI)).Return(testOrderedCollectionOfActors, nil),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)).Return(func() {}, nil),
 			db.EXPECT().Get(ctx, mustParse(testAudienceIRI2)).Return(testCollectionOfActors, nil),
 			fp.EXPECT().MaxInboxForwardingRecursionDepth(ctx).Return(0),
 			// hasInboxForwardingValues
-			db.EXPECT().Lock(ctx, mustParse(testTagIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testTagIRI)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testTagIRI)).Return(false, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testTagIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testTagIRI2)),
+			db.EXPECT().Lock(ctx, mustParse(testTagIRI2)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testTagIRI2)).Return(false, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testTagIRI2)),
-			db.EXPECT().Lock(ctx, mustParse(testNoteId1)),
+			db.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testNoteId1)).Return(false, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testNoteId1)),
 			cm.EXPECT().NewTransport(ctx, mustParse(testMyInboxIRI), goFedUserAgent()).Return(mockTPortTag, nil),
 			mockTPortTag.EXPECT().Dereference(ctx, mustParse(testTagIRI)).Return(mustSerializeToBytes(newObjectWithId(testTagIRI)), nil),
 			cm.EXPECT().NewTransport(ctx, mustParse(testMyInboxIRI), goFedUserAgent()).Return(mockTPortTag2, nil),
 			mockTPortTag2.EXPECT().Dereference(ctx, mustParse(testTagIRI2)).Return(mustSerializeToBytes(newObjectWithId(testTagIRI2)), nil),
-			// Deferred
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI2)),
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI)),
 		)
 		// Run
 		err := a.InboxForwarding(ctx, mustParse(testMyInboxIRI), input)
@@ -594,25 +553,21 @@ func TestInboxForwarding(t *testing.T) {
 			mustAddAudienceIds(testListen))
 		tPort := NewMockTransport(ctl)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)).Return(func() {}, nil),
 			db.EXPECT().Exists(ctx, mustParse(testFederatedActivityIRI)).Return(false, nil),
 			db.EXPECT().Create(ctx, input).Return(nil),
-			db.EXPECT().Unlock(ctx, mustParse(testFederatedActivityIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testAudienceIRI)).Return(true, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testAudienceIRI2)).Return(true, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI2)),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil),
 			db.EXPECT().Get(ctx, mustParse(testAudienceIRI)).Return(testOrderedCollectionOfActors, nil),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)).Return(func() {}, nil),
 			db.EXPECT().Get(ctx, mustParse(testAudienceIRI2)).Return(testCollectionOfActors, nil),
 			fp.EXPECT().MaxInboxForwardingRecursionDepth(ctx).Return(0),
 			// hasInboxForwardingValues
-			db.EXPECT().Lock(ctx, mustParse(testTagIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testTagIRI)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testTagIRI)).Return(true, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testTagIRI)),
 			// after hasInboxForwardingValues
 			fp.EXPECT().FilterForwarding(
 				ctx,
@@ -637,9 +592,6 @@ func TestInboxForwarding(t *testing.T) {
 					mustParse(testFederatedActorIRI4),
 				},
 			),
-			// Deferred
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI2)),
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI)),
 		)
 		// Run
 		err := a.InboxForwarding(ctx, mustParse(testMyInboxIRI), input)
@@ -654,28 +606,23 @@ func TestInboxForwarding(t *testing.T) {
 		input := mustAddAudienceIds(testNestedInReplyTo)
 		tPort := NewMockTransport(ctl)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)).Return(func() {}, nil),
 			db.EXPECT().Exists(ctx, mustParse(testFederatedActivityIRI)).Return(false, nil),
 			db.EXPECT().Create(ctx, input).Return(nil),
-			db.EXPECT().Unlock(ctx, mustParse(testFederatedActivityIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testAudienceIRI)).Return(true, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testAudienceIRI2)).Return(true, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI2)),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil),
 			db.EXPECT().Get(ctx, mustParse(testAudienceIRI)).Return(testOrderedCollectionOfActors, nil),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)).Return(func() {}, nil),
 			db.EXPECT().Get(ctx, mustParse(testAudienceIRI2)).Return(testCollectionOfActors, nil),
 			fp.EXPECT().MaxInboxForwardingRecursionDepth(ctx).Return(0),
 			// hasInboxForwardingValues
-			db.EXPECT().Lock(ctx, mustParse(testNoteId1)),
+			db.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testNoteId1)).Return(false, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testNoteId1)),
-			db.EXPECT().Lock(ctx, mustParse(inReplyToIRI)),
+			db.EXPECT().Lock(ctx, mustParse(inReplyToIRI)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(inReplyToIRI)).Return(true, nil),
-			db.EXPECT().Unlock(ctx, mustParse(inReplyToIRI)),
 			// after hasInboxForwardingValues
 			fp.EXPECT().FilterForwarding(
 				ctx,
@@ -700,9 +647,6 @@ func TestInboxForwarding(t *testing.T) {
 					mustParse(testFederatedActorIRI4),
 				},
 			),
-			// Deferred
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI2)),
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI)),
 		)
 		// Run
 		err := a.InboxForwarding(ctx, mustParse(testMyInboxIRI), input)
@@ -720,38 +664,31 @@ func TestInboxForwarding(t *testing.T) {
 		tagTPort2 := NewMockTransport(ctl)
 		tPort := NewMockTransport(ctl)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)).Return(func() {}, nil),
 			db.EXPECT().Exists(ctx, mustParse(testFederatedActivityIRI)).Return(false, nil),
 			db.EXPECT().Create(ctx, input).Return(nil),
-			db.EXPECT().Unlock(ctx, mustParse(testFederatedActivityIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testAudienceIRI)).Return(true, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testAudienceIRI2)).Return(true, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI2)),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil),
 			db.EXPECT().Get(ctx, mustParse(testAudienceIRI)).Return(testOrderedCollectionOfActors, nil),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)).Return(func() {}, nil),
 			db.EXPECT().Get(ctx, mustParse(testAudienceIRI2)).Return(testCollectionOfActors, nil),
 			fp.EXPECT().MaxInboxForwardingRecursionDepth(ctx).Return(0),
 			// hasInboxForwardingValues
-			db.EXPECT().Lock(ctx, mustParse(testTagIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testTagIRI)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testTagIRI)).Return(false, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testTagIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testTagIRI2)),
+			db.EXPECT().Lock(ctx, mustParse(testTagIRI2)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testTagIRI2)).Return(false, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testTagIRI2)),
-			db.EXPECT().Lock(ctx, mustParse(testNoteId1)),
+			db.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testNoteId1)).Return(false, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testNoteId1)),
 			cm.EXPECT().NewTransport(ctx, mustParse(testMyInboxIRI), goFedUserAgent()).Return(tagTPort, nil),
 			tagTPort.EXPECT().Dereference(ctx, mustParse(testTagIRI)).Return(mustSerializeToBytes(mustAddInReplyToIds(newActivityWithId(testTagIRI))), nil),
 			cm.EXPECT().NewTransport(ctx, mustParse(testMyInboxIRI), goFedUserAgent()).Return(tagTPort2, nil),
 			tagTPort2.EXPECT().Dereference(ctx, mustParse(testTagIRI2)).Return(mustSerializeToBytes(newActivityWithId(testTagIRI2)), nil),
-			db.EXPECT().Lock(ctx, mustParse(inReplyToIRI)),
+			db.EXPECT().Lock(ctx, mustParse(inReplyToIRI)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(inReplyToIRI)).Return(true, nil),
-			db.EXPECT().Unlock(ctx, mustParse(inReplyToIRI)),
 			// after hasInboxForwardingValues
 			fp.EXPECT().FilterForwarding(
 				ctx,
@@ -776,9 +713,6 @@ func TestInboxForwarding(t *testing.T) {
 					mustParse(testFederatedActorIRI4),
 				},
 			),
-			// Deferred
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI2)),
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI)),
 		)
 		// Run
 		err := a.InboxForwarding(ctx, mustParse(testMyInboxIRI), input)
@@ -792,28 +726,21 @@ func TestInboxForwarding(t *testing.T) {
 		_, fp, _, db, _, a := setupFn(ctl)
 		input := mustAddAudienceIds(testNestedInReplyTo)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)).Return(func() {}, nil),
 			db.EXPECT().Exists(ctx, mustParse(testFederatedActivityIRI)).Return(false, nil),
 			db.EXPECT().Create(ctx, input).Return(nil),
-			db.EXPECT().Unlock(ctx, mustParse(testFederatedActivityIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testAudienceIRI)).Return(true, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI)),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testAudienceIRI2)).Return(true, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI2)),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil),
 			db.EXPECT().Get(ctx, mustParse(testAudienceIRI)).Return(testOrderedCollectionOfActors, nil),
-			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)),
+			db.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)).Return(func() {}, nil),
 			db.EXPECT().Get(ctx, mustParse(testAudienceIRI2)).Return(testCollectionOfActors, nil),
 			fp.EXPECT().MaxInboxForwardingRecursionDepth(ctx).Return(1),
 			// hasInboxForwardingValues
-			db.EXPECT().Lock(ctx, mustParse(testNoteId1)),
+			db.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testNoteId1)).Return(false, nil),
-			db.EXPECT().Unlock(ctx, mustParse(testNoteId1)),
-			// Deferred
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI2)),
-			db.EXPECT().Unlock(ctx, mustParse(testAudienceIRI)),
 		)
 		// Run
 		err := a.InboxForwarding(ctx, mustParse(testMyInboxIRI), input)
@@ -849,13 +776,11 @@ func TestPostOutbox(t *testing.T) {
 		_, _, sp, db, _, a := setupFn(ctl)
 		outboxIRI := mustParse(testMyOutboxIRI)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, mustParse(testNewActivityIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testNewActivityIRI)).Return(func() {}, nil),
 			db.EXPECT().Create(ctx, testMyListen),
-			db.EXPECT().Unlock(ctx, mustParse(testNewActivityIRI)),
-			db.EXPECT().Lock(ctx, outboxIRI),
+			db.EXPECT().Lock(ctx, outboxIRI).Return(func() {}, nil),
 			db.EXPECT().GetOutbox(ctx, outboxIRI).Return(testEmptyOrderedCollection, nil),
 			db.EXPECT().SetOutbox(ctx, testOrderedCollectionWithNewId).Return(nil),
-			db.EXPECT().Unlock(ctx, outboxIRI),
 		)
 		sp.EXPECT().SocialCallbacks(ctx).Return(SocialWrappedCallbacks{}, nil, nil)
 		sp.EXPECT().DefaultCallback(ctx, testMyListen).Return(nil)
@@ -872,13 +797,11 @@ func TestPostOutbox(t *testing.T) {
 		_, _, sp, db, _, a := setupFn(ctl)
 		outboxIRI := mustParse(testMyOutboxIRI)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, mustParse(testNewActivityIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testNewActivityIRI)).Return(func() {}, nil),
 			db.EXPECT().Create(ctx, testMyListen),
-			db.EXPECT().Unlock(ctx, mustParse(testNewActivityIRI)),
-			db.EXPECT().Lock(ctx, outboxIRI),
+			db.EXPECT().Lock(ctx, outboxIRI).Return(func() {}, nil),
 			db.EXPECT().GetOutbox(ctx, outboxIRI).Return(testOrderedCollectionWithNewId2, nil),
 			db.EXPECT().SetOutbox(ctx, testOrderedCollectionWithBothNewIds).Return(nil),
-			db.EXPECT().Unlock(ctx, outboxIRI),
 		)
 		sp.EXPECT().SocialCallbacks(ctx).Return(SocialWrappedCallbacks{}, nil, nil)
 		sp.EXPECT().DefaultCallback(ctx, testMyListen).Return(nil)
@@ -895,13 +818,11 @@ func TestPostOutbox(t *testing.T) {
 		_, _, sp, db, _, a := setupFn(ctl)
 		outboxIRI := mustParse(testMyOutboxIRI)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, mustParse(testNewActivityIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testNewActivityIRI)).Return(func() {}, nil),
 			db.EXPECT().Create(ctx, testMyListen),
-			db.EXPECT().Unlock(ctx, mustParse(testNewActivityIRI)),
-			db.EXPECT().Lock(ctx, outboxIRI),
+			db.EXPECT().Lock(ctx, outboxIRI).Return(func() {}, nil),
 			db.EXPECT().GetOutbox(ctx, outboxIRI).Return(testEmptyOrderedCollection, nil),
 			db.EXPECT().SetOutbox(ctx, testOrderedCollectionWithNewId).Return(nil),
-			db.EXPECT().Unlock(ctx, outboxIRI),
 		)
 		pass := false
 		sp.EXPECT().SocialCallbacks(ctx).Return(SocialWrappedCallbacks{}, []interface{}{
@@ -924,13 +845,11 @@ func TestPostOutbox(t *testing.T) {
 		_, _, sp, db, _, a := setupFn(ctl)
 		outboxIRI := mustParse(testMyOutboxIRI)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, mustParse(testNewActivityIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testNewActivityIRI)).Return(func() {}, nil),
 			db.EXPECT().Create(ctx, testMyCreate),
-			db.EXPECT().Unlock(ctx, mustParse(testNewActivityIRI)),
-			db.EXPECT().Lock(ctx, outboxIRI),
+			db.EXPECT().Lock(ctx, outboxIRI).Return(func() {}, nil),
 			db.EXPECT().GetOutbox(ctx, outboxIRI).Return(testEmptyOrderedCollection, nil),
 			db.EXPECT().SetOutbox(ctx, testOrderedCollectionWithNewId).Return(nil),
-			db.EXPECT().Unlock(ctx, outboxIRI),
 		)
 		pass := false
 		sp.EXPECT().SocialCallbacks(ctx).Return(SocialWrappedCallbacks{}, []interface{}{
@@ -953,13 +872,11 @@ func TestPostOutbox(t *testing.T) {
 		_, _, sp, db, _, a := setupFn(ctl)
 		outboxIRI := mustParse(testMyInboxIRI)
 		gomock.InOrder(
-			db.EXPECT().Lock(ctx, mustParse(testNewActivityIRI)),
+			db.EXPECT().Lock(ctx, mustParse(testNewActivityIRI)).Return(func() {}, nil),
 			db.EXPECT().Create(ctx, testMyCreate),
-			db.EXPECT().Unlock(ctx, mustParse(testNewActivityIRI)),
-			db.EXPECT().Lock(ctx, outboxIRI),
+			db.EXPECT().Lock(ctx, outboxIRI).Return(func() {}, nil),
 			db.EXPECT().GetOutbox(ctx, outboxIRI).Return(testEmptyOrderedCollection, nil),
 			db.EXPECT().SetOutbox(ctx, testOrderedCollectionWithNewId).Return(nil),
-			db.EXPECT().Unlock(ctx, outboxIRI),
 		)
 		pass := false
 		sp.EXPECT().SocialCallbacks(ctx).Return(SocialWrappedCallbacks{
@@ -968,9 +885,8 @@ func TestPostOutbox(t *testing.T) {
 				return nil
 			},
 		}, nil, nil)
-		db.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		db.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		db.EXPECT().Create(ctx, testMyNote)
-		db.EXPECT().Unlock(ctx, mustParse(testNoteId1))
 		// Run
 		deliverable, err := a.PostOutbox(ctx, testMyCreate, outboxIRI, mustSerialize(testMyCreate))
 		// Verify
@@ -1123,14 +1039,12 @@ func TestDeliver(t *testing.T) {
 			mustSerializeToBytes(testFederatedPerson1), nil)
 		mockTp.EXPECT().Dereference(ctx, mustParse(testFederatedActorIRI2)).Return(
 			mustSerializeToBytes(testFederatedPerson2), nil)
-		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().ActorForOutbox(ctx, mustParse(testMyOutboxIRI)).Return(
 			mustParse(testPersonIRI), nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testMyOutboxIRI))
-		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().Get(ctx, mustParse(testPersonIRI)).Return(
 			testMyPerson, nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testPersonIRI))
 		c.EXPECT().NewTransport(ctx, mustParse(testMyOutboxIRI), goFedUserAgent()).Return(
 			mockTp, nil)
 		mockTp.EXPECT().BatchDeliver(ctx, mustSerializeToBytes(act), expectRecip)
@@ -1162,14 +1076,12 @@ func TestDeliver(t *testing.T) {
 			mustSerializeToBytes(testFederatedPerson1), nil)
 		mockTp.EXPECT().Dereference(ctx, mustParse(testFederatedActorIRI2)).Return(
 			mustSerializeToBytes(testFederatedPerson2), nil)
-		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().ActorForOutbox(ctx, mustParse(testMyOutboxIRI)).Return(
 			mustParse(testPersonIRI), nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testMyOutboxIRI))
-		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().Get(ctx, mustParse(testPersonIRI)).Return(
 			testMyPerson, nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testPersonIRI))
 		c.EXPECT().NewTransport(ctx, mustParse(testMyOutboxIRI), goFedUserAgent()).Return(
 			mockTp, nil)
 		mockTp.EXPECT().BatchDeliver(ctx, mustSerializeToBytes(expectAct), expectRecip)
@@ -1200,14 +1112,12 @@ func TestDeliver(t *testing.T) {
 			mustSerializeToBytes(testFederatedPerson1), nil)
 		mockTp.EXPECT().Dereference(ctx, mustParse(testFederatedActorIRI2)).Return(
 			mustSerializeToBytes(testFederatedPerson2), nil)
-		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().ActorForOutbox(ctx, mustParse(testMyOutboxIRI)).Return(
 			mustParse(testPersonIRI), nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testMyOutboxIRI))
-		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().Get(ctx, mustParse(testPersonIRI)).Return(
 			testMyPerson, nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testPersonIRI))
 		c.EXPECT().NewTransport(ctx, mustParse(testMyOutboxIRI), goFedUserAgent()).Return(
 			mockTp, nil)
 		mockTp.EXPECT().BatchDeliver(ctx, mustSerializeToBytes(act), expectRecip)
@@ -1239,14 +1149,12 @@ func TestDeliver(t *testing.T) {
 			mustSerializeToBytes(testFederatedPerson1), nil)
 		mockTp.EXPECT().Dereference(ctx, mustParse(testFederatedActorIRI2)).Return(
 			mustSerializeToBytes(testFederatedPerson2), nil)
-		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().ActorForOutbox(ctx, mustParse(testMyOutboxIRI)).Return(
 			mustParse(testPersonIRI), nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testMyOutboxIRI))
-		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().Get(ctx, mustParse(testPersonIRI)).Return(
 			testMyPerson, nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testPersonIRI))
 		c.EXPECT().NewTransport(ctx, mustParse(testMyOutboxIRI), goFedUserAgent()).Return(
 			mockTp, nil)
 		mockTp.EXPECT().BatchDeliver(ctx, mustSerializeToBytes(expectAct), expectRecip)
@@ -1277,14 +1185,12 @@ func TestDeliver(t *testing.T) {
 			mustSerializeToBytes(testFederatedPerson1), nil)
 		mockTp.EXPECT().Dereference(ctx, mustParse(testFederatedActorIRI2)).Return(
 			mustSerializeToBytes(testFederatedPerson2), nil)
-		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().ActorForOutbox(ctx, mustParse(testMyOutboxIRI)).Return(
 			mustParse(testPersonIRI), nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testMyOutboxIRI))
-		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().Get(ctx, mustParse(testPersonIRI)).Return(
 			testMyPerson, nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testPersonIRI))
 		c.EXPECT().NewTransport(ctx, mustParse(testMyOutboxIRI), goFedUserAgent()).Return(
 			mockTp, nil)
 		mockTp.EXPECT().BatchDeliver(ctx, mustSerializeToBytes(act), expectRecip)
@@ -1316,14 +1222,12 @@ func TestDeliver(t *testing.T) {
 			mustSerializeToBytes(testFederatedPerson1), nil)
 		mockTp.EXPECT().Dereference(ctx, mustParse(testFederatedActorIRI2)).Return(
 			mustSerializeToBytes(testFederatedPerson2), nil)
-		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().ActorForOutbox(ctx, mustParse(testMyOutboxIRI)).Return(
 			mustParse(testPersonIRI), nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testMyOutboxIRI))
-		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().Get(ctx, mustParse(testPersonIRI)).Return(
 			testMyPerson, nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testPersonIRI))
 		c.EXPECT().NewTransport(ctx, mustParse(testMyOutboxIRI), goFedUserAgent()).Return(
 			mockTp, nil)
 		mockTp.EXPECT().BatchDeliver(ctx, mustSerializeToBytes(act), expectRecip)
@@ -1355,14 +1259,12 @@ func TestDeliver(t *testing.T) {
 			mustSerializeToBytes(testFederatedPerson1), nil)
 		mockTp.EXPECT().Dereference(ctx, mustParse(testFederatedActorIRI2)).Return(
 			mustSerializeToBytes(testFederatedPerson2), nil)
-		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().ActorForOutbox(ctx, mustParse(testMyOutboxIRI)).Return(
 			mustParse(testPersonIRI), nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testMyOutboxIRI))
-		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().Get(ctx, mustParse(testPersonIRI)).Return(
 			testMyPerson, nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testPersonIRI))
 		c.EXPECT().NewTransport(ctx, mustParse(testMyOutboxIRI), goFedUserAgent()).Return(
 			mockTp, nil)
 		mockTp.EXPECT().BatchDeliver(ctx, mustSerializeToBytes(act), expectRecip)
@@ -1394,14 +1296,12 @@ func TestDeliver(t *testing.T) {
 			mustSerializeToBytes(testFederatedPerson1), nil)
 		mockTp.EXPECT().Dereference(ctx, mustParse(testFederatedActorIRI4)).Return(
 			mustSerializeToBytes(testFederatedPerson2), nil)
-		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().ActorForOutbox(ctx, mustParse(testMyOutboxIRI)).Return(
 			mustParse(testPersonIRI), nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testMyOutboxIRI))
-		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().Get(ctx, mustParse(testPersonIRI)).Return(
 			testMyPerson, nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testPersonIRI))
 		c.EXPECT().NewTransport(ctx, mustParse(testMyOutboxIRI), goFedUserAgent()).Return(
 			mockTp, nil)
 		mockTp.EXPECT().BatchDeliver(ctx, mustSerializeToBytes(act), expectRecip)
@@ -1425,14 +1325,12 @@ func TestDeliver(t *testing.T) {
 		mockFp.EXPECT().MaxDeliveryRecursionDepth(ctx).Return(1)
 		mockTp.EXPECT().Dereference(ctx, mustParse(testAudienceIRI)).Return(
 			mustSerializeToBytes(testCollectionOfActors), nil)
-		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().ActorForOutbox(ctx, mustParse(testMyOutboxIRI)).Return(
 			mustParse(testPersonIRI), nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testMyOutboxIRI))
-		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().Get(ctx, mustParse(testPersonIRI)).Return(
 			testMyPerson, nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testPersonIRI))
 		c.EXPECT().NewTransport(ctx, mustParse(testMyOutboxIRI), goFedUserAgent()).Return(
 			mockTp, nil)
 		mockTp.EXPECT().BatchDeliver(ctx, mustSerializeToBytes(act), nil)
@@ -1478,14 +1376,12 @@ func TestDeliver(t *testing.T) {
 			mustSerializeToBytes(testFederatedPerson1), nil).Times(4)
 		mockTp.EXPECT().Dereference(ctx, mustParse(testFederatedActorIRI2)).Return(
 			mustSerializeToBytes(testFederatedPerson2), nil).Times(4)
-		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().ActorForOutbox(ctx, mustParse(testMyOutboxIRI)).Return(
 			mustParse(testPersonIRI), nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testMyOutboxIRI))
-		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().Get(ctx, mustParse(testPersonIRI)).Return(
 			testMyPerson, nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testPersonIRI))
 		c.EXPECT().NewTransport(ctx, mustParse(testMyOutboxIRI), goFedUserAgent()).Return(
 			mockTp, nil)
 		mockTp.EXPECT().BatchDeliver(ctx, mustSerializeToBytes(expectAct), expectRecip)
@@ -1518,14 +1414,12 @@ func TestDeliver(t *testing.T) {
 			mustSerializeToBytes(testFederatedPerson1), nil)
 		mockTp.EXPECT().Dereference(ctx, mustParse(testFederatedActorIRI2)).Return(
 			mustSerializeToBytes(testFederatedPerson2), nil)
-		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().ActorForOutbox(ctx, mustParse(testMyOutboxIRI)).Return(
 			mustParse(testPersonIRI), nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testMyOutboxIRI))
-		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().Get(ctx, mustParse(testPersonIRI)).Return(
 			testMyPerson, nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testPersonIRI))
 		c.EXPECT().NewTransport(ctx, mustParse(testMyOutboxIRI), goFedUserAgent()).Return(
 			mockTp, nil)
 		mockTp.EXPECT().BatchDeliver(ctx, mustSerializeToBytes(expectAct), expectRecip)
@@ -1558,14 +1452,12 @@ func TestDeliver(t *testing.T) {
 			mustSerializeToBytes(testFederatedPerson1), nil)
 		mockTp.EXPECT().Dereference(ctx, mustParse(testFederatedActorIRI2)).Return(
 			mustSerializeToBytes(testFederatedPerson2), nil)
-		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().ActorForOutbox(ctx, mustParse(testMyOutboxIRI)).Return(
 			mustParse(testPersonIRI), nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testMyOutboxIRI))
-		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().Get(ctx, mustParse(testPersonIRI)).Return(
 			testMyPerson, nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testPersonIRI))
 		c.EXPECT().NewTransport(ctx, mustParse(testMyOutboxIRI), goFedUserAgent()).Return(
 			mockTp, nil)
 		mockTp.EXPECT().BatchDeliver(ctx, mustSerializeToBytes(expectAct), expectRecip)
@@ -1595,14 +1487,12 @@ func TestDeliver(t *testing.T) {
 			[]byte{}, fmt.Errorf("test error"))
 		mockTp.EXPECT().Dereference(ctx, mustParse(testFederatedActorIRI2)).Return(
 			mustSerializeToBytes(testFederatedPerson2), nil)
-		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().ActorForOutbox(ctx, mustParse(testMyOutboxIRI)).Return(
 			mustParse(testPersonIRI), nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testMyOutboxIRI))
-		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().Get(ctx, mustParse(testPersonIRI)).Return(
 			testMyPerson, nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testPersonIRI))
 		c.EXPECT().NewTransport(ctx, mustParse(testMyOutboxIRI), goFedUserAgent()).Return(
 			mockTp, nil)
 		mockTp.EXPECT().BatchDeliver(ctx, mustSerializeToBytes(act), expectRecip)
@@ -1634,14 +1524,12 @@ func TestDeliver(t *testing.T) {
 			mustSerializeToBytes(testFederatedPerson1), nil)
 		mockTp.EXPECT().Dereference(ctx, mustParse(testFederatedActorIRI2)).Return(
 			mustSerializeToBytes(testFederatedPerson2), nil)
-		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().ActorForOutbox(ctx, mustParse(testMyOutboxIRI)).Return(
 			mustParse(testPersonIRI), nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testMyOutboxIRI))
-		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testPersonIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().Get(ctx, mustParse(testPersonIRI)).Return(
 			testMyPerson, nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testPersonIRI))
 		c.EXPECT().NewTransport(ctx, mustParse(testMyOutboxIRI), goFedUserAgent()).Return(
 			mockTp, nil)
 		mockTp.EXPECT().BatchDeliver(ctx, mustSerializeToBytes(act), expectRecip).Return(
@@ -1693,10 +1581,9 @@ func TestWrapInCreate(t *testing.T) {
 		_, _, _, mockDb, _, a := setupFn(ctl)
 		n, expect := baseNoteFn()
 		// Mock
-		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().ActorForOutbox(ctx, mustParse(testMyOutboxIRI)).Return(
 			mustParse(testPersonIRI), nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testMyOutboxIRI))
 		// Run & Verify
 		got, err := a.WrapInCreate(ctx, n, mustParse(testMyOutboxIRI))
 		assertEqual(t, err, nil)
@@ -1714,10 +1601,9 @@ func TestWrapInCreate(t *testing.T) {
 		n.SetActivityStreamsTo(to)
 		expect.SetActivityStreamsTo(to)
 		// Mock
-		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().ActorForOutbox(ctx, mustParse(testMyOutboxIRI)).Return(
 			mustParse(testPersonIRI), nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testMyOutboxIRI))
 		// Run & Verify
 		got, err := a.WrapInCreate(ctx, n, mustParse(testMyOutboxIRI))
 		assertEqual(t, err, nil)
@@ -1735,10 +1621,9 @@ func TestWrapInCreate(t *testing.T) {
 		n.SetActivityStreamsCc(cc)
 		expect.SetActivityStreamsCc(cc)
 		// Mock
-		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().ActorForOutbox(ctx, mustParse(testMyOutboxIRI)).Return(
 			mustParse(testPersonIRI), nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testMyOutboxIRI))
 		// Run & Verify
 		got, err := a.WrapInCreate(ctx, n, mustParse(testMyOutboxIRI))
 		assertEqual(t, err, nil)
@@ -1756,10 +1641,9 @@ func TestWrapInCreate(t *testing.T) {
 		n.SetActivityStreamsBto(bto)
 		expect.SetActivityStreamsBto(bto)
 		// Mock
-		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().ActorForOutbox(ctx, mustParse(testMyOutboxIRI)).Return(
 			mustParse(testPersonIRI), nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testMyOutboxIRI))
 		// Run & Verify
 		got, err := a.WrapInCreate(ctx, n, mustParse(testMyOutboxIRI))
 		assertEqual(t, err, nil)
@@ -1777,10 +1661,9 @@ func TestWrapInCreate(t *testing.T) {
 		n.SetActivityStreamsBcc(bcc)
 		expect.SetActivityStreamsBcc(bcc)
 		// Mock
-		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().ActorForOutbox(ctx, mustParse(testMyOutboxIRI)).Return(
 			mustParse(testPersonIRI), nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testMyOutboxIRI))
 		// Run & Verify
 		got, err := a.WrapInCreate(ctx, n, mustParse(testMyOutboxIRI))
 		assertEqual(t, err, nil)
@@ -1798,10 +1681,9 @@ func TestWrapInCreate(t *testing.T) {
 		n.SetActivityStreamsAudience(aud)
 		expect.SetActivityStreamsAudience(aud)
 		// Mock
-		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().ActorForOutbox(ctx, mustParse(testMyOutboxIRI)).Return(
 			mustParse(testPersonIRI), nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testMyOutboxIRI))
 		// Run & Verify
 		got, err := a.WrapInCreate(ctx, n, mustParse(testMyOutboxIRI))
 		assertEqual(t, err, nil)
@@ -1818,10 +1700,9 @@ func TestWrapInCreate(t *testing.T) {
 		n.SetActivityStreamsPublished(pub)
 		expect.SetActivityStreamsPublished(pub)
 		// Mock
-		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI))
+		mockDb.EXPECT().Lock(ctx, mustParse(testMyOutboxIRI)).Return(func() {}, nil)
 		mockDb.EXPECT().ActorForOutbox(ctx, mustParse(testMyOutboxIRI)).Return(
 			mustParse(testPersonIRI), nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testMyOutboxIRI))
 		// Run & Verify
 		got, err := a.WrapInCreate(ctx, n, mustParse(testMyOutboxIRI))
 		assertEqual(t, err, nil)

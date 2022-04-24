@@ -230,11 +230,12 @@ func (mr *MockDatabaseMockRecorder) Liked(c, actorIRI interface{}) *gomock.Call 
 }
 
 // Lock mocks base method.
-func (m *MockDatabase) Lock(c context.Context, id *url.URL) error {
+func (m *MockDatabase) Lock(c context.Context, id *url.URL) (func(), error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Lock", c, id)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret0, _ := ret[0].(func())
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // Lock indicates an expected call of Lock.
@@ -314,20 +315,6 @@ func (m *MockDatabase) SetOutbox(c context.Context, outbox vocab.ActivityStreams
 func (mr *MockDatabaseMockRecorder) SetOutbox(c, outbox interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "SetOutbox", reflect.TypeOf((*MockDatabase)(nil).SetOutbox), c, outbox)
-}
-
-// Unlock mocks base method.
-func (m *MockDatabase) Unlock(c context.Context, id *url.URL) error {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "Unlock", c, id)
-	ret0, _ := ret[0].(error)
-	return ret0
-}
-
-// Unlock indicates an expected call of Unlock.
-func (mr *MockDatabaseMockRecorder) Unlock(c, id interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Unlock", reflect.TypeOf((*MockDatabase)(nil).Unlock), c, id)
 }
 
 // Update mocks base method.

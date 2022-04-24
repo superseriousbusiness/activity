@@ -27,7 +27,6 @@ func TestFederatedCallbacks(t *testing.T) {
 		if !ok {
 			t.Fatalf("could not find extra function")
 		}
-
 	})
 	t.Run("OverridesCreate", func(t *testing.T) {
 		ok := false
@@ -269,9 +268,8 @@ func TestFederatedCreate(t *testing.T) {
 		ctl := gomock.NewController(t)
 		defer ctl.Finish()
 		w, mockDB, _ := setupFn(ctl)
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDB.EXPECT().Create(ctx, testFederatedNote)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId1))
 		c := newCreateFn()
 		err := w.create(ctx, c)
 		if err != nil {
@@ -282,12 +280,10 @@ func TestFederatedCreate(t *testing.T) {
 		ctl := gomock.NewController(t)
 		defer ctl.Finish()
 		w, mockDB, _ := setupFn(ctl)
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDB.EXPECT().Create(ctx, testFederatedNote)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId1))
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId2))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId2)).Return(func() {}, nil)
 		mockDB.EXPECT().Create(ctx, testFederatedNote2)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId2))
 		c := newCreateFn()
 		c.GetActivityStreamsObject().AppendActivityStreamsNote(testFederatedNote2)
 		err := w.create(ctx, c)
@@ -299,9 +295,8 @@ func TestFederatedCreate(t *testing.T) {
 		ctl := gomock.NewController(t)
 		defer ctl.Finish()
 		w, mockDB, mockTp := setupFn(ctl)
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDB.EXPECT().Create(ctx, toDeserializedForm(testFederatedNote))
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId1))
 		mockTp.EXPECT().Dereference(ctx, mustParse(testNoteId1)).Return(
 			mustSerializeToBytes(testFederatedNote), nil)
 		c := newCreateFn()
@@ -317,9 +312,8 @@ func TestFederatedCreate(t *testing.T) {
 		ctl := gomock.NewController(t)
 		defer ctl.Finish()
 		w, mockDB, _ := setupFn(ctl)
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDB.EXPECT().Create(ctx, testFederatedNote)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId1))
 		c := newCreateFn()
 		var gotc context.Context
 		var got vocab.ActivityStreamsCreate
@@ -390,9 +384,8 @@ func TestFederatedUpdate(t *testing.T) {
 		ctl := gomock.NewController(t)
 		defer ctl.Finish()
 		w, mockDB := setupFn(ctl)
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDB.EXPECT().Update(ctx, testFederatedNote)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId1))
 		u := newUpdateFn()
 		err := w.update(ctx, u)
 		if err != nil {
@@ -403,12 +396,10 @@ func TestFederatedUpdate(t *testing.T) {
 		ctl := gomock.NewController(t)
 		defer ctl.Finish()
 		w, mockDB := setupFn(ctl)
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDB.EXPECT().Update(ctx, testFederatedNote)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId1))
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId2))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId2)).Return(func() {}, nil)
 		mockDB.EXPECT().Update(ctx, testFederatedNote2)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId2))
 		u := newUpdateFn()
 		u.GetActivityStreamsObject().AppendActivityStreamsNote(testFederatedNote2)
 		err := w.update(ctx, u)
@@ -431,9 +422,8 @@ func TestFederatedUpdate(t *testing.T) {
 		ctl := gomock.NewController(t)
 		defer ctl.Finish()
 		w, mockDB := setupFn(ctl)
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDB.EXPECT().Update(ctx, testFederatedNote)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId1))
 		u := newUpdateFn()
 		var gotc context.Context
 		var got vocab.ActivityStreamsUpdate
@@ -504,9 +494,8 @@ func TestFederatedDelete(t *testing.T) {
 		ctl := gomock.NewController(t)
 		defer ctl.Finish()
 		w, mockDB := setupFn(ctl)
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDB.EXPECT().Delete(ctx, mustParse(testNoteId1))
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId1))
 		d := newDeleteFn()
 		err := w.deleteFn(ctx, d)
 		if err != nil {
@@ -517,12 +506,10 @@ func TestFederatedDelete(t *testing.T) {
 		ctl := gomock.NewController(t)
 		defer ctl.Finish()
 		w, mockDB := setupFn(ctl)
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDB.EXPECT().Delete(ctx, mustParse(testNoteId1))
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId1))
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId2))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId2)).Return(func() {}, nil)
 		mockDB.EXPECT().Delete(ctx, mustParse(testNoteId2))
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId2))
 		d := newDeleteFn()
 		d.GetActivityStreamsObject().AppendIRI(mustParse(testNoteId2))
 		err := w.deleteFn(ctx, d)
@@ -534,9 +521,8 @@ func TestFederatedDelete(t *testing.T) {
 		ctl := gomock.NewController(t)
 		defer ctl.Finish()
 		w, mockDB := setupFn(ctl)
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDB.EXPECT().Delete(ctx, mustParse(testNoteId1))
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId1))
 		d := newDeleteFn()
 		var gotc context.Context
 		var got vocab.ActivityStreamsDelete
@@ -598,10 +584,9 @@ func TestFederatedFollow(t *testing.T) {
 		defer ctl.Finish()
 		w, mockDB := setupFn(ctl)
 		w.OnFollow = OnFollowDoNothing
-		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().ActorForInbox(ctx, mustParse(testMyInboxIRI)).Return(
 			mustParse(testFederatedActorIRI2), nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testMyInboxIRI))
 		f := newFollowFn()
 		err := w.follow(ctx, f)
 		if err != nil {
@@ -624,19 +609,16 @@ func TestFederatedFollow(t *testing.T) {
 		expectItems := streams.NewActivityStreamsItemsProperty()
 		expectItems.AppendIRI(mustParse(testFederatedActorIRI))
 		expectFollowers.SetActivityStreamsItems(expectItems)
-		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().ActorForInbox(ctx, mustParse(testMyInboxIRI)).Return(
 			mustParse(testFederatedActorIRI2), nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testMyInboxIRI))
-		mockDB.EXPECT().Lock(ctx, mustParse(testFederatedActorIRI2))
+		mockDB.EXPECT().Lock(ctx, mustParse(testFederatedActorIRI2)).Return(func() {}, nil)
 		mockDB.EXPECT().Followers(ctx, mustParse(testFederatedActorIRI2)).Return(
 			followers, nil)
 		mockDB.EXPECT().Update(ctx, expectFollowers)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testFederatedActorIRI2))
-		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().OutboxForInbox(ctx, mustParse(testMyInboxIRI)).Return(
 			mustParse(testMyOutboxIRI), nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testMyInboxIRI))
 		f := newFollowFn()
 		err := w.follow(ctx, f)
 		if err != nil {
@@ -658,19 +640,16 @@ func TestFederatedFollow(t *testing.T) {
 			return nil
 		}
 		followers := streams.NewActivityStreamsCollection()
-		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().ActorForInbox(ctx, mustParse(testMyInboxIRI)).Return(
 			mustParse(testFederatedActorIRI2), nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testMyInboxIRI))
-		mockDB.EXPECT().Lock(ctx, mustParse(testFederatedActorIRI2))
+		mockDB.EXPECT().Lock(ctx, mustParse(testFederatedActorIRI2)).Return(func() {}, nil)
 		mockDB.EXPECT().Followers(ctx, mustParse(testFederatedActorIRI2)).Return(
 			followers, nil)
 		mockDB.EXPECT().Update(ctx, gomock.Any())
-		mockDB.EXPECT().Unlock(ctx, mustParse(testFederatedActorIRI2))
-		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().OutboxForInbox(ctx, mustParse(testMyInboxIRI)).Return(
 			mustParse(testMyOutboxIRI), nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testMyInboxIRI))
 		f := newFollowFn()
 		err := w.follow(ctx, f)
 		if err != nil {
@@ -691,14 +670,12 @@ func TestFederatedFollow(t *testing.T) {
 			}
 			return nil
 		}
-		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().ActorForInbox(ctx, mustParse(testMyInboxIRI)).Return(
 			mustParse(testFederatedActorIRI2), nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testMyInboxIRI))
-		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().OutboxForInbox(ctx, mustParse(testMyInboxIRI)).Return(
 			mustParse(testMyOutboxIRI), nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testMyInboxIRI))
 		f := newFollowFn()
 		err := w.follow(ctx, f)
 		if err != nil {
@@ -710,10 +687,9 @@ func TestFederatedFollow(t *testing.T) {
 		defer ctl.Finish()
 		w, mockDB := setupFn(ctl)
 		w.OnFollow = OnFollowDoNothing
-		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().ActorForInbox(ctx, mustParse(testMyInboxIRI)).Return(
 			mustParse(testFederatedActorIRI2), nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testMyInboxIRI))
 		f := newFollowFn()
 		var gotc context.Context
 		var got vocab.ActivityStreamsFollow
@@ -774,21 +750,18 @@ func TestFederatedAccept(t *testing.T) {
 		expectItems := streams.NewActivityStreamsItemsProperty()
 		expectItems.AppendIRI(mustParse(testFederatedActorIRI))
 		expectFollowers.SetActivityStreamsItems(expectItems)
-		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().ActorForInbox(ctx, mustParse(testMyInboxIRI)).Return(
 			mustParse(testFederatedActorIRI2), nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testMyInboxIRI))
 		mockTp.EXPECT().Dereference(ctx, mustParse(testFederatedActivityIRI)).Return(
 			mustSerializeToBytes(testFollow), nil)
-		mockDB.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testFederatedActivityIRI)).Return(
 			testFollow, nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testFederatedActivityIRI))
-		mockDB.EXPECT().Lock(ctx, mustParse(testFederatedActorIRI2))
+		mockDB.EXPECT().Lock(ctx, mustParse(testFederatedActorIRI2)).Return(func() {}, nil)
 		mockDB.EXPECT().Following(ctx, mustParse(testFederatedActorIRI2)).Return(
 			followers, nil)
 		mockDB.EXPECT().Update(ctx, expectFollowers)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testFederatedActorIRI2))
 		a := newAcceptFn()
 		op := streams.NewActivityStreamsObjectProperty()
 		op.AppendIRI(mustParse(testFederatedActivityIRI))
@@ -802,10 +775,9 @@ func TestFederatedAccept(t *testing.T) {
 		ctl := gomock.NewController(t)
 		defer ctl.Finish()
 		w, mockDB, _ := setupFn(ctl)
-		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().ActorForInbox(ctx, mustParse(testMyInboxIRI)).Return(
 			mustParse(testFederatedActorIRI2), nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testMyInboxIRI))
 		a := newAcceptFn()
 		op := streams.NewActivityStreamsObjectProperty()
 		op.AppendActivityStreamsListen(testListen)
@@ -819,10 +791,9 @@ func TestFederatedAccept(t *testing.T) {
 		ctl := gomock.NewController(t)
 		defer ctl.Finish()
 		w, mockDB, _ := setupFn(ctl)
-		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().ActorForInbox(ctx, mustParse(testMyInboxIRI)).Return(
 			mustParse(testFederatedActorIRI3), nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testMyInboxIRI))
 		a := newAcceptFn()
 		err := w.accept(ctx, a)
 		if err != nil {
@@ -833,14 +804,12 @@ func TestFederatedAccept(t *testing.T) {
 		ctl := gomock.NewController(t)
 		defer ctl.Finish()
 		w, mockDB, _ := setupFn(ctl)
-		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().ActorForInbox(ctx, mustParse(testMyInboxIRI)).Return(
 			mustParse(testFederatedActorIRI2), nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testMyInboxIRI))
-		mockDB.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testFederatedActivityIRI)).Return(
 			testListen, nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testFederatedActivityIRI))
 		a := newAcceptFn()
 		err := w.accept(ctx, a)
 		if err == nil {
@@ -856,19 +825,16 @@ func TestFederatedAccept(t *testing.T) {
 		expectItems := streams.NewActivityStreamsItemsProperty()
 		expectItems.AppendIRI(mustParse(testFederatedActorIRI))
 		expectFollowers.SetActivityStreamsItems(expectItems)
-		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testMyInboxIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().ActorForInbox(ctx, mustParse(testMyInboxIRI)).Return(
 			mustParse(testFederatedActorIRI2), nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testMyInboxIRI))
-		mockDB.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testFederatedActivityIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testFederatedActivityIRI)).Return(
 			testFollow, nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testFederatedActivityIRI))
-		mockDB.EXPECT().Lock(ctx, mustParse(testFederatedActorIRI2))
+		mockDB.EXPECT().Lock(ctx, mustParse(testFederatedActorIRI2)).Return(func() {}, nil)
 		mockDB.EXPECT().Following(ctx, mustParse(testFederatedActorIRI2)).Return(
 			followers, nil)
 		mockDB.EXPECT().Update(ctx, expectFollowers)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testFederatedActorIRI2))
 		a := newAcceptFn()
 		err := w.accept(ctx, a)
 		if err != nil {
@@ -985,13 +951,12 @@ func TestFederatedAdd(t *testing.T) {
 		items1.AppendIRI(mustParse(testNoteId1))
 		items1.AppendIRI(mustParse(testNoteId2))
 		expectCol1.SetActivityStreamsItems(items1)
-		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().Owns(ctx, mustParse(testAudienceIRI)).Return(
 			true, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testAudienceIRI)).Return(
 			col1, nil)
 		mockDB.EXPECT().Update(ctx, expectCol1).Return(nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testAudienceIRI))
 		a := newAddFn()
 		a.GetActivityStreamsObject().AppendActivityStreamsNote(testFederatedNote2)
 		err := w.add(ctx, a)
@@ -1009,13 +974,12 @@ func TestFederatedAdd(t *testing.T) {
 		items1.AppendIRI(mustParse(testNoteId1))
 		items1.AppendIRI(mustParse(testNoteId2))
 		expectCol1.SetActivityStreamsOrderedItems(items1)
-		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().Owns(ctx, mustParse(testAudienceIRI)).Return(
 			true, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testAudienceIRI)).Return(
 			col1, nil)
 		mockDB.EXPECT().Update(ctx, expectCol1).Return(nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testAudienceIRI))
 		a := newAddFn()
 		a.GetActivityStreamsObject().AppendActivityStreamsNote(testFederatedNote2)
 		err := w.add(ctx, a)
@@ -1037,20 +1001,18 @@ func TestFederatedAdd(t *testing.T) {
 		items2 := streams.NewActivityStreamsItemsProperty()
 		items2.AppendIRI(mustParse(testNoteId1))
 		expectCol2.SetActivityStreamsItems(items2)
-		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().Owns(ctx, mustParse(testAudienceIRI)).Return(
 			true, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testAudienceIRI)).Return(
 			col1, nil)
 		mockDB.EXPECT().Update(ctx, expectCol1).Return(nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testAudienceIRI))
-		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI2))
+		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)).Return(func() {}, nil)
 		mockDB.EXPECT().Owns(ctx, mustParse(testAudienceIRI2)).Return(
 			true, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testAudienceIRI2)).Return(
 			col2, nil)
 		mockDB.EXPECT().Update(ctx, expectCol2).Return(nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testAudienceIRI2))
 		a := newAddFn()
 		a.GetActivityStreamsTarget().AppendIRI(mustParse(testAudienceIRI2))
 		err := w.add(ctx, a)
@@ -1063,12 +1025,11 @@ func TestFederatedAdd(t *testing.T) {
 		defer ctl.Finish()
 		w, mockDB := setupFn(ctl)
 		notCol := streams.NewActivityStreamsNote()
-		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().Owns(ctx, mustParse(testAudienceIRI)).Return(
 			true, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testAudienceIRI)).Return(
 			notCol, nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testAudienceIRI))
 		a := newAddFn()
 		err := w.add(ctx, a)
 		if err == nil {
@@ -1080,13 +1041,12 @@ func TestFederatedAdd(t *testing.T) {
 		defer ctl.Finish()
 		w, mockDB := setupFn(ctl)
 		col1 := streams.NewActivityStreamsCollection()
-		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().Owns(ctx, mustParse(testAudienceIRI)).Return(
 			true, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testAudienceIRI)).Return(
 			col1, nil)
 		mockDB.EXPECT().Update(ctx, gomock.Any()).Return(nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testAudienceIRI))
 		var gotc context.Context
 		var got vocab.ActivityStreamsAdd
 		w.Add = func(ctx context.Context, v vocab.ActivityStreamsAdd) error {
@@ -1179,13 +1139,12 @@ func TestFederatedRemove(t *testing.T) {
 		items1.AppendIRI(mustParse(testAudienceIRI))
 		items1.AppendIRI(mustParse(testAudienceIRI2))
 		expectCol1.SetActivityStreamsItems(items1)
-		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().Owns(ctx, mustParse(testAudienceIRI)).Return(
 			true, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testAudienceIRI)).Return(
 			col1, nil)
 		mockDB.EXPECT().Update(ctx, expectCol1).Return(nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testAudienceIRI))
 		r := newRemoveFn()
 		r.GetActivityStreamsObject().AppendActivityStreamsNote(testFederatedNote2)
 		err := w.remove(ctx, r)
@@ -1209,13 +1168,12 @@ func TestFederatedRemove(t *testing.T) {
 		items1.AppendIRI(mustParse(testAudienceIRI))
 		items1.AppendIRI(mustParse(testAudienceIRI2))
 		expectCol1.SetActivityStreamsOrderedItems(items1)
-		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().Owns(ctx, mustParse(testAudienceIRI)).Return(
 			true, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testAudienceIRI)).Return(
 			col1, nil)
 		mockDB.EXPECT().Update(ctx, expectCol1).Return(nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testAudienceIRI))
 		r := newRemoveFn()
 		r.GetActivityStreamsObject().AppendActivityStreamsNote(testFederatedNote2)
 		err := w.remove(ctx, r)
@@ -1249,20 +1207,18 @@ func TestFederatedRemove(t *testing.T) {
 		items2.AppendIRI(mustParse(testFederatedActorIRI))
 		items2.AppendIRI(mustParse(testFederatedActorIRI2))
 		expectCol2.SetActivityStreamsItems(items2)
-		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().Owns(ctx, mustParse(testAudienceIRI)).Return(
 			true, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testAudienceIRI)).Return(
 			col1, nil)
 		mockDB.EXPECT().Update(ctx, expectCol1).Return(nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testAudienceIRI))
-		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI2))
+		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI2)).Return(func() {}, nil)
 		mockDB.EXPECT().Owns(ctx, mustParse(testAudienceIRI2)).Return(
 			true, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testAudienceIRI2)).Return(
 			col2, nil)
 		mockDB.EXPECT().Update(ctx, expectCol2).Return(nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testAudienceIRI2))
 		r := newRemoveFn()
 		r.GetActivityStreamsTarget().AppendIRI(mustParse(testAudienceIRI2))
 		err := w.remove(ctx, r)
@@ -1275,12 +1231,11 @@ func TestFederatedRemove(t *testing.T) {
 		defer ctl.Finish()
 		w, mockDB := setupFn(ctl)
 		notCol := streams.NewActivityStreamsNote()
-		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().Owns(ctx, mustParse(testAudienceIRI)).Return(
 			true, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testAudienceIRI)).Return(
 			notCol, nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testAudienceIRI))
 		r := newRemoveFn()
 		err := w.remove(ctx, r)
 		if err == nil {
@@ -1292,13 +1247,12 @@ func TestFederatedRemove(t *testing.T) {
 		defer ctl.Finish()
 		w, mockDB := setupFn(ctl)
 		col1 := streams.NewActivityStreamsCollection()
-		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI))
+		mockDB.EXPECT().Lock(ctx, mustParse(testAudienceIRI)).Return(func() {}, nil)
 		mockDB.EXPECT().Owns(ctx, mustParse(testAudienceIRI)).Return(
 			true, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testAudienceIRI)).Return(
 			col1, nil)
 		mockDB.EXPECT().Update(ctx, gomock.Any()).Return(nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testAudienceIRI))
 		var gotc context.Context
 		var got vocab.ActivityStreamsRemove
 		w.Remove = func(ctx context.Context, v vocab.ActivityStreamsRemove) error {
@@ -1358,9 +1312,8 @@ func TestFederatedLike(t *testing.T) {
 		ctl := gomock.NewController(t)
 		defer ctl.Finish()
 		w, mockDB := setupFn(ctl)
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDB.EXPECT().Owns(ctx, mustParse(testNoteId1)).Return(false, nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId1))
 		l := newLikeFn()
 		err := w.like(ctx, l)
 		if err != nil {
@@ -1380,12 +1333,11 @@ func TestFederatedLike(t *testing.T) {
 		expectCol.SetActivityStreamsItems(expectItems)
 		expectLikes.SetActivityStreamsCollection(expectCol)
 		expectNote.SetActivityStreamsLikes(expectLikes)
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDB.EXPECT().Owns(ctx, mustParse(testNoteId1)).Return(true, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testNoteId1)).Return(
 			note, nil)
 		mockDB.EXPECT().Update(ctx, expectNote).Return(nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId1))
 		l := newLikeFn()
 		err := w.like(ctx, l)
 		if err != nil {
@@ -1413,12 +1365,11 @@ func TestFederatedLike(t *testing.T) {
 		expectCol.SetActivityStreamsItems(expectItems)
 		expectLikes.SetActivityStreamsCollection(expectCol)
 		expectNote.SetActivityStreamsLikes(expectLikes)
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDB.EXPECT().Owns(ctx, mustParse(testNoteId1)).Return(true, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testNoteId1)).Return(
 			note, nil)
 		mockDB.EXPECT().Update(ctx, expectNote).Return(nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId1))
 		l := newLikeFn()
 		err := w.like(ctx, l)
 		if err != nil {
@@ -1446,12 +1397,11 @@ func TestFederatedLike(t *testing.T) {
 		expectCol.SetActivityStreamsOrderedItems(expectItems)
 		expectLikes.SetActivityStreamsOrderedCollection(expectCol)
 		expectNote.SetActivityStreamsLikes(expectLikes)
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDB.EXPECT().Owns(ctx, mustParse(testNoteId1)).Return(true, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testNoteId1)).Return(
 			note, nil)
 		mockDB.EXPECT().Update(ctx, expectNote).Return(nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId1))
 		l := newLikeFn()
 		err := w.like(ctx, l)
 		if err != nil {
@@ -1471,12 +1421,11 @@ func TestFederatedLike(t *testing.T) {
 		expectCol.SetActivityStreamsItems(expectItems)
 		expectLikes.SetActivityStreamsCollection(expectCol)
 		expectNote.SetActivityStreamsLikes(expectLikes)
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDB.EXPECT().Owns(ctx, mustParse(testNoteId1)).Return(true, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testNoteId1)).Return(
 			note, nil)
 		mockDB.EXPECT().Update(ctx, expectNote).Return(nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId1))
 		var gotc context.Context
 		var got vocab.ActivityStreamsLike
 		w.Like = func(ctx context.Context, v vocab.ActivityStreamsLike) error {
@@ -1527,10 +1476,9 @@ func TestFederatedAnnounce(t *testing.T) {
 		ctl := gomock.NewController(t)
 		defer ctl.Finish()
 		w, mockDB := setupFn(ctl)
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDB.EXPECT().Owns(ctx, mustParse(testNoteId1)).Return(
 			false, nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId1))
 		a := newAnnounceFn()
 		err := w.announce(ctx, a)
 		if err != nil {
@@ -1550,13 +1498,12 @@ func TestFederatedAnnounce(t *testing.T) {
 		expectCol.SetActivityStreamsItems(expectItems)
 		expectShares.SetActivityStreamsCollection(expectCol)
 		expectNote.SetActivityStreamsShares(expectShares)
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDB.EXPECT().Owns(ctx, mustParse(testNoteId1)).Return(
 			true, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testNoteId1)).Return(
 			note, nil)
 		mockDB.EXPECT().Update(ctx, expectNote).Return(nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId1))
 		a := newAnnounceFn()
 		err := w.announce(ctx, a)
 		if err != nil {
@@ -1584,13 +1531,12 @@ func TestFederatedAnnounce(t *testing.T) {
 		expectCol.SetActivityStreamsItems(expectItems)
 		expectShares.SetActivityStreamsCollection(expectCol)
 		expectNote.SetActivityStreamsShares(expectShares)
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDB.EXPECT().Owns(ctx, mustParse(testNoteId1)).Return(
 			true, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testNoteId1)).Return(
 			note, nil)
 		mockDB.EXPECT().Update(ctx, expectNote).Return(nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId1))
 		a := newAnnounceFn()
 		err := w.announce(ctx, a)
 		if err != nil {
@@ -1618,13 +1564,12 @@ func TestFederatedAnnounce(t *testing.T) {
 		expectCol.SetActivityStreamsOrderedItems(expectItems)
 		expectShares.SetActivityStreamsOrderedCollection(expectCol)
 		expectNote.SetActivityStreamsShares(expectShares)
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDB.EXPECT().Owns(ctx, mustParse(testNoteId1)).Return(
 			true, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testNoteId1)).Return(
 			note, nil)
 		mockDB.EXPECT().Update(ctx, expectNote).Return(nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId1))
 		a := newAnnounceFn()
 		err := w.announce(ctx, a)
 		if err != nil {
@@ -1636,13 +1581,12 @@ func TestFederatedAnnounce(t *testing.T) {
 		defer ctl.Finish()
 		w, mockDB := setupFn(ctl)
 		note := streams.NewActivityStreamsNote()
-		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDB.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDB.EXPECT().Owns(ctx, mustParse(testNoteId1)).Return(
 			true, nil)
 		mockDB.EXPECT().Get(ctx, mustParse(testNoteId1)).Return(
 			note, nil)
 		mockDB.EXPECT().Update(ctx, gomock.Any()).Return(nil)
-		mockDB.EXPECT().Unlock(ctx, mustParse(testNoteId1))
 		var gotc context.Context
 		var got vocab.ActivityStreamsAnnounce
 		w.Announce = func(ctx context.Context, v vocab.ActivityStreamsAnnounce) error {
