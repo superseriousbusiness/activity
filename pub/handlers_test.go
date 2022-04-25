@@ -43,9 +43,8 @@ func TestActivityStreamsHandler(t *testing.T) {
 		req := toAPRequest(httptest.NewRequest("GET", testNoteId1, nil))
 		testErr := fmt.Errorf("test error")
 		// Mock
-		mockDb.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDb.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDb.EXPECT().Get(ctx, mustParse(testNoteId1)).Return(nil, testErr)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testNoteId1))
 		// Run & Verify
 		isAPReq, err := hf(ctx, resp, req)
 		assertEqual(t, isAPReq, true)
@@ -60,9 +59,8 @@ func TestActivityStreamsHandler(t *testing.T) {
 		resp := httptest.NewRecorder()
 		req := toAPRequest(httptest.NewRequest("GET", testNoteId1, nil))
 		// Mock
-		mockDb.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDb.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDb.EXPECT().Get(ctx, mustParse(testNoteId1)).Return(testTombstone, nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testNoteId1))
 		mockClock.EXPECT().Now().Return(now())
 		// Run & Verify
 		isAPReq, err := hf(ctx, resp, req)
@@ -85,9 +83,8 @@ func TestActivityStreamsHandler(t *testing.T) {
 		resp := httptest.NewRecorder()
 		req := toAPRequest(httptest.NewRequest("GET", testNoteId1, nil))
 		// Mock
-		mockDb.EXPECT().Lock(ctx, mustParse(testNoteId1))
+		mockDb.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil)
 		mockDb.EXPECT().Get(ctx, mustParse(testNoteId1)).Return(testMyNote, nil)
-		mockDb.EXPECT().Unlock(ctx, mustParse(testNoteId1))
 		mockClock.EXPECT().Now().Return(now())
 		// Run & Verify
 		isAPReq, err := hf(ctx, resp, req)
