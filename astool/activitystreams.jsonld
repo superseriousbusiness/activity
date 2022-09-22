@@ -1135,18 +1135,11 @@
             "name": "Example 1"
           },
           "notes": "Describes an object of any kind. The Object type serves as the base type for most of the other kinds of objects defined in the Activity Vocabulary, including other Core types such as Activity, IntransitiveActivity, Collection and OrderedCollection.",
-          "disjointWith": [
-            {
-              "type": "owl:Class",
-              "url": "https://www.w3.org/TR/activitystreams-vocabulary/#dfn-link",
-              "name": "Link"
-            },
-            {
-              "type": "owl:Class",
-              "url": "https://www.w3.org/TR/activitypub/#dfn-endpoint-collection",
-              "name": "EndpointCollection"
-            }
-          ],
+          "disjointWith": {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/TR/activitystreams-vocabulary/#dfn-link",
+            "name": "Link"
+          },
           "name": "Object",
           "url": "https://www.w3.org/TR/activitystreams-vocabulary/#dfn-object"
         },
@@ -1738,18 +1731,6 @@
           "disjointWith": [],
           "name": "Tombstone",
           "url": "https://www.w3.org/TR/activitystreams-vocabulary/#dfn-tombstone"
-        },
-        {
-          "id": "https://www.w3.org/TR/activitypub/#EndpointCollection",
-          "type": "owl:Class",
-          "notes": "A json object which maps additional (typically server/domain-wide) endpoints which may be useful either for this actor or someone referencing this actor. This mapping may be nested inside the actor document as the value or may be a link to a JSON-LD document with these properties.",
-          "disjointWith": {
-            "type": "owl:Class",
-            "url": "https://www.w3.org/TR/activitystreams-vocabulary/#dfn-object",
-            "name": "Object"
-          },
-          "name": "EndpointCollection",
-          "url": "https://www.w3.org/TR/activitypub/#dfn-endpoint-collection"
         }
       ]
     },
@@ -5443,12 +5424,21 @@
           "url": "https://www.w3.org/TR/activitypub/#preferredUsername"
         },
         {
-          "id": "https://www.w3.org/TR/activitypub/#endpoints",
+          "id": "https://www.w3.org/TR/activitypub/#Endpoints",
+          "type": "owl:Class",
+          "notes": "A json object which maps additional (typically server/domain-wide) endpoints which may be useful either for this actor or someone referencing this actor. This mapping may be nested inside the actor document as the value or may be a link to a JSON-LD document with these properties.",
+          "name": "Endpoints",
+          "url": "https://www.w3.org/TR/activitypub/#Endpoints",
+          "@wtf_typeless": true
+        },
+        {
+          "id": "https://www.w3.org/TR/activitypub/#dfn-endpoints",
           "type": [
             "rdf:Property",
-            "owl:FunctionalProperty"
+            "owl:ObjectProperty"
           ],
-          "notes": "A json object which maps additional (typically server/domain-wide) endpoints which may be useful either for this actor or someone referencing this actor. This mapping may be nested inside the actor document as the value or may be a link to a JSON-LD document with these properties.",
+          "example": {},
+          "notes": "Endpoints for an ActivityStreams actor.",
           "domain": {
             "type": "owl:Class",
             "unionOf": [
@@ -5482,11 +5472,13 @@
           "isDefinedBy": "https://www.w3.org/TR/activitypub/#dfn-endpoints",
           "range": {
             "type": "owl:Class",
-            "unionOf": {
-              "type": "owl:Class",
-              "url": "https://www.w3.org/TR/activitypub/#dfn-endpoint-collections",
-              "name": "EndpointCollection"
-            }
+            "unionOf": [
+              {
+                "type": "owl:Class",
+                "url": "https://www.w3.org/TR/activitypub/#Endpoints",
+                "name": "Endpoints"
+              }
+            ]
           },
           "name": "endpoints",
           "url": "https://www.w3.org/TR/activitypub/#dfn-endpoints"
@@ -5503,8 +5495,8 @@
             "unionOf": [
               {
                 "type": "owl:Class",
-                "url": "https://www.w3.org/TR/activitypub/#dfn-endpoint-collection",
-                "name": "EndpointCollection"
+                "url": "https://www.w3.org/TR/activitypub/#Endpoints",
+                "name": "Endpoints"
               }
             ]
           },
