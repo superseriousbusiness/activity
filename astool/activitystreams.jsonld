@@ -1135,11 +1135,18 @@
             "name": "Example 1"
           },
           "notes": "Describes an object of any kind. The Object type serves as the base type for most of the other kinds of objects defined in the Activity Vocabulary, including other Core types such as Activity, IntransitiveActivity, Collection and OrderedCollection.",
-          "disjointWith": {
-            "type": "owl:Class",
-            "url": "https://www.w3.org/TR/activitystreams-vocabulary/#dfn-link",
-            "name": "Link"
-          },
+          "disjointWith": [
+            {
+              "type": "owl:Class",
+              "url": "https://www.w3.org/TR/activitystreams-vocabulary/#dfn-link",
+              "name": "Link"
+            },
+            {
+              "type": "owl:Class",
+              "url": "https://www.w3.org/TR/activitypub/#dfn-endpoint-collection",
+              "name": "EndpointCollection"
+            }
+          ],
           "name": "Object",
           "url": "https://www.w3.org/TR/activitystreams-vocabulary/#dfn-object"
         },
@@ -1731,6 +1738,18 @@
           "disjointWith": [],
           "name": "Tombstone",
           "url": "https://www.w3.org/TR/activitystreams-vocabulary/#dfn-tombstone"
+        },
+        {
+          "id": "https://www.w3.org/TR/activitypub/#EndpointCollection",
+          "type": "owl:Class",
+          "notes": "A json object which maps additional (typically server/domain-wide) endpoints which may be useful either for this actor or someone referencing this actor. This mapping may be nested inside the actor document as the value or may be a link to a JSON-LD document with these properties.",
+          "disjointWith": {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/TR/activitystreams-vocabulary/#dfn-object",
+            "name": "Object"
+          },
+          "name": "EndpointCollection",
+          "url": "https://www.w3.org/TR/activitypub/#dfn-endpoint-collection"
         }
       ]
     },
@@ -5422,6 +5441,80 @@
           },
           "name": "preferredUsername",
           "url": "https://www.w3.org/TR/activitypub/#preferredUsername"
+        },
+        {
+          "id": "https://www.w3.org/TR/activitypub/#endpoints",
+          "type": [
+            "rdf:Property",
+            "owl:FunctionalProperty"
+          ],
+          "notes": "A json object which maps additional (typically server/domain-wide) endpoints which may be useful either for this actor or someone referencing this actor. This mapping may be nested inside the actor document as the value or may be a link to a JSON-LD document with these properties.",
+          "domain": {
+            "type": "owl:Class",
+            "unionOf": [
+              {
+                "type": "owl:Class",
+                "url": "https://www.w3.org/ns/activitystreams#Application",
+                "name": "Application"
+              },
+              {
+                "type": "owl:Class",
+                "url": "https://www.w3.org/ns/activitystreams#Group",
+                "name": "Group"
+              },
+              {
+                "type": "owl:Class",
+                "url": "https://www.w3.org/ns/activitystreams#Organization",
+                "name": "Organization"
+              },
+              {
+                "type": "owl:Class",
+                "url": "https://www.w3.org/ns/activitystreams#Person",
+                "name": "Person"
+              },
+              {
+                "type": "owl:Class",
+                "url": "https://www.w3.org/ns/activitystreams#Service",
+                "name": "Service"
+              }
+            ]
+          },
+          "isDefinedBy": "https://www.w3.org/TR/activitypub/#dfn-endpoints",
+          "range": {
+            "type": "owl:Class",
+            "unionOf": {
+              "type": "owl:Class",
+              "url": "https://www.w3.org/TR/activitypub/#dfn-endpoint-collections",
+              "name": "EndpointCollection"
+            }
+          },
+          "name": "endpoints",
+          "url": "https://www.w3.org/TR/activitypub/#dfn-endpoints"
+        },
+        {
+          "id": "https://www.w3.org/TR/activitypub/#sharedInbox",
+          "type": [
+            "rdf:Property",
+            "owl:FunctionalProperty"
+          ],
+          "notes": "An optional endpoint used for wide delivery of publicly addressed activities and activities sent to followers. sharedInbox endpoints SHOULD also be publicly readable OrderedCollection objects containing objects addressed to the Public special collection. Reading from the sharedInbox endpoint MUST NOT present objects which are not addressed to the Public endpoint.",
+          "domain": {
+            "type": "owl:Class",
+            "unionOf": [
+              {
+                "type": "owl:Class",
+                "url": "https://www.w3.org/TR/activitypub/#dfn-endpoint-collection",
+                "name": "EndpointCollection"
+              }
+            ]
+          },
+          "isDefinedBy": "https://www.w3.org/TR/activitypub/#dfn-sharedInbox",
+          "range": {
+            "type": "owl:Class",
+            "unionOf": "xsd:anyURI"
+          },
+          "name": "sharedInbox",
+          "url": "https://www.w3.org/TR/activitypub/#dfn-sharedInbox"
         },
         {
           "id": "https://www.w3.org/TR/activitypub/#manuallyApprovesFollowers",
