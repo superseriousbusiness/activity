@@ -25,7 +25,7 @@ func TestPassThroughMethods(t *testing.T) {
 		sp = NewMockSocialProtocol(ctl)
 		db = NewMockDatabase(ctl)
 		cl = NewMockClock(ctl)
-		a = &sideEffectActor{
+		a = &SideEffectActor{
 			common: c,
 			s2s:    fp,
 			c2s:    sp,
@@ -127,7 +127,7 @@ func TestAuthorizePostInbox(t *testing.T) {
 		sp = NewMockSocialProtocol(ctl)
 		db = NewMockDatabase(ctl)
 		cl = NewMockClock(ctl)
-		a = &sideEffectActor{
+		a = &SideEffectActor{
 			common: c,
 			s2s:    fp,
 			c2s:    sp,
@@ -198,7 +198,7 @@ func TestPostInbox(t *testing.T) {
 		sp = NewMockSocialProtocol(ctl)
 		db = NewMockDatabase(ctl)
 		cl = NewMockClock(ctl)
-		a = &sideEffectActor{
+		a = &SideEffectActor{
 			common: c,
 			s2s:    fp,
 			c2s:    sp,
@@ -350,7 +350,7 @@ func TestInboxForwarding(t *testing.T) {
 		sp = NewMockSocialProtocol(ctl)
 		db = NewMockDatabase(ctl)
 		cl = NewMockClock(ctl)
-		a = &sideEffectActor{
+		a = &SideEffectActor{
 			common: c,
 			s2s:    fp,
 			c2s:    sp,
@@ -760,7 +760,7 @@ func TestPostOutbox(t *testing.T) {
 		sp = NewMockSocialProtocol(ctl)
 		db = NewMockDatabase(ctl)
 		cl = NewMockClock(ctl)
-		a = &sideEffectActor{
+		a = &SideEffectActor{
 			common: c,
 			s2s:    fp,
 			c2s:    sp,
@@ -908,7 +908,7 @@ func TestAddNewIDs(t *testing.T) {
 		sp = NewMockSocialProtocol(ctl)
 		db = NewMockDatabase(ctl)
 		cl = NewMockClock(ctl)
-		a = &sideEffectActor{
+		a = &SideEffectActor{
 			common: c,
 			s2s:    fp,
 			c2s:    sp,
@@ -1007,7 +1007,7 @@ func TestDeliver(t *testing.T) {
 		sp = NewMockSocialProtocol(ctl)
 		db = NewMockDatabase(ctl)
 		cl = NewMockClock(ctl)
-		a = &sideEffectActor{
+		a = &SideEffectActor{
 			common: c,
 			s2s:    fp,
 			c2s:    sp,
@@ -1565,7 +1565,7 @@ func TestWrapInCreate(t *testing.T) {
 		sp = NewMockSocialProtocol(ctl)
 		db = NewMockDatabase(ctl)
 		cl = NewMockClock(ctl)
-		a = &sideEffectActor{
+		a = &SideEffectActor{
 			common: c,
 			s2s:    fp,
 			c2s:    sp,
