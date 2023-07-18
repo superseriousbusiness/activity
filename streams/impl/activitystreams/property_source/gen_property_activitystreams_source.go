@@ -58,7 +58,6 @@ type ActivityStreamsSourceProperty struct {
 	activitystreamsPlaceMember                 vocab.ActivityStreamsPlace
 	activitystreamsProfileMember               vocab.ActivityStreamsProfile
 	schemaPropertyValueMember                  vocab.SchemaPropertyValue
-	forgefedPushMember                         vocab.ForgeFedPush
 	activitystreamsQuestionMember              vocab.ActivityStreamsQuestion
 	activitystreamsReadMember                  vocab.ActivityStreamsRead
 	activitystreamsRejectMember                vocab.ActivityStreamsReject
@@ -370,12 +369,6 @@ func DeserializeSourceProperty(m map[string]interface{}, aliasMap map[string]str
 					schemaPropertyValueMember: v,
 				}
 				return this, nil
-			} else if v, err := mgr.DeserializePushForgeFed()(m, aliasMap); err == nil {
-				this := &ActivityStreamsSourceProperty{
-					alias:              alias,
-					forgefedPushMember: v,
-				}
-				return this, nil
 			} else if v, err := mgr.DeserializeQuestionActivityStreams()(m, aliasMap); err == nil {
 				this := &ActivityStreamsSourceProperty{
 					activitystreamsQuestionMember: v,
@@ -523,7 +516,6 @@ func (this *ActivityStreamsSourceProperty) Clear() {
 	this.activitystreamsPlaceMember = nil
 	this.activitystreamsProfileMember = nil
 	this.schemaPropertyValueMember = nil
-	this.forgefedPushMember = nil
 	this.activitystreamsQuestionMember = nil
 	this.activitystreamsReadMember = nil
 	this.activitystreamsRejectMember = nil
@@ -1087,9 +1079,6 @@ func (this ActivityStreamsSourceProperty) GetType() vocab.Type {
 	if this.IsSchemaPropertyValue() {
 		return this.GetSchemaPropertyValue()
 	}
-	if this.IsForgeFedPush() {
-		return this.GetForgeFedPush()
-	}
 	if this.IsActivityStreamsQuestion() {
 		return this.GetActivityStreamsQuestion()
 	}
@@ -1182,7 +1171,6 @@ func (this ActivityStreamsSourceProperty) HasAny() bool {
 		this.IsActivityStreamsPlace() ||
 		this.IsActivityStreamsProfile() ||
 		this.IsSchemaPropertyValue() ||
-		this.IsForgeFedPush() ||
 		this.IsActivityStreamsQuestion() ||
 		this.IsActivityStreamsRead() ||
 		this.IsActivityStreamsReject() ||
@@ -1710,8 +1698,6 @@ func (this ActivityStreamsSourceProperty) JSONLDContext() map[string]string {
 		child = this.GetActivityStreamsProfile().JSONLDContext()
 	} else if this.IsSchemaPropertyValue() {
 		child = this.GetSchemaPropertyValue().JSONLDContext()
-	} else if this.IsForgeFedPush() {
-		child = this.GetForgeFedPush().JSONLDContext()
 	} else if this.IsActivityStreamsQuestion() {
 		child = this.GetActivityStreamsQuestion().JSONLDContext()
 	} else if this.IsActivityStreamsRead() {
@@ -1883,64 +1869,52 @@ func (this ActivityStreamsSourceProperty) KindIndex() int {
 		return 41
 	}
 	if this.IsActivityStreamsProfile() {
-		return 43
+		return 42
 	}
 	if this.IsSchemaPropertyValue() {
-		return 44
-	}
-	if this.IsForgeFedPush() {
-		return 45
+		return 43
 	}
 	if this.IsActivityStreamsQuestion() {
-		return 46
+		return 44
 	}
 	if this.IsActivityStreamsRead() {
-		return 47
+		return 45
 	}
 	if this.IsActivityStreamsReject() {
-		return 48
+		return 46
 	}
 	if this.IsActivityStreamsRelationship() {
-		return 49
+		return 47
 	}
 	if this.IsActivityStreamsRemove() {
-		return 50
-	}
-	if this.IsForgeFedRepository() {
-		return 51
+		return 48
 	}
 	if this.IsActivityStreamsService() {
-		return 52
+		return 49
 	}
 	if this.IsActivityStreamsTentativeAccept() {
-		return 53
+		return 50
 	}
 	if this.IsActivityStreamsTentativeReject() {
-		return 54
-	}
-	if this.IsForgeFedTicket() {
-		return 55
-	}
-	if this.IsForgeFedTicketDependency() {
-		return 56
+		return 51
 	}
 	if this.IsActivityStreamsTombstone() {
-		return 57
+		return 52
 	}
 	if this.IsActivityStreamsTravel() {
-		return 58
+		return 53
 	}
 	if this.IsActivityStreamsUndo() {
-		return 59
+		return 54
 	}
 	if this.IsActivityStreamsUpdate() {
-		return 60
+		return 55
 	}
 	if this.IsActivityStreamsVideo() {
-		return 61
+		return 56
 	}
 	if this.IsActivityStreamsView() {
-		return 62
+		return 57
 	}
 	if this.IsIRI() {
 		return -2
@@ -2047,8 +2021,6 @@ func (this ActivityStreamsSourceProperty) LessThan(o vocab.ActivityStreamsSource
 		return this.GetActivityStreamsProfile().LessThan(o.GetActivityStreamsProfile())
 	} else if this.IsSchemaPropertyValue() {
 		return this.GetSchemaPropertyValue().LessThan(o.GetSchemaPropertyValue())
-	} else if this.IsForgeFedPush() {
-		return this.GetForgeFedPush().LessThan(o.GetForgeFedPush())
 	} else if this.IsActivityStreamsQuestion() {
 		return this.GetActivityStreamsQuestion().LessThan(o.GetActivityStreamsQuestion())
 	} else if this.IsActivityStreamsRead() {
@@ -2185,8 +2157,6 @@ func (this ActivityStreamsSourceProperty) Serialize() (interface{}, error) {
 		return this.GetActivityStreamsProfile().Serialize()
 	} else if this.IsSchemaPropertyValue() {
 		return this.GetSchemaPropertyValue().Serialize()
-	} else if this.IsForgeFedPush() {
-		return this.GetForgeFedPush().Serialize()
 	} else if this.IsActivityStreamsQuestion() {
 		return this.GetActivityStreamsQuestion().Serialize()
 	} else if this.IsActivityStreamsRead() {
@@ -2810,10 +2780,6 @@ func (this *ActivityStreamsSourceProperty) SetType(t vocab.Type) error {
 	}
 	if v, ok := t.(vocab.SchemaPropertyValue); ok {
 		this.SetSchemaPropertyValue(v)
-		return nil
-	}
-	if v, ok := t.(vocab.ForgeFedPush); ok {
-		this.SetForgeFedPush(v)
 		return nil
 	}
 	if v, ok := t.(vocab.ActivityStreamsQuestion); ok {

@@ -58,7 +58,6 @@ type ActivityStreamsActorPropertyIterator struct {
 	activitystreamsPlaceMember                 vocab.ActivityStreamsPlace
 	activitystreamsProfileMember               vocab.ActivityStreamsProfile
 	schemaPropertyValueMember                  vocab.SchemaPropertyValue
-	forgefedPushMember                         vocab.ForgeFedPush
 	activitystreamsQuestionMember              vocab.ActivityStreamsQuestion
 	activitystreamsReadMember                  vocab.ActivityStreamsRead
 	activitystreamsRejectMember                vocab.ActivityStreamsReject
@@ -368,12 +367,6 @@ func deserializeActivityStreamsActorPropertyIterator(i interface{}, aliasMap map
 			this := &ActivityStreamsActorPropertyIterator{
 				alias:                     alias,
 				schemaPropertyValueMember: v,
-			}
-			return this, nil
-		} else if v, err := mgr.DeserializePushForgeFed()(m, aliasMap); err == nil {
-			this := &ActivityStreamsActorPropertyIterator{
-				alias:              alias,
-				forgefedPushMember: v,
 			}
 			return this, nil
 		} else if v, err := mgr.DeserializeQuestionActivityStreams()(m, aliasMap); err == nil {
@@ -1014,9 +1007,6 @@ func (this ActivityStreamsActorPropertyIterator) GetType() vocab.Type {
 	if this.IsSchemaPropertyValue() {
 		return this.GetSchemaPropertyValue()
 	}
-	if this.IsForgeFedPush() {
-		return this.GetForgeFedPush()
-	}
 	if this.IsActivityStreamsQuestion() {
 		return this.GetActivityStreamsQuestion()
 	}
@@ -1109,7 +1099,6 @@ func (this ActivityStreamsActorPropertyIterator) HasAny() bool {
 		this.IsActivityStreamsPlace() ||
 		this.IsActivityStreamsProfile() ||
 		this.IsSchemaPropertyValue() ||
-		this.IsForgeFedPush() ||
 		this.IsActivityStreamsQuestion() ||
 		this.IsActivityStreamsRead() ||
 		this.IsActivityStreamsReject() ||
@@ -1637,8 +1626,6 @@ func (this ActivityStreamsActorPropertyIterator) JSONLDContext() map[string]stri
 		child = this.GetActivityStreamsProfile().JSONLDContext()
 	} else if this.IsSchemaPropertyValue() {
 		child = this.GetSchemaPropertyValue().JSONLDContext()
-	} else if this.IsForgeFedPush() {
-		child = this.GetForgeFedPush().JSONLDContext()
 	} else if this.IsActivityStreamsQuestion() {
 		child = this.GetActivityStreamsQuestion().JSONLDContext()
 	} else if this.IsActivityStreamsRead() {
@@ -1810,64 +1797,52 @@ func (this ActivityStreamsActorPropertyIterator) KindIndex() int {
 		return 41
 	}
 	if this.IsActivityStreamsProfile() {
-		return 43
+		return 42
 	}
 	if this.IsSchemaPropertyValue() {
-		return 44
-	}
-	if this.IsForgeFedPush() {
-		return 45
+		return 43
 	}
 	if this.IsActivityStreamsQuestion() {
-		return 46
+		return 44
 	}
 	if this.IsActivityStreamsRead() {
-		return 47
+		return 45
 	}
 	if this.IsActivityStreamsReject() {
-		return 48
+		return 46
 	}
 	if this.IsActivityStreamsRelationship() {
-		return 49
+		return 47
 	}
 	if this.IsActivityStreamsRemove() {
-		return 50
-	}
-	if this.IsForgeFedRepository() {
-		return 51
+		return 48
 	}
 	if this.IsActivityStreamsService() {
-		return 52
+		return 49
 	}
 	if this.IsActivityStreamsTentativeAccept() {
-		return 53
+		return 50
 	}
 	if this.IsActivityStreamsTentativeReject() {
-		return 54
-	}
-	if this.IsForgeFedTicket() {
-		return 55
-	}
-	if this.IsForgeFedTicketDependency() {
-		return 56
+		return 51
 	}
 	if this.IsActivityStreamsTombstone() {
-		return 57
+		return 52
 	}
 	if this.IsActivityStreamsTravel() {
-		return 58
+		return 53
 	}
 	if this.IsActivityStreamsUndo() {
-		return 59
+		return 54
 	}
 	if this.IsActivityStreamsUpdate() {
-		return 60
+		return 55
 	}
 	if this.IsActivityStreamsVideo() {
-		return 61
+		return 56
 	}
 	if this.IsActivityStreamsView() {
-		return 62
+		return 57
 	}
 	if this.IsIRI() {
 		return -2
@@ -1974,8 +1949,6 @@ func (this ActivityStreamsActorPropertyIterator) LessThan(o vocab.ActivityStream
 		return this.GetActivityStreamsProfile().LessThan(o.GetActivityStreamsProfile())
 	} else if this.IsSchemaPropertyValue() {
 		return this.GetSchemaPropertyValue().LessThan(o.GetSchemaPropertyValue())
-	} else if this.IsForgeFedPush() {
-		return this.GetForgeFedPush().LessThan(o.GetForgeFedPush())
 	} else if this.IsActivityStreamsQuestion() {
 		return this.GetActivityStreamsQuestion().LessThan(o.GetActivityStreamsQuestion())
 	} else if this.IsActivityStreamsRead() {
@@ -2628,10 +2601,6 @@ func (this *ActivityStreamsActorPropertyIterator) SetType(t vocab.Type) error {
 		this.SetSchemaPropertyValue(v)
 		return nil
 	}
-	if v, ok := t.(vocab.ForgeFedPush); ok {
-		this.SetForgeFedPush(v)
-		return nil
-	}
 	if v, ok := t.(vocab.ActivityStreamsQuestion); ok {
 		this.SetActivityStreamsQuestion(v)
 		return nil
@@ -2739,7 +2708,6 @@ func (this *ActivityStreamsActorPropertyIterator) clear() {
 	this.activitystreamsPlaceMember = nil
 	this.activitystreamsProfileMember = nil
 	this.schemaPropertyValueMember = nil
-	this.forgefedPushMember = nil
 	this.activitystreamsQuestionMember = nil
 	this.activitystreamsReadMember = nil
 	this.activitystreamsRejectMember = nil
@@ -2851,8 +2819,6 @@ func (this ActivityStreamsActorPropertyIterator) serialize() (interface{}, error
 		return this.GetActivityStreamsProfile().Serialize()
 	} else if this.IsSchemaPropertyValue() {
 		return this.GetSchemaPropertyValue().Serialize()
-	} else if this.IsForgeFedPush() {
-		return this.GetForgeFedPush().Serialize()
 	} else if this.IsActivityStreamsQuestion() {
 		return this.GetActivityStreamsQuestion().Serialize()
 	} else if this.IsActivityStreamsRead() {
@@ -4582,23 +4548,6 @@ func (this *ActivityStreamsActorProperty) InsertIRI(idx int, v *url.URL) {
 	}
 }
 
-// InsertTootEmoji inserts a Emoji value at the specified index for a property
-// "actor". Existing elements at that index and higher are shifted back once.
-// Invalidates all iterators.
-func (this *ActivityStreamsActorProperty) InsertTootEmoji(idx int, v vocab.TootEmoji) {
-	this.properties = append(this.properties, nil)
-	copy(this.properties[idx+1:], this.properties[idx:])
-	this.properties[idx] = &ActivityStreamsActorPropertyIterator{
-		alias:           this.alias,
-		myIdx:           idx,
-		parent:          this,
-		tootEmojiMember: v,
-	}
-	for i := idx; i < this.Len(); i++ {
-		(this.properties)[i].myIdx = i
-	}
-}
-
 // InsertSchemaPropertyValue inserts a PropertyValue value at the specified index
 // for a property "actor". Existing elements at that index and higher are
 // shifted back once. Invalidates all iterators.
@@ -4617,6 +4566,23 @@ func (this *ActivityStreamsActorProperty) InsertSchemaPropertyValue(idx int, v v
 }
 
 // InsertTootEmoji inserts a Emoji value at the specified index for a property
+// "actor". Existing elements at that index and higher are shifted back once.
+// Invalidates all iterators.
+func (this *ActivityStreamsActorProperty) InsertTootEmoji(idx int, v vocab.TootEmoji) {
+	this.properties = append(this.properties, nil)
+	copy(this.properties[idx+1:], this.properties[idx:])
+	this.properties[idx] = &ActivityStreamsActorPropertyIterator{
+		alias:           this.alias,
+		myIdx:           idx,
+		parent:          this,
+		tootEmojiMember: v,
+	}
+	for i := idx; i < this.Len(); i++ {
+		(this.properties)[i].myIdx = i
+	}
+}
+
+// InsertTootHashtag inserts a Hashtag value at the specified index for a property
 // "actor". Existing elements at that index and higher are shifted back once.
 // Invalidates all iterators.
 func (this *ActivityStreamsActorProperty) InsertTootHashtag(idx int, v vocab.TootHashtag) {
@@ -4883,79 +4849,63 @@ func (this ActivityStreamsActorProperty) Less(i, j int) bool {
 			lhs := this.properties[i].GetActivityStreamsProfile()
 			rhs := this.properties[j].GetActivityStreamsProfile()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 44 {
+		} else if idx1 == 43 {
 			lhs := this.properties[i].GetSchemaPropertyValue()
 			rhs := this.properties[j].GetSchemaPropertyValue()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 45 {
-			lhs := this.properties[i].GetForgeFedPush()
-			rhs := this.properties[j].GetForgeFedPush()
-			return lhs.LessThan(rhs)
-		} else if idx1 == 46 {
+		} else if idx1 == 44 {
 			lhs := this.properties[i].GetActivityStreamsQuestion()
 			rhs := this.properties[j].GetActivityStreamsQuestion()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 47 {
+		} else if idx1 == 45 {
 			lhs := this.properties[i].GetActivityStreamsRead()
 			rhs := this.properties[j].GetActivityStreamsRead()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 48 {
+		} else if idx1 == 46 {
 			lhs := this.properties[i].GetActivityStreamsReject()
 			rhs := this.properties[j].GetActivityStreamsReject()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 49 {
+		} else if idx1 == 47 {
 			lhs := this.properties[i].GetActivityStreamsRelationship()
 			rhs := this.properties[j].GetActivityStreamsRelationship()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 50 {
+		} else if idx1 == 48 {
 			lhs := this.properties[i].GetActivityStreamsRemove()
 			rhs := this.properties[j].GetActivityStreamsRemove()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 51 {
-			lhs := this.properties[i].GetForgeFedRepository()
-			rhs := this.properties[j].GetForgeFedRepository()
-			return lhs.LessThan(rhs)
-		} else if idx1 == 52 {
+		} else if idx1 == 49 {
 			lhs := this.properties[i].GetActivityStreamsService()
 			rhs := this.properties[j].GetActivityStreamsService()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 53 {
+		} else if idx1 == 50 {
 			lhs := this.properties[i].GetActivityStreamsTentativeAccept()
 			rhs := this.properties[j].GetActivityStreamsTentativeAccept()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 54 {
+		} else if idx1 == 51 {
 			lhs := this.properties[i].GetActivityStreamsTentativeReject()
 			rhs := this.properties[j].GetActivityStreamsTentativeReject()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 55 {
-			lhs := this.properties[i].GetForgeFedTicket()
-			rhs := this.properties[j].GetForgeFedTicket()
-			return lhs.LessThan(rhs)
-		} else if idx1 == 56 {
-			lhs := this.properties[i].GetForgeFedTicketDependency()
-			rhs := this.properties[j].GetForgeFedTicketDependency()
-			return lhs.LessThan(rhs)
-		} else if idx1 == 57 {
+		} else if idx1 == 52 {
 			lhs := this.properties[i].GetActivityStreamsTombstone()
 			rhs := this.properties[j].GetActivityStreamsTombstone()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 58 {
+		} else if idx1 == 53 {
 			lhs := this.properties[i].GetActivityStreamsTravel()
 			rhs := this.properties[j].GetActivityStreamsTravel()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 59 {
+		} else if idx1 == 54 {
 			lhs := this.properties[i].GetActivityStreamsUndo()
 			rhs := this.properties[j].GetActivityStreamsUndo()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 60 {
+		} else if idx1 == 55 {
 			lhs := this.properties[i].GetActivityStreamsUpdate()
 			rhs := this.properties[j].GetActivityStreamsUpdate()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 61 {
+		} else if idx1 == 56 {
 			lhs := this.properties[i].GetActivityStreamsVideo()
 			rhs := this.properties[j].GetActivityStreamsVideo()
 			return lhs.LessThan(rhs)
-		} else if idx1 == 62 {
+		} else if idx1 == 57 {
 			lhs := this.properties[i].GetActivityStreamsView()
 			rhs := this.properties[j].GetActivityStreamsView()
 			return lhs.LessThan(rhs)

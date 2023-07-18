@@ -4,6 +4,7 @@ package streams
 
 import (
 	typeemoji "github.com/superseriousbusiness/activity/streams/impl/toot/type_emoji"
+	typehashtag "github.com/superseriousbusiness/activity/streams/impl/toot/type_hashtag"
 	typeidentityproof "github.com/superseriousbusiness/activity/streams/impl/toot/type_identityproof"
 	vocab "github.com/superseriousbusiness/activity/streams/vocab"
 )

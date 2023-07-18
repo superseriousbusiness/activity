@@ -4,7 +4,7 @@ package typehashtag
 
 import (
 	"fmt"
-	vocab "github.com/go-fed/activity/streams/vocab"
+	vocab "github.com/superseriousbusiness/activity/streams/vocab"
 	"strings"
 )
 
@@ -181,7 +181,7 @@ func DeserializeHashtag(m map[string]interface{}, aliasMap map[string]string) (*
 // HashtagIsDisjointWith returns true if the other provided type is disjoint with
 // the Hashtag type.
 func HashtagIsDisjointWith(other vocab.Type) bool {
-	disjointWith := []string{"Accept", "Activity", "Add", "Announce", "Application", "Arrive", "Article", "Audio", "Block", "Collection", "CollectionPage", "Create", "Delete", "Dislike", "Document", "Emoji", "Event", "Flag", "Follow", "Group", "IdentityProof", "Ignore", "Image", "IntransitiveActivity", "Invite", "Join", "Leave", "Like", "Listen", "Move", "Note", "Object", "Offer", "OrderedCollection", "OrderedCollectionPage", "OrderedCollectionPage", "Organization", "Page", "Person", "Place", "Profile", "Question", "Read", "Reject", "Relationship", "Remove", "Service", "TentativeAccept", "TentativeReject", "Tombstone", "Travel", "Undo", "Update", "Video", "View"}
+	disjointWith := []string{"Accept", "Activity", "Add", "Announce", "Application", "Arrive", "Article", "Audio", "Block", "Collection", "CollectionPage", "Create", "Delete", "Dislike", "Document", "Emoji", "Event", "Flag", "Follow", "Group", "IdentityProof", "Ignore", "Image", "IntransitiveActivity", "Invite", "Join", "Leave", "Like", "Listen", "Move", "Note", "Object", "Offer", "OrderedCollection", "OrderedCollectionPage", "OrderedCollectionPage", "Organization", "Page", "Person", "Place", "Profile", "PropertyValue", "Question", "Read", "Reject", "Relationship", "Remove", "Service", "TentativeAccept", "TentativeReject", "Tombstone", "Travel", "Undo", "Update", "Video", "View"}
 	for _, disjoint := range disjointWith {
 		if disjoint == other.GetTypeName() {
 			return true
