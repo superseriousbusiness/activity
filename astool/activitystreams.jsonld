@@ -5509,7 +5509,7 @@
           "url": "https://www.w3.org/TR/activitypub/#dfn-sharedInbox"
         },
         {
-          "id": "https://www.w3.org/TR/activitypub/#manuallyApprovesFollowers",
+          "id": "https://www.w3.org/ns/activitystreams/#manuallyApprovesFollowers",
           "type": [
             "rdf:Property",
             "owl:FunctionalProperty"
@@ -5545,16 +5545,16 @@
               }
             ]
           },
-          "isDefinedBy": "https://www.w3.org/TR/activitypub/#manuallyApprovesFollowers",
+          "isDefinedBy": "https://www.w3.org/ns/activitystreams/#manuallyApprovesFollowers",
           "range": {
             "type": "owl:Class",
             "unionOf": "xsd:boolean"
           },
           "name": "manuallyApprovesFollowers",
-          "url": "https://www.w3.org/TR/activitypub/#manuallyApprovesFollowers"
+          "url": "https://www.w3.org/ns/activitystreams/#manuallyApprovesFollowers"
         },
         {
-          "id": "https://www.w3.org/TR/activitypub/#alsoKnownAs",
+          "id": "https://www.w3.org/ns/activitystreams/#alsoKnownAs",
           "type": [
             "rdf:Property",
             "owl:FunctionalProperty"
@@ -5590,16 +5590,16 @@
               }
             ]
           },
-          "isDefinedBy": "https://www.w3.org/TR/activitypub/#alsoKnownAs",
+          "isDefinedBy": "https://www.w3.org/ns/activitystreams/#alsoKnownAs",
           "range": {
             "type": "owl:Class",
             "unionOf": "xsd:anyURI"
           },
           "name": "alsoKnownAs",
-          "url": "https://www.w3.org/TR/activitypub/#alsoKnownAs"
+          "url": "https://www.w3.org/ns/activitystreams/#alsoKnownAs"
         },
         {
-          "id": "https://www.w3.org/TR/activitypub/#movedTo",
+          "id": "https://www.w3.org/ns/activitystreams/#movedTo",
           "type": [
             "rdf:Property",
             "owl:FunctionalProperty"
@@ -5635,13 +5635,13 @@
               }
             ]
           },
-          "isDefinedBy": "https://www.w3.org/TR/activitypub/#movedTo",
+          "isDefinedBy": "https://www.w3.org/ns/activitystreams/#movedTo",
           "range": {
             "type": "owl:Class",
             "unionOf": "xsd:anyURI"
           },
           "name": "movedTo",
-          "url": "https://www.w3.org/TR/activitypub/#movedTo"
+          "url": "https://www.w3.org/ns/activitystreams/#movedTo"
         }
       ]
     }
