@@ -5509,7 +5509,7 @@
           "url": "https://www.w3.org/TR/activitypub/#dfn-sharedInbox"
         },
         {
-          "id": "https://www.w3.org/TR/activitypub/#manuallyApprovesFollowers",
+          "id": "https://www.w3.org/ns/activitystreams/#manuallyApprovesFollowers",
           "type": [
             "rdf:Property",
             "owl:FunctionalProperty"
@@ -5545,13 +5545,103 @@
               }
             ]
           },
-          "isDefinedBy": "https://www.w3.org/TR/activitypub/#manuallyApprovesFollowers",
+          "isDefinedBy": "https://www.w3.org/ns/activitystreams/#manuallyApprovesFollowers",
           "range": {
             "type": "owl:Class",
             "unionOf": "xsd:boolean"
           },
           "name": "manuallyApprovesFollowers",
-          "url": "https://www.w3.org/TR/activitypub/#manuallyApprovesFollowers"
+          "url": "https://www.w3.org/ns/activitystreams/#manuallyApprovesFollowers"
+        },
+        {
+          "id": "https://www.w3.org/ns/activitystreams/#alsoKnownAs",
+          "type": [
+            "rdf:Property",
+            "owl:FunctionalProperty"
+          ],
+          "notes": "URI/ID by which this actor is also known (eg., ID of 'alt' account, previous account, new account, etc).",
+          "domain": {
+            "type": "owl:Class",
+            "unionOf": [
+              {
+                "type": "owl:Class",
+                "url": "https://www.w3.org/ns/activitystreams#Application",
+                "name": "Application"
+              },
+              {
+                "type": "owl:Class",
+                "url": "https://www.w3.org/ns/activitystreams#Group",
+                "name": "Group"
+              },
+              {
+                "type": "owl:Class",
+                "url": "https://www.w3.org/ns/activitystreams#Organization",
+                "name": "Organization"
+              },
+              {
+                "type": "owl:Class",
+                "url": "https://www.w3.org/ns/activitystreams#Person",
+                "name": "Person"
+              },
+              {
+                "type": "owl:Class",
+                "url": "https://www.w3.org/ns/activitystreams#Service",
+                "name": "Service"
+              }
+            ]
+          },
+          "isDefinedBy": "https://www.w3.org/ns/activitystreams/#alsoKnownAs",
+          "range": {
+            "type": "owl:Class",
+            "unionOf": "xsd:anyURI"
+          },
+          "name": "alsoKnownAs",
+          "url": "https://www.w3.org/ns/activitystreams/#alsoKnownAs"
+        },
+        {
+          "id": "https://www.w3.org/ns/activitystreams/#movedTo",
+          "type": [
+            "rdf:Property",
+            "owl:FunctionalProperty"
+          ],
+          "notes": "URI/ID to which this Actor has moved. A set value indicates that the Actor is now active at the target URI, and is no longer active on the Actor model on which this property is set.",
+          "domain": {
+            "type": "owl:Class",
+            "unionOf": [
+              {
+                "type": "owl:Class",
+                "url": "https://www.w3.org/ns/activitystreams#Application",
+                "name": "Application"
+              },
+              {
+                "type": "owl:Class",
+                "url": "https://www.w3.org/ns/activitystreams#Group",
+                "name": "Group"
+              },
+              {
+                "type": "owl:Class",
+                "url": "https://www.w3.org/ns/activitystreams#Organization",
+                "name": "Organization"
+              },
+              {
+                "type": "owl:Class",
+                "url": "https://www.w3.org/ns/activitystreams#Person",
+                "name": "Person"
+              },
+              {
+                "type": "owl:Class",
+                "url": "https://www.w3.org/ns/activitystreams#Service",
+                "name": "Service"
+              }
+            ]
+          },
+          "isDefinedBy": "https://www.w3.org/ns/activitystreams/#movedTo",
+          "range": {
+            "type": "owl:Class",
+            "unionOf": "xsd:anyURI"
+          },
+          "name": "movedTo",
+          "url": "https://www.w3.org/ns/activitystreams/#movedTo"
         }
       ]
     }
