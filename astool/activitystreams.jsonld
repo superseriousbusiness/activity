@@ -5557,9 +5557,9 @@
           "id": "https://www.w3.org/ns/activitystreams/#alsoKnownAs",
           "type": [
             "rdf:Property",
-            "owl:FunctionalProperty"
+            "owl:ObjectProperty"
           ],
-          "notes": "URI/ID by which this actor is also known (eg., ID of 'alt' account, previous account, new account, etc).",
+          "notes": "List of other URIs/AP IDs by which this actor is also known (eg., URIs of 'alt' account, previous account, new account, etc).",
           "domain": {
             "type": "owl:Class",
             "unionOf": [
