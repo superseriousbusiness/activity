@@ -9,89 +9,74 @@ import (
 	"net/url"
 )
 
-// ActivityStreamsAlsoKnownAsProperty is the functional property "alsoKnownAs". It
-// is permitted to be a single nilable value type.
-type ActivityStreamsAlsoKnownAsProperty struct {
+// ActivityStreamsAlsoKnownAsPropertyIterator is an iterator for a property. It is
+// permitted to be a single nilable value type.
+type ActivityStreamsAlsoKnownAsPropertyIterator struct {
 	xmlschemaAnyURIMember *url.URL
 	unknown               interface{}
 	alias                 string
+	myIdx                 int
+	parent                vocab.ActivityStreamsAlsoKnownAsProperty
 }
 
-// DeserializeAlsoKnownAsProperty creates a "alsoKnownAs" property from an
-// interface representation that has been unmarshalled from a text or binary
-// format.
-func DeserializeAlsoKnownAsProperty(m map[string]interface{}, aliasMap map[string]string) (*ActivityStreamsAlsoKnownAsProperty, error) {
+// NewActivityStreamsAlsoKnownAsPropertyIterator creates a new
+// ActivityStreamsAlsoKnownAs property.
+func NewActivityStreamsAlsoKnownAsPropertyIterator() *ActivityStreamsAlsoKnownAsPropertyIterator {
+	return &ActivityStreamsAlsoKnownAsPropertyIterator{alias: ""}
+}
+
+// deserializeActivityStreamsAlsoKnownAsPropertyIterator creates an iterator from
+// an element that has been unmarshalled from a text or binary format.
+func deserializeActivityStreamsAlsoKnownAsPropertyIterator(i interface{}, aliasMap map[string]string) (*ActivityStreamsAlsoKnownAsPropertyIterator, error) {
 	alias := ""
 	if a, ok := aliasMap["https://www.w3.org/ns/activitystreams"]; ok {
 		alias = a
 	}
-	propName := "alsoKnownAs"
-	if len(alias) > 0 {
-		// Use alias both to find the property, and set within the property.
-		propName = fmt.Sprintf("%s:%s", alias, "alsoKnownAs")
-	}
-	i, ok := m[propName]
-
-	if ok {
-		if v, err := anyuri.DeserializeAnyURI(i); err == nil {
-			this := &ActivityStreamsAlsoKnownAsProperty{
-				alias:                 alias,
-				xmlschemaAnyURIMember: v,
-			}
-			return this, nil
-		}
-		this := &ActivityStreamsAlsoKnownAsProperty{
-			alias:   alias,
-			unknown: i,
+	if v, err := anyuri.DeserializeAnyURI(i); err == nil {
+		this := &ActivityStreamsAlsoKnownAsPropertyIterator{
+			alias:                 alias,
+			xmlschemaAnyURIMember: v,
 		}
 		return this, nil
 	}
-	return nil, nil
-}
-
-// NewActivityStreamsAlsoKnownAsProperty creates a new alsoKnownAs property.
-func NewActivityStreamsAlsoKnownAsProperty() *ActivityStreamsAlsoKnownAsProperty {
-	return &ActivityStreamsAlsoKnownAsProperty{alias: ""}
-}
-
-// Clear ensures no value of this property is set. Calling IsXMLSchemaAnyURI
-// afterwards will return false.
-func (this *ActivityStreamsAlsoKnownAsProperty) Clear() {
-	this.unknown = nil
-	this.xmlschemaAnyURIMember = nil
+	this := &ActivityStreamsAlsoKnownAsPropertyIterator{
+		alias:   alias,
+		unknown: i,
+	}
+	return this, nil
 }
 
 // Get returns the value of this property. When IsXMLSchemaAnyURI returns false,
 // Get will return any arbitrary value.
-func (this ActivityStreamsAlsoKnownAsProperty) Get() *url.URL {
+func (this ActivityStreamsAlsoKnownAsPropertyIterator) Get() *url.URL {
 	return this.xmlschemaAnyURIMember
 }
 
 // GetIRI returns the IRI of this property. When IsIRI returns false, GetIRI will
 // return any arbitrary value.
-func (this ActivityStreamsAlsoKnownAsProperty) GetIRI() *url.URL {
+func (this ActivityStreamsAlsoKnownAsPropertyIterator) GetIRI() *url.URL {
 	return this.xmlschemaAnyURIMember
 }
 
 // HasAny returns true if the value or IRI is set.
-func (this ActivityStreamsAlsoKnownAsProperty) HasAny() bool {
+func (this ActivityStreamsAlsoKnownAsPropertyIterator) HasAny() bool {
 	return this.IsXMLSchemaAnyURI()
 }
 
 // IsIRI returns true if this property is an IRI.
-func (this ActivityStreamsAlsoKnownAsProperty) IsIRI() bool {
+func (this ActivityStreamsAlsoKnownAsPropertyIterator) IsIRI() bool {
 	return this.xmlschemaAnyURIMember != nil
 }
 
 // IsXMLSchemaAnyURI returns true if this property is set and not an IRI.
-func (this ActivityStreamsAlsoKnownAsProperty) IsXMLSchemaAnyURI() bool {
+func (this ActivityStreamsAlsoKnownAsPropertyIterator) IsXMLSchemaAnyURI() bool {
 	return this.xmlschemaAnyURIMember != nil
 }
 
 // JSONLDContext returns the JSONLD URIs required in the context string for this
 // property and the specific values that are set. The value in the map is the
 // alias used to import the property's value or values.
-func (this ActivityStreamsAlsoKnownAsProperty) JSONLDContext() map[string]string {
+func (this ActivityStreamsAlsoKnownAsPropertyIterator) JSONLDContext() map[string]string {
 	m := map[string]string{"https://www.w3.org/ns/activitystreams": this.alias}
 	var child map[string]string
 
@@ -109,7 +94,7 @@ func (this ActivityStreamsAlsoKnownAsProperty) JSONLDContext() map[string]string
 // KindIndex computes an arbitrary value for indexing this kind of value. This is
 // a leaky API detail only for folks looking to replace the go-fed
 // implementation. Applications should not use this method.
-func (this ActivityStreamsAlsoKnownAsProperty) KindIndex() int {
+func (this ActivityStreamsAlsoKnownAsPropertyIterator) KindIndex() int {
 	if this.IsXMLSchemaAnyURI() {
 		return 0
 	}
@@ -123,7 +108,7 @@ func (this ActivityStreamsAlsoKnownAsProperty) KindIndex() int {
 // comparison. Applications should not use this because it is only meant to
 // help alternative implementations to go-fed to be able to normalize
 // nonfunctional properties.
-func (this ActivityStreamsAlsoKnownAsProperty) LessThan(o vocab.ActivityStreamsAlsoKnownAsProperty) bool {
+func (this ActivityStreamsAlsoKnownAsPropertyIterator) LessThan(o vocab.ActivityStreamsAlsoKnownAsPropertyIterator) bool {
 	if this.IsIRI() {
 		// IRIs are always less than other values, none, or unknowns
 		return true
@@ -147,7 +132,283 @@ func (this ActivityStreamsAlsoKnownAsProperty) LessThan(o vocab.ActivityStreamsA
 	}
 }
 
-// Name returns the name of this property: "alsoKnownAs".
+// Name returns the name of this property: "ActivityStreamsAlsoKnownAs".
+func (this ActivityStreamsAlsoKnownAsPropertyIterator) Name() string {
+	if len(this.alias) > 0 {
+		return this.alias + ":" + "ActivityStreamsAlsoKnownAs"
+	} else {
+		return "ActivityStreamsAlsoKnownAs"
+	}
+}
+
+// Next returns the next iterator, or nil if there is no next iterator.
+func (this ActivityStreamsAlsoKnownAsPropertyIterator) Next() vocab.ActivityStreamsAlsoKnownAsPropertyIterator {
+	if this.myIdx+1 >= this.parent.Len() {
+		return nil
+	} else {
+		return this.parent.At(this.myIdx + 1)
+	}
+}
+
+// Prev returns the previous iterator, or nil if there is no previous iterator.
+func (this ActivityStreamsAlsoKnownAsPropertyIterator) Prev() vocab.ActivityStreamsAlsoKnownAsPropertyIterator {
+	if this.myIdx-1 < 0 {
+		return nil
+	} else {
+		return this.parent.At(this.myIdx - 1)
+	}
+}
+
+// Set sets the value of this property. Calling IsXMLSchemaAnyURI afterwards will
+// return true.
+func (this *ActivityStreamsAlsoKnownAsPropertyIterator) Set(v *url.URL) {
+	this.clear()
+	this.xmlschemaAnyURIMember = v
+}
+
+// SetIRI sets the value of this property. Calling IsIRI afterwards will return
+// true.
+func (this *ActivityStreamsAlsoKnownAsPropertyIterator) SetIRI(v *url.URL) {
+	this.clear()
+	this.Set(v)
+}
+
+// clear ensures no value of this property is set. Calling IsXMLSchemaAnyURI
+// afterwards will return false.
+func (this *ActivityStreamsAlsoKnownAsPropertyIterator) clear() {
+	this.unknown = nil
+	this.xmlschemaAnyURIMember = nil
+}
+
+// serialize converts this into an interface representation suitable for
+// marshalling into a text or binary format. Applications should not need this
+// function as most typical use cases serialize types instead of individual
+// properties. It is exposed for alternatives to go-fed implementations to use.
+func (this ActivityStreamsAlsoKnownAsPropertyIterator) serialize() (interface{}, error) {
+	if this.IsXMLSchemaAnyURI() {
+		return anyuri.SerializeAnyURI(this.Get())
+	}
+	return this.unknown, nil
+}
+
+// ActivityStreamsAlsoKnownAsProperty is the non-functional property
+// "alsoKnownAs". It is permitted to have one or more values, and of different
+// value types.
+type ActivityStreamsAlsoKnownAsProperty struct {
+	properties []*ActivityStreamsAlsoKnownAsPropertyIterator
+	alias      string
+}
+
+// DeserializeAlsoKnownAsProperty creates a "alsoKnownAs" property from an
+// interface representation that has been unmarshalled from a text or binary
+// format.
+func DeserializeAlsoKnownAsProperty(m map[string]interface{}, aliasMap map[string]string) (vocab.ActivityStreamsAlsoKnownAsProperty, error) {
+	alias := ""
+	if a, ok := aliasMap["https://www.w3.org/ns/activitystreams"]; ok {
+		alias = a
+	}
+	propName := "alsoKnownAs"
+	if len(alias) > 0 {
+		propName = fmt.Sprintf("%s:%s", alias, "alsoKnownAs")
+	}
+	i, ok := m[propName]
+
+	if ok {
+		this := &ActivityStreamsAlsoKnownAsProperty{
+			alias:      alias,
+			properties: []*ActivityStreamsAlsoKnownAsPropertyIterator{},
+		}
+		if list, ok := i.([]interface{}); ok {
+			for _, iterator := range list {
+				if p, err := deserializeActivityStreamsAlsoKnownAsPropertyIterator(iterator, aliasMap); err != nil {
+					return this, err
+				} else if p != nil {
+					this.properties = append(this.properties, p)
+				}
+			}
+		} else {
+			if p, err := deserializeActivityStreamsAlsoKnownAsPropertyIterator(i, aliasMap); err != nil {
+				return this, err
+			} else if p != nil {
+				this.properties = append(this.properties, p)
+			}
+		}
+		// Set up the properties for iteration.
+		for idx, ele := range this.properties {
+			ele.parent = this
+			ele.myIdx = idx
+		}
+		return this, nil
+	}
+	return nil, nil
+}
+
+// NewActivityStreamsAlsoKnownAsProperty creates a new alsoKnownAs property.
+func NewActivityStreamsAlsoKnownAsProperty() *ActivityStreamsAlsoKnownAsProperty {
+	return &ActivityStreamsAlsoKnownAsProperty{alias: ""}
+}
+
+// AppendIRI appends an IRI value to the back of a list of the property
+// "alsoKnownAs"
+func (this *ActivityStreamsAlsoKnownAsProperty) AppendIRI(v *url.URL) {
+	this.properties = append(this.properties, &ActivityStreamsAlsoKnownAsPropertyIterator{
+		alias:                 this.alias,
+		myIdx:                 this.Len(),
+		parent:                this,
+		xmlschemaAnyURIMember: v,
+	})
+}
+
+// AppendXMLSchemaAnyURI appends a anyURI value to the back of a list of the
+// property "alsoKnownAs". Invalidates iterators that are traversing using
+// Prev.
+func (this *ActivityStreamsAlsoKnownAsProperty) AppendXMLSchemaAnyURI(v *url.URL) {
+	this.properties = append(this.properties, &ActivityStreamsAlsoKnownAsPropertyIterator{
+		alias:                 this.alias,
+		myIdx:                 this.Len(),
+		parent:                this,
+		xmlschemaAnyURIMember: v,
+	})
+}
+
+// At returns the property value for the specified index. Panics if the index is
+// out of bounds.
+func (this ActivityStreamsAlsoKnownAsProperty) At(index int) vocab.ActivityStreamsAlsoKnownAsPropertyIterator {
+	return this.properties[index]
+}
+
+// Begin returns the first iterator, or nil if empty. Can be used with the
+// iterator's Next method and this property's End method to iterate from front
+// to back through all values.
+func (this ActivityStreamsAlsoKnownAsProperty) Begin() vocab.ActivityStreamsAlsoKnownAsPropertyIterator {
+	if this.Empty() {
+		return nil
+	} else {
+		return this.properties[0]
+	}
+}
+
+// Empty returns returns true if there are no elements.
+func (this ActivityStreamsAlsoKnownAsProperty) Empty() bool {
+	return this.Len() == 0
+}
+
+// End returns beyond-the-last iterator, which is nil. Can be used with the
+// iterator's Next method and this property's Begin method to iterate from
+// front to back through all values.
+func (this ActivityStreamsAlsoKnownAsProperty) End() vocab.ActivityStreamsAlsoKnownAsPropertyIterator {
+	return nil
+}
+
+// Insert inserts an IRI value at the specified index for a property
+// "alsoKnownAs". Existing elements at that index and higher are shifted back
+// once. Invalidates all iterators.
+func (this *ActivityStreamsAlsoKnownAsProperty) InsertIRI(idx int, v *url.URL) {
+	this.properties = append(this.properties, nil)
+	copy(this.properties[idx+1:], this.properties[idx:])
+	this.properties[idx] = &ActivityStreamsAlsoKnownAsPropertyIterator{
+		alias:                 this.alias,
+		myIdx:                 idx,
+		parent:                this,
+		xmlschemaAnyURIMember: v,
+	}
+	for i := idx; i < this.Len(); i++ {
+		(this.properties)[i].myIdx = i
+	}
+}
+
+// InsertXMLSchemaAnyURI inserts a anyURI value at the specified index for a
+// property "alsoKnownAs". Existing elements at that index and higher are
+// shifted back once. Invalidates all iterators.
+func (this *ActivityStreamsAlsoKnownAsProperty) InsertXMLSchemaAnyURI(idx int, v *url.URL) {
+	this.properties = append(this.properties, nil)
+	copy(this.properties[idx+1:], this.properties[idx:])
+	this.properties[idx] = &ActivityStreamsAlsoKnownAsPropertyIterator{
+		alias:                 this.alias,
+		myIdx:                 idx,
+		parent:                this,
+		xmlschemaAnyURIMember: v,
+	}
+	for i := idx; i < this.Len(); i++ {
+		(this.properties)[i].myIdx = i
+	}
+}
+
+// JSONLDContext returns the JSONLD URIs required in the context string for this
+// property and the specific values that are set. The value in the map is the
+// alias used to import the property's value or values.
+func (this ActivityStreamsAlsoKnownAsProperty) JSONLDContext() map[string]string {
+	m := map[string]string{"https://www.w3.org/ns/activitystreams": this.alias}
+	for _, elem := range this.properties {
+		child := elem.JSONLDContext()
+		/*
+		   Since the literal maps in this function are determined at
+		   code-generation time, this loop should not overwrite an existing key with a
+		   new value.
+		*/
+		for k, v := range child {
+			m[k] = v
+		}
+	}
+	return m
+}
+
+// KindIndex computes an arbitrary value for indexing this kind of value. This is
+// a leaky API method specifically needed only for alternate implementations
+// for go-fed. Applications should not use this method. Panics if the index is
+// out of bounds.
+func (this ActivityStreamsAlsoKnownAsProperty) KindIndex(idx int) int {
+	return this.properties[idx].KindIndex()
+}
+
+// Len returns the number of values that exist for the "alsoKnownAs" property.
+func (this ActivityStreamsAlsoKnownAsProperty) Len() (length int) {
+	return len(this.properties)
+}
+
+// Less computes whether another property is less than this one. Mixing types
+// results in a consistent but arbitrary ordering
+func (this ActivityStreamsAlsoKnownAsProperty) Less(i, j int) bool {
+	idx1 := this.KindIndex(i)
+	idx2 := this.KindIndex(j)
+	if idx1 < idx2 {
+		return true
+	} else if idx1 == idx2 {
+		if idx1 == 0 {
+			lhs := this.properties[i].Get()
+			rhs := this.properties[j].Get()
+			return anyuri.LessAnyURI(lhs, rhs)
+		} else if idx1 == -2 {
+			lhs := this.properties[i].GetIRI()
+			rhs := this.properties[j].GetIRI()
+			return lhs.String() < rhs.String()
+		}
+	}
+	return false
+}
+
+// LessThan compares two instances of this property with an arbitrary but stable
+// comparison. Applications should not use this because it is only meant to
+// help alternative implementations to go-fed to be able to normalize
+// nonfunctional properties.
+func (this ActivityStreamsAlsoKnownAsProperty) LessThan(o vocab.ActivityStreamsAlsoKnownAsProperty) bool {
+	l1 := this.Len()
+	l2 := o.Len()
+	l := l1
+	if l2 < l1 {
+		l = l2
+	}
+	for i := 0; i < l; i++ {
+		if this.properties[i].LessThan(o.At(i)) {
+			return true
+		} else if o.At(i).LessThan(this.properties[i]) {
+			return false
+		}
+	}
+	return l1 < l2
+}
+
+// Name returns the name of this property ("alsoKnownAs") with any alias.
 func (this ActivityStreamsAlsoKnownAsProperty) Name() string {
 	if len(this.alias) > 0 {
 		return this.alias + ":" + "alsoKnownAs"
@@ -156,27 +417,93 @@ func (this ActivityStreamsAlsoKnownAsProperty) Name() string {
 	}
 }
 
+// PrependIRI prepends an IRI value to the front of a list of the property
+// "alsoKnownAs".
+func (this *ActivityStreamsAlsoKnownAsProperty) PrependIRI(v *url.URL) {
+	this.properties = append([]*ActivityStreamsAlsoKnownAsPropertyIterator{{
+		alias:                 this.alias,
+		myIdx:                 0,
+		parent:                this,
+		xmlschemaAnyURIMember: v,
+	}}, this.properties...)
+	for i := 1; i < this.Len(); i++ {
+		(this.properties)[i].myIdx = i
+	}
+}
+
+// PrependXMLSchemaAnyURI prepends a anyURI value to the front of a list of the
+// property "alsoKnownAs". Invalidates all iterators.
+func (this *ActivityStreamsAlsoKnownAsProperty) PrependXMLSchemaAnyURI(v *url.URL) {
+	this.properties = append([]*ActivityStreamsAlsoKnownAsPropertyIterator{{
+		alias:                 this.alias,
+		myIdx:                 0,
+		parent:                this,
+		xmlschemaAnyURIMember: v,
+	}}, this.properties...)
+	for i := 1; i < this.Len(); i++ {
+		(this.properties)[i].myIdx = i
+	}
+}
+
+// Remove deletes an element at the specified index from a list of the property
+// "alsoKnownAs", regardless of its type. Panics if the index is out of
+// bounds. Invalidates all iterators.
+func (this *ActivityStreamsAlsoKnownAsProperty) Remove(idx int) {
+	(this.properties)[idx].parent = nil
+	copy((this.properties)[idx:], (this.properties)[idx+1:])
+	(this.properties)[len(this.properties)-1] = &ActivityStreamsAlsoKnownAsPropertyIterator{}
+	this.properties = (this.properties)[:len(this.properties)-1]
+	for i := idx; i < this.Len(); i++ {
+		(this.properties)[i].myIdx = i
+	}
+}
+
 // Serialize converts this into an interface representation suitable for
 // marshalling into a text or binary format. Applications should not need this
 // function as most typical use cases serialize types instead of individual
 // properties. It is exposed for alternatives to go-fed implementations to use.
 func (this ActivityStreamsAlsoKnownAsProperty) Serialize() (interface{}, error) {
-	if this.IsXMLSchemaAnyURI() {
-		return anyuri.SerializeAnyURI(this.Get())
+	s := make([]interface{}, 0, len(this.properties))
+	for _, iterator := range this.properties {
+		if b, err := iterator.serialize(); err != nil {
+			return s, err
+		} else {
+			s = append(s, b)
+		}
 	}
-	return this.unknown, nil
+	// Shortcut: if serializing one value, don't return an array -- pretty sure other Fediverse software would choke on a "type" value with array, for example.
+	if len(s) == 1 {
+		return s[0], nil
+	}
+	return s, nil
 }
 
-// Set sets the value of this property. Calling IsXMLSchemaAnyURI afterwards will
-// return true.
-func (this *ActivityStreamsAlsoKnownAsProperty) Set(v *url.URL) {
-	this.Clear()
-	this.xmlschemaAnyURIMember = v
+// Set sets a anyURI value to be at the specified index for the property
+// "alsoKnownAs". Panics if the index is out of bounds. Invalidates all
+// iterators.
+func (this *ActivityStreamsAlsoKnownAsProperty) Set(idx int, v *url.URL) {
+	(this.properties)[idx].parent = nil
+	(this.properties)[idx] = &ActivityStreamsAlsoKnownAsPropertyIterator{
+		alias:                 this.alias,
+		myIdx:                 idx,
+		parent:                this,
+		xmlschemaAnyURIMember: v,
+	}
 }
 
-// SetIRI sets the value of this property. Calling IsIRI afterwards will return
-// true.
-func (this *ActivityStreamsAlsoKnownAsProperty) SetIRI(v *url.URL) {
-	this.Clear()
-	this.Set(v)
+// SetIRI sets an IRI value to be at the specified index for the property
+// "alsoKnownAs". Panics if the index is out of bounds.
+func (this *ActivityStreamsAlsoKnownAsProperty) SetIRI(idx int, v *url.URL) {
+	(this.properties)[idx].parent = nil
+	(this.properties)[idx] = &ActivityStreamsAlsoKnownAsPropertyIterator{
+		alias:                 this.alias,
+		myIdx:                 idx,
+		parent:                this,
+		xmlschemaAnyURIMember: v,
+	}
+}
+
+// Swap swaps the location of values at two indices for the "alsoKnownAs" property.
+func (this ActivityStreamsAlsoKnownAsProperty) Swap(i, j int) {
+	this.properties[i], this.properties[j] = this.properties[j], this.properties[i]
 }
