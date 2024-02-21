@@ -3,6 +3,7 @@ package pub
 import (
 	"context"
 	"fmt"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -31,7 +32,8 @@ var (
 			gs,
 			ps,
 			testPubKeyId,
-			testPrivKey)
+			testPrivKey,
+		)
 		return
 	}
 )
@@ -50,8 +52,8 @@ func TestHttpSigTransportDereference(t *testing.T) {
 		gs.EXPECT().SignRequest(testPrivKey, testPubKeyId, gomock.Any(), nil)
 		hc.EXPECT().Do(gomock.Any()).Return(resp, testErr)
 		// Run & Verify
-		b, err := tp.Dereference(ctx, mustParse(testNoteId1))
-		assertEqual(t, len(b), 0)
+		resp, err := tp.Dereference(ctx, mustParse(testNoteId1))
+		assertEqual(t, resp, nil)
 		assertEqual(t, err, testErr)
 	})
 	t.Run("Dereferences", func(t *testing.T) {
@@ -74,7 +76,11 @@ func TestHttpSigTransportDereference(t *testing.T) {
 		gs.EXPECT().SignRequest(testPrivKey, testPubKeyId, expectReq, nil)
 		hc.EXPECT().Do(expectReq).Return(resp, nil)
 		// Run & Verify
-		b, err := tp.Dereference(ctx, mustParse(testNoteId1))
+		resp, err = tp.Dereference(ctx, mustParse(testNoteId1))
+		assertEqual(t, err, nil)
+		assertEqual(t, resp.StatusCode, http.StatusOK)
+		b, err := io.ReadAll(resp.Body)
+		_ = resp.Body.Close()
 		assertByteEqual(t, b, testRespBody)
 		assertEqual(t, err, nil)
 	})

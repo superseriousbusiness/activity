@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
@@ -468,6 +469,21 @@ func wrappedInCreate(t vocab.Type) vocab.ActivityStreamsCreate {
 	op.AppendType(t)
 	create.SetActivityStreamsObject(op)
 	return create
+}
+
+// mustWrapInGETResponse wraps a vocab.Type as serialized JSON response body to GET request with IRI.
+func mustWrapInGETResponse(iri *url.URL, t vocab.Type) *http.Response {
+	r := new(http.Response)
+	r.Request = new(http.Request)
+	r.Request.Method = http.MethodGet
+	r.Request.URL = iri
+	r.Status = http.StatusText(http.StatusOK)
+	r.StatusCode = http.StatusOK
+	body := bytes.NewReader(mustSerializeToBytes(t))
+	r.Body = io.NopCloser(body)
+	r.Header = make(http.Header)
+	r.Header.Set("Content-Type", activityStreamsMediaTypes[0])
+	return r
 }
 
 // mustSerializeToBytes serializes a type to bytes or panics.
