@@ -25,13 +25,7 @@ func TestPassThroughMethods(t *testing.T) {
 		sp = NewMockSocialProtocol(ctl)
 		db = NewMockDatabase(ctl)
 		cl = NewMockClock(ctl)
-		a = &SideEffectActor{
-			common: c,
-			s2s:    fp,
-			c2s:    sp,
-			db:     db,
-			clock:  cl,
-		}
+		a = NewSideEffectActor(c, fp, sp, db, cl)
 		return
 	}
 	// Run tests
@@ -127,13 +121,7 @@ func TestAuthorizePostInbox(t *testing.T) {
 		sp = NewMockSocialProtocol(ctl)
 		db = NewMockDatabase(ctl)
 		cl = NewMockClock(ctl)
-		a = &SideEffectActor{
-			common: c,
-			s2s:    fp,
-			c2s:    sp,
-			db:     db,
-			clock:  cl,
-		}
+		a = NewSideEffectActor(c, fp, sp, db, cl)
 		return
 	}
 	// Run tests
@@ -198,13 +186,7 @@ func TestPostInbox(t *testing.T) {
 		sp = NewMockSocialProtocol(ctl)
 		db = NewMockDatabase(ctl)
 		cl = NewMockClock(ctl)
-		a = &SideEffectActor{
-			common: c,
-			s2s:    fp,
-			c2s:    sp,
-			db:     db,
-			clock:  cl,
-		}
+		a = NewSideEffectActor(c, fp, sp, db, cl)
 		return
 	}
 	// Run tests
@@ -350,13 +332,7 @@ func TestInboxForwarding(t *testing.T) {
 		sp = NewMockSocialProtocol(ctl)
 		db = NewMockDatabase(ctl)
 		cl = NewMockClock(ctl)
-		a = &SideEffectActor{
-			common: c,
-			s2s:    fp,
-			c2s:    sp,
-			db:     db,
-			clock:  cl,
-		}
+		a = NewSideEffectActor(c, fp, sp, db, cl)
 		return
 	}
 	t.Run("DoesNotForwardIfAlreadyExists", func(t *testing.T) {
@@ -535,9 +511,11 @@ func TestInboxForwarding(t *testing.T) {
 			db.EXPECT().Lock(ctx, mustParse(testNoteId1)).Return(func() {}, nil),
 			db.EXPECT().Owns(ctx, mustParse(testNoteId1)).Return(false, nil),
 			cm.EXPECT().NewTransport(ctx, mustParse(testMyInboxIRI), goFedUserAgent()).Return(mockTPortTag, nil),
-			mockTPortTag.EXPECT().Dereference(ctx, mustParse(testTagIRI)).Return(mustSerializeToBytes(newObjectWithId(testTagIRI)), nil),
+			mockTPortTag.EXPECT().Dereference(ctx, mustParse(testTagIRI)).Return(
+				mustWrapInGETResponse(mustParse(testTagIRI), newObjectWithId(testTagIRI)), nil),
 			cm.EXPECT().NewTransport(ctx, mustParse(testMyInboxIRI), goFedUserAgent()).Return(mockTPortTag2, nil),
-			mockTPortTag2.EXPECT().Dereference(ctx, mustParse(testTagIRI2)).Return(mustSerializeToBytes(newObjectWithId(testTagIRI2)), nil),
+			mockTPortTag2.EXPECT().Dereference(ctx, mustParse(testTagIRI2)).Return(
+				mustWrapInGETResponse(mustParse(testTagIRI2), newObjectWithId(testTagIRI2)), nil),
 		)
 		// Run
 		err := a.InboxForwarding(ctx, mustParse(testMyInboxIRI), input)
@@ -760,13 +738,7 @@ func TestPostOutbox(t *testing.T) {
 		sp = NewMockSocialProtocol(ctl)
 		db = NewMockDatabase(ctl)
 		cl = NewMockClock(ctl)
-		a = &SideEffectActor{
-			common: c,
-			s2s:    fp,
-			c2s:    sp,
-			db:     db,
-			clock:  cl,
-		}
+		a = NewSideEffectActor(c, fp, sp, db, cl)
 		return
 	}
 	t.Run("AddsToEmptyOutbox", func(t *testing.T) {
@@ -908,13 +880,7 @@ func TestAddNewIDs(t *testing.T) {
 		sp = NewMockSocialProtocol(ctl)
 		db = NewMockDatabase(ctl)
 		cl = NewMockClock(ctl)
-		a = &SideEffectActor{
-			common: c,
-			s2s:    fp,
-			c2s:    sp,
-			db:     db,
-			clock:  cl,
-		}
+		a = NewSideEffectActor(c, fp, sp, db, cl)
 		return
 	}
 	t.Run("AddsIdToActivityWithoutId", func(t *testing.T) {
@@ -1007,13 +973,7 @@ func TestDeliver(t *testing.T) {
 		sp = NewMockSocialProtocol(ctl)
 		db = NewMockDatabase(ctl)
 		cl = NewMockClock(ctl)
-		a = &SideEffectActor{
-			common: c,
-			s2s:    fp,
-			c2s:    sp,
-			db:     db,
-			clock:  cl,
-		}
+		a = NewSideEffectActor(c, fp, sp, db, cl)
 		return
 	}
 	t.Run("SendToRecipientsInTo", func(t *testing.T) {
@@ -1565,13 +1525,7 @@ func TestWrapInCreate(t *testing.T) {
 		sp = NewMockSocialProtocol(ctl)
 		db = NewMockDatabase(ctl)
 		cl = NewMockClock(ctl)
-		a = &SideEffectActor{
-			common: c,
-			s2s:    fp,
-			c2s:    sp,
-			db:     db,
-			clock:  cl,
-		}
+		a = NewSideEffectActor(c, fp, sp, db, cl)
 		return
 	}
 	t.Run("CreateHasObjectAndActor", func(t *testing.T) {
