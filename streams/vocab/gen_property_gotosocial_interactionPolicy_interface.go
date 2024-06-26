@@ -57,7 +57,7 @@ type GoToSocialInteractionPolicyPropertyIterator interface {
 	SetType(t Type) error
 }
 
-// InteractionPolicy for an ActivityStreams Object or Activity.
+// InteractionPolicy for an ActivityStreams Object.
 //
 //   null
 type GoToSocialInteractionPolicyProperty interface {

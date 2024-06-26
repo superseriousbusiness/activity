@@ -111,6 +111,9 @@ type ActivityStreamsAudio interface {
 	// GetActivityStreamsUrl returns the "url" property if it exists, and nil
 	// otherwise.
 	GetActivityStreamsUrl() ActivityStreamsUrlProperty
+	// GetGoToSocialApprovedBy returns the "approvedBy" property if it exists,
+	// and nil otherwise.
+	GetGoToSocialApprovedBy() GoToSocialApprovedByProperty
 	// GetGoToSocialInteractionPolicy returns the "interactionPolicy" property
 	// if it exists, and nil otherwise.
 	GetGoToSocialInteractionPolicy() GoToSocialInteractionPolicyProperty
@@ -208,6 +211,8 @@ type ActivityStreamsAudio interface {
 	SetActivityStreamsUpdated(i ActivityStreamsUpdatedProperty)
 	// SetActivityStreamsUrl sets the "url" property.
 	SetActivityStreamsUrl(i ActivityStreamsUrlProperty)
+	// SetGoToSocialApprovedBy sets the "approvedBy" property.
+	SetGoToSocialApprovedBy(i GoToSocialApprovedByProperty)
 	// SetGoToSocialInteractionPolicy sets the "interactionPolicy" property.
 	SetGoToSocialInteractionPolicy(i GoToSocialInteractionPolicyProperty)
 	// SetJSONLDId sets the "id" property.

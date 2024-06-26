@@ -43,57 +43,7 @@
         "rdf:Property",
         "owl:ObjectProperty"
       ],
-      "example": {
-        "@context": [
-          "https://gotosocial.org/ns",
-          "https://www.w3.org/ns/activitystreams"
-        ],
-        "content": "hey @f0x and @dumpsterqueer",
-        "contentMap": {
-          "en": "hey @f0x and @dumpsterqueer",
-          "fr": "bonjour @f0x et @dumpsterqueer"
-        },
-        "interactionPolicy": {
-          "canLike": {
-            "always": [
-              "https://www.w3.org/ns/activitystreams#Public"
-            ],
-            "approvalRequired": []
-          },
-          "canReply": {
-            "always": [
-              "https://example.org/users/the_mighty_zork",
-              "https://example.org/users/the_mighty_zork/followers",
-              "https://another.example.org/users/dumpsterqueer",
-              "https://another.example.org/users/f0x"
-            ],
-            "approvalRequired": [
-              "https://www.w3.org/ns/activitystreams#Public"
-            ]
-          },
-          "canAnnounce": {
-            "always": [
-              "https://example.org/users/the_mighty_zork"
-            ],
-            "approvalRequired": [
-              "https://www.w3.org/ns/activitystreams#Public"
-            ]
-          }
-        },
-        "tag": [
-          {
-            "href": "https://another.example.org/users/dumpsterqueer",
-            "name": "@dumpsterqueer@another.example.org",
-            "type": "Mention"
-          },
-          {
-            "href": "https://another.example.org/users/f0x",
-            "name": "@f0x@another.example.org",
-            "type": "Mention"
-          }
-        ],
-        "type": "Note"
-      },
+      "example": {},
       "notes": "InteractionPolicy for an ActivityStreams Object.",
       "domain": {
         "type": "owl:Class",
@@ -351,19 +301,59 @@
         "rdf:Property",
         "owl:FunctionalProperty"
       ],
-      "notes": "URI/ID of an Approve Activity, which itself points towards the ID of the Activity to which this property is attached. The presence of this property on an Activity indicates that an interaction has been Approve'd by the Actor whose Object this Activity interacts with.",
+      "notes": "URI/ID of an Approve Activity, which itself points towards the ID of the Activity or Object to which this property is attached. The presence of this property on an Activity or Object indicates that an interaction has been Approve'd by the Actor whose Object this Activity or Object interacts with.",
       "domain": {
         "type": "owl:Class",
         "unionOf": [
           {
             "type": "owl:Class",
-            "url": "https://www.w3.org/ns/activitystreams#Create",
-            "name": "as:Create"
+            "url": "https://www.w3.org/ns/activitystreams#Article",
+            "name": "as:Article"
           },
           {
             "type": "owl:Class",
-            "url": "https://www.w3.org/ns/activitystreams#Announce",
-            "name": "as:Announce"
+            "url": "https://www.w3.org/ns/activitystreams#Document",
+            "name": "as:Document"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Image",
+            "name": "as:Image"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Video",
+            "name": "as:Video"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Note",
+            "name": "as:Note"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Page",
+            "name": "as:Page"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Event",
+            "name": "as:Event"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Place",
+            "name": "as:Place"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Profile",
+            "name": "as:Profile"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Question",
+            "name": "as:Question"
           },
           {
             "type": "owl:Class",

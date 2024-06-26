@@ -2,9 +2,7 @@
 
 package vocab
 
-// InteractionPolicy for an ActivityStreams Object or Activity. This mapping may
-// be nested inside the Object/Activity document as the value or may be a link
-// to a JSON-LD document with these properties.
+// InteractionPolicy for an ActivityStreams Object.
 type GoToSocialInteractionPolicy interface {
 	// GetGoToSocialCanAnnounce returns the "canAnnounce" property if it
 	// exists, and nil otherwise.

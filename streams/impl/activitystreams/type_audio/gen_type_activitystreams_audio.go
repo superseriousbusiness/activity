@@ -22,6 +22,7 @@ import (
 //   }
 type ActivityStreamsAudio struct {
 	ActivityStreamsAltitude     vocab.ActivityStreamsAltitudeProperty
+	GoToSocialApprovedBy        vocab.GoToSocialApprovedByProperty
 	ActivityStreamsAttachment   vocab.ActivityStreamsAttachmentProperty
 	ActivityStreamsAttributedTo vocab.ActivityStreamsAttributedToProperty
 	ActivityStreamsAudience     vocab.ActivityStreamsAudienceProperty
@@ -134,6 +135,11 @@ func DeserializeAudio(m map[string]interface{}, aliasMap map[string]string) (*Ac
 		return nil, err
 	} else if p != nil {
 		this.ActivityStreamsAltitude = p
+	}
+	if p, err := mgr.DeserializeApprovedByPropertyGoToSocial()(m, aliasMap); err != nil {
+		return nil, err
+	} else if p != nil {
+		this.GoToSocialApprovedBy = p
 	}
 	if p, err := mgr.DeserializeAttachmentPropertyActivityStreams()(m, aliasMap); err != nil {
 		return nil, err
@@ -316,6 +322,8 @@ func DeserializeAudio(m map[string]interface{}, aliasMap map[string]string) (*Ac
 	for k, v := range m {
 		// Begin: Code that ensures a property name is unknown
 		if k == "altitude" {
+			continue
+		} else if k == "approvedBy" {
 			continue
 		} else if k == "attachment" {
 			continue
@@ -612,6 +620,12 @@ func (this ActivityStreamsAudio) GetActivityStreamsUrl() vocab.ActivityStreamsUr
 	return this.ActivityStreamsUrl
 }
 
+// GetGoToSocialApprovedBy returns the "approvedBy" property if it exists, and nil
+// otherwise.
+func (this ActivityStreamsAudio) GetGoToSocialApprovedBy() vocab.GoToSocialApprovedByProperty {
+	return this.GoToSocialApprovedBy
+}
+
 // GetGoToSocialInteractionPolicy returns the "interactionPolicy" property if it
 // exists, and nil otherwise.
 func (this ActivityStreamsAudio) GetGoToSocialInteractionPolicy() vocab.GoToSocialInteractionPolicyProperty {
@@ -659,6 +673,7 @@ func (this ActivityStreamsAudio) IsExtending(other vocab.Type) bool {
 func (this ActivityStreamsAudio) JSONLDContext() map[string]string {
 	m := map[string]string{"https://www.w3.org/ns/activitystreams": this.alias}
 	m = this.helperJSONLDContext(this.ActivityStreamsAltitude, m)
+	m = this.helperJSONLDContext(this.GoToSocialApprovedBy, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsAttachment, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsAttributedTo, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsAudience, m)
@@ -704,6 +719,20 @@ func (this ActivityStreamsAudio) LessThan(o vocab.ActivityStreamsAudio) bool {
 	// Begin: Compare known properties
 	// Compare property "altitude"
 	if lhs, rhs := this.ActivityStreamsAltitude, o.GetActivityStreamsAltitude(); lhs != nil && rhs != nil {
+		if lhs.LessThan(rhs) {
+			return true
+		} else if rhs.LessThan(lhs) {
+			return false
+		}
+	} else if lhs == nil && rhs != nil {
+		// Nil is less than anything else
+		return true
+	} else if rhs != nil && rhs == nil {
+		// Anything else is greater than nil
+		return false
+	} // Else: Both are nil
+	// Compare property "approvedBy"
+	if lhs, rhs := this.GoToSocialApprovedBy, o.GetGoToSocialApprovedBy(); lhs != nil && rhs != nil {
 		if lhs.LessThan(rhs) {
 			return true
 		} else if rhs.LessThan(lhs) {
@@ -1237,6 +1266,14 @@ func (this ActivityStreamsAudio) Serialize() (map[string]interface{}, error) {
 			m[this.ActivityStreamsAltitude.Name()] = i
 		}
 	}
+	// Maybe serialize property "approvedBy"
+	if this.GoToSocialApprovedBy != nil {
+		if i, err := this.GoToSocialApprovedBy.Serialize(); err != nil {
+			return nil, err
+		} else if i != nil {
+			m[this.GoToSocialApprovedBy.Name()] = i
+		}
+	}
 	// Maybe serialize property "attachment"
 	if this.ActivityStreamsAttachment != nil {
 		if i, err := this.ActivityStreamsAttachment.Serialize(); err != nil {
@@ -1689,6 +1726,11 @@ func (this *ActivityStreamsAudio) SetActivityStreamsUpdated(i vocab.ActivityStre
 // SetActivityStreamsUrl sets the "url" property.
 func (this *ActivityStreamsAudio) SetActivityStreamsUrl(i vocab.ActivityStreamsUrlProperty) {
 	this.ActivityStreamsUrl = i
+}
+
+// SetGoToSocialApprovedBy sets the "approvedBy" property.
+func (this *ActivityStreamsAudio) SetGoToSocialApprovedBy(i vocab.GoToSocialApprovedByProperty) {
+	this.GoToSocialApprovedBy = i
 }
 
 // SetGoToSocialInteractionPolicy sets the "interactionPolicy" property.

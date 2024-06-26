@@ -124,6 +124,9 @@ type ActivityStreamsImage interface {
 	// GetActivityStreamsWidth returns the "width" property if it exists, and
 	// nil otherwise.
 	GetActivityStreamsWidth() ActivityStreamsWidthProperty
+	// GetGoToSocialApprovedBy returns the "approvedBy" property if it exists,
+	// and nil otherwise.
+	GetGoToSocialApprovedBy() GoToSocialApprovedByProperty
 	// GetGoToSocialInteractionPolicy returns the "interactionPolicy" property
 	// if it exists, and nil otherwise.
 	GetGoToSocialInteractionPolicy() GoToSocialInteractionPolicyProperty
@@ -225,6 +228,8 @@ type ActivityStreamsImage interface {
 	SetActivityStreamsUrl(i ActivityStreamsUrlProperty)
 	// SetActivityStreamsWidth sets the "width" property.
 	SetActivityStreamsWidth(i ActivityStreamsWidthProperty)
+	// SetGoToSocialApprovedBy sets the "approvedBy" property.
+	SetGoToSocialApprovedBy(i GoToSocialApprovedByProperty)
 	// SetGoToSocialInteractionPolicy sets the "interactionPolicy" property.
 	SetGoToSocialInteractionPolicy(i GoToSocialInteractionPolicyProperty)
 	// SetJSONLDId sets the "id" property.

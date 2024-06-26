@@ -55,6 +55,8 @@ type GoToSocialCanLikePropertyIterator interface {
 	SetType(t Type) error
 }
 
+// Defines who can Like with an object property set to the URI/ID of the Object to
+// which this interactionPolicy is attached.
 type GoToSocialCanLikeProperty interface {
 	// AppendGoToSocialCanLike appends a CanLike value to the back of a list
 	// of the property "canLike". Invalidates iterators that are

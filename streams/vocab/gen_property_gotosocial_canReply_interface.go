@@ -56,6 +56,8 @@ type GoToSocialCanReplyPropertyIterator interface {
 	SetType(t Type) error
 }
 
+// Defines who can Create a new Object with an inReplyTo property set to the
+// URI/ID of the Object to which this interactionPolicy is attached.
 type GoToSocialCanReplyProperty interface {
 	// AppendGoToSocialCanReply appends a CanReply value to the back of a list
 	// of the property "canReply". Invalidates iterators that are

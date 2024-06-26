@@ -4,9 +4,7 @@ package typeinteractionpolicy
 
 import vocab "github.com/superseriousbusiness/activity/streams/vocab"
 
-// InteractionPolicy for an ActivityStreams Object or Activity. This mapping may
-// be nested inside the Object/Activity document as the value or may be a link
-// to a JSON-LD document with these properties.
+// InteractionPolicy for an ActivityStreams Object.
 type GoToSocialInteractionPolicy struct {
 	GoToSocialCanAnnounce vocab.GoToSocialCanAnnounceProperty
 	GoToSocialCanLike     vocab.GoToSocialCanLikeProperty

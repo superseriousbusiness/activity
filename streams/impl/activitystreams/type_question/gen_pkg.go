@@ -23,6 +23,10 @@ type privateManager interface {
 	// method for the "ActivityStreamsAnyOfProperty" non-functional
 	// property in the vocabulary "ActivityStreams"
 	DeserializeAnyOfPropertyActivityStreams() func(map[string]interface{}, map[string]string) (vocab.ActivityStreamsAnyOfProperty, error)
+	// DeserializeApprovedByPropertyGoToSocial returns the deserialization
+	// method for the "GoToSocialApprovedByProperty" non-functional
+	// property in the vocabulary "GoToSocial"
+	DeserializeApprovedByPropertyGoToSocial() func(map[string]interface{}, map[string]string) (vocab.GoToSocialApprovedByProperty, error)
 	// DeserializeAttachmentPropertyActivityStreams returns the
 	// deserialization method for the "ActivityStreamsAttachmentProperty"
 	// non-functional property in the vocabulary "ActivityStreams"

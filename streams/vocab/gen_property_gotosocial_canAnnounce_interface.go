@@ -56,6 +56,8 @@ type GoToSocialCanAnnouncePropertyIterator interface {
 	SetType(t Type) error
 }
 
+// Defines who can Announce with an object property set to the URI/ID of the
+// Object to which this interactionPolicy is attached.
 type GoToSocialCanAnnounceProperty interface {
 	// AppendGoToSocialCanAnnounce appends a CanAnnounce value to the back of
 	// a list of the property "canAnnounce". Invalidates iterators that
