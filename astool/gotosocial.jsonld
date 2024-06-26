@@ -1,0 +1,374 @@
+{
+  "@context": [
+    {
+      "as": "https://www.w3.org/ns/activitystreams",
+      "owl": "http://www.w3.org/2002/07/owl#",
+      "rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "rfc": "https://tools.ietf.org/html/",
+      "schema": "http://schema.org/",
+      "xsd": "http://www.w3.org/2001/XMLSchema#"
+    },
+    {
+      "domain": "rdfs:domain",
+      "example": "schema:workExample",
+      "isDefinedBy": "rdfs:isDefinedBy",
+      "mainEntity": "schema:mainEntity",
+      "members": "owl:members",
+      "name": "schema:name",
+      "notes": "rdfs:comment",
+      "range": "rdfs:range",
+      "subClassOf": "rdfs:subClassOf",
+      "disjointWith": "owl:disjointWith",
+      "subPropertyOf": "rdfs:subPropertyOf",
+      "unionOf": "owl:unionOf",
+      "url": "schema:URL"
+    }
+  ],
+  "id": "https://gotosocial.org/ns#",
+  "type": "owl:Ontology",
+  "name": "GoToSocial",
+  "members": [
+    {
+      "id": "https://gotosocial.org/ns#InteractionPolicy",
+      "type": "owl:Class",
+      "notes": "InteractionPolicy for an ActivityStreams Object.",
+      "name": "InteractionPolicy",
+      "url": "https://gotosocial.org/ns#InteractionPolicy",
+      "@wtf_typeless": true
+    },
+    {
+      "id": "https://gotosocial.org/ns#dfn-interactionPolicy",
+      "type": [
+        "rdf:Property",
+        "owl:ObjectProperty"
+      ],
+      "example": {},
+      "notes": "InteractionPolicy for an ActivityStreams Object.",
+      "domain": {
+        "type": "owl:Class",
+        "unionOf": [
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Article",
+            "name": "as:Article"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Document",
+            "name": "as:Document"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Image",
+            "name": "as:Image"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Video",
+            "name": "as:Video"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Note",
+            "name": "as:Note"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Page",
+            "name": "as:Page"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Event",
+            "name": "as:Event"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Place",
+            "name": "as:Place"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Profile",
+            "name": "as:Profile"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Question",
+            "name": "as:Question"
+          }
+        ]
+      },
+      "isDefinedBy": "https://gotosocial.org/ns#dfn-interactionPolicy",
+      "range": {
+        "type": "owl:Class",
+        "unionOf": [
+          {
+            "type": "owl:Class",
+            "url": "https://gotosocial.org/ns#InteractionPolicy",
+            "name": "InteractionPolicy"
+          }
+        ]
+      },
+      "name": "interactionPolicy",
+      "url": "https://gotosocial.org/ns#dfn-interactionPolicy"
+    },
+    {
+      "id": "https://gotosocial.org/ns#CanLike",
+      "type": "owl:Class",
+      "notes": "",
+      "name": "CanLike",
+      "url": "https://gotosocial.org/ns#CanLike",
+      "@wtf_typeless": true
+    },
+    {
+      "id": "https://gotosocial.org/ns#dfn-canLike",
+      "type": [
+        "rdf:Property",
+        "owl:ObjectProperty"
+      ],
+      "notes": "Defines who can Like with an object property set to the URI/ID of the Object to which this interactionPolicy is attached.",
+      "domain": {
+        "type": "owl:Class",
+        "unionOf": [
+          {
+            "type": "owl:Class",
+            "url": "https://gotosocial.org/ns#InteractionPolicy",
+            "name": "InteractionPolicy"
+          }
+        ]
+      },
+      "isDefinedBy": "https://gotosocial.org/ns#dfn-canLike",
+      "range": {
+        "type": "owl:Class",
+        "unionOf": [
+          {
+            "type": "owl:Class",
+            "url": "https://gotosocial.org/ns#CanLike",
+            "name": "CanLike"
+          }
+        ]
+      },
+      "name": "canLike",
+      "url": "https://gotosocial.org/ns#dfn-canLike"
+    },
+    {
+      "id": "https://gotosocial.org/ns#CanAnnounce",
+      "type": "owl:Class",
+      "notes": "",
+      "name": "CanAnnounce",
+      "url": "https://gotosocial.org/ns#CanAnnounce",
+      "@wtf_typeless": true
+    },
+    {
+      "id": "https://gotosocial.org/ns#dfn-canAnnounce",
+      "type": [
+        "rdf:Property",
+        "owl:ObjectProperty"
+      ],
+      "notes": "Defines who can Announce with an object property set to the URI/ID of the Object to which this interactionPolicy is attached.",
+      "domain": {
+        "type": "owl:Class",
+        "unionOf": [
+          {
+            "type": "owl:Class",
+            "url": "https://gotosocial.org/ns#InteractionPolicy",
+            "name": "InteractionPolicy"
+          }
+        ]
+      },
+      "isDefinedBy": "https://gotosocial.org/ns#dfn-canAnnounce",
+      "range": {
+        "type": "owl:Class",
+        "unionOf": [
+          {
+            "type": "owl:Class",
+            "url": "https://gotosocial.org/ns#CanAnnounce",
+            "name": "CanAnnounce"
+          }
+        ]
+      },
+      "name": "canAnnounce",
+      "url": "https://gotosocial.org/ns#dfn-canAnnounce"
+    },
+    {
+      "id": "https://gotosocial.org/ns#CanReply",
+      "type": "owl:Class",
+      "notes": "",
+      "name": "CanReply",
+      "url": "https://gotosocial.org/ns#CanReply",
+      "@wtf_typeless": true
+    },
+    {
+      "id": "https://gotosocial.org/ns#dfn-canReply",
+      "type": [
+        "rdf:Property",
+        "owl:ObjectProperty"
+      ],
+      "notes": "Defines who can Create a new Object with an inReplyTo property set to the URI/ID of the Object to which this interactionPolicy is attached.",
+      "domain": {
+        "type": "owl:Class",
+        "unionOf": [
+          {
+            "type": "owl:Class",
+            "url": "https://gotosocial.org/ns#InteractionPolicy",
+            "name": "InteractionPolicy"
+          }
+        ]
+      },
+      "isDefinedBy": "https://gotosocial.org/ns#dfn-canReply",
+      "range": {
+        "type": "owl:Class",
+        "unionOf": [
+          {
+            "type": "owl:Class",
+            "url": "https://gotosocial.org/ns#CanReply",
+            "name": "CanReply"
+          }
+        ]
+      },
+      "name": "canReply",
+      "url": "https://gotosocial.org/ns#dfn-canReply"
+    },
+    {
+      "id": "https://gotosocial.org/ns#always",
+      "type": "rdf:Property",
+      "notes": "Indicates zero or more URI/IDs that can perform an interaction without requiring approval by the Object AttributedTo Actor.",
+      "domain": {
+        "type": "owl:Class",
+        "unionOf": [
+          {
+            "type": "owl:Class",
+            "url": "https://gotosocial.org/ns#CanLike",
+            "name": "CanLike"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://gotosocial.org/ns#CanAnnounce",
+            "name": "CanAnnounce"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://gotosocial.org/ns#CanReply",
+            "name": "CanReply"
+          }
+        ]
+      },
+      "isDefinedBy": "https://gotosocial.org/ns#always",
+      "range": {
+        "type": "owl:Class",
+        "unionOf": "xsd:anyURI"
+      },
+      "name": "always",
+      "url": "https://gotosocial.org/ns#always"
+    },
+    {
+      "id": "https://gotosocial.org/ns#approvalRequired",
+      "type": "rdf:Property",
+      "notes": "Indicates zero or more URI/IDs that require approval by the Object AttributedTo Actor in order to perform an interaction.",
+      "domain": {
+        "type": "owl:Class",
+        "unionOf": [
+          {
+            "type": "owl:Class",
+            "url": "https://gotosocial.org/ns#CanLike",
+            "name": "CanLike"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://gotosocial.org/ns#CanAnnounce",
+            "name": "CanAnnounce"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://gotosocial.org/ns#CanReply",
+            "name": "CanReply"
+          }
+        ]
+      },
+      "isDefinedBy": "https://gotosocial.org/ns#approvalRequired",
+      "range": {
+        "type": "owl:Class",
+        "unionOf": "xsd:anyURI"
+      },
+      "name": "approvalRequired",
+      "url": "https://gotosocial.org/ns#approvalRequired"
+    },
+    {
+      "id": "https://gotosocial.org/ns#approvedBy",
+      "type": [
+        "rdf:Property",
+        "owl:FunctionalProperty"
+      ],
+      "notes": "URI/ID of an Approve Activity, which itself points towards the ID of the Activity or Object to which this property is attached. The presence of this property on an Activity or Object indicates that an interaction has been Approve'd by the Actor whose Object this Activity or Object interacts with.",
+      "domain": {
+        "type": "owl:Class",
+        "unionOf": [
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Article",
+            "name": "as:Article"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Document",
+            "name": "as:Document"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Image",
+            "name": "as:Image"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Video",
+            "name": "as:Video"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Note",
+            "name": "as:Note"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Page",
+            "name": "as:Page"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Event",
+            "name": "as:Event"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Place",
+            "name": "as:Place"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Profile",
+            "name": "as:Profile"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Question",
+            "name": "as:Question"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Like",
+            "name": "as:Like"
+          }
+        ]
+      },
+      "isDefinedBy": "https://gotosocial.org/ns#approvedBy",
+      "range": {
+        "type": "owl:Class",
+        "unionOf": "xsd:anyURI"
+      },
+      "name": "approvedBy",
+      "url": "https://gotosocial.org/ns#approvedBy"
+    }
+  ]
+}
