@@ -107,6 +107,9 @@ type ActivityStreamsPage interface {
 	// GetActivityStreamsUrl returns the "url" property if it exists, and nil
 	// otherwise.
 	GetActivityStreamsUrl() ActivityStreamsUrlProperty
+	// GetGoToSocialInteractionPolicy returns the "interactionPolicy" property
+	// if it exists, and nil otherwise.
+	GetGoToSocialInteractionPolicy() GoToSocialInteractionPolicyProperty
 	// GetJSONLDId returns the "id" property if it exists, and nil otherwise.
 	GetJSONLDId() JSONLDIdProperty
 	// GetJSONLDType returns the "type" property if it exists, and nil
@@ -201,6 +204,8 @@ type ActivityStreamsPage interface {
 	SetActivityStreamsUpdated(i ActivityStreamsUpdatedProperty)
 	// SetActivityStreamsUrl sets the "url" property.
 	SetActivityStreamsUrl(i ActivityStreamsUrlProperty)
+	// SetGoToSocialInteractionPolicy sets the "interactionPolicy" property.
+	SetGoToSocialInteractionPolicy(i GoToSocialInteractionPolicyProperty)
 	// SetJSONLDId sets the "id" property.
 	SetJSONLDId(i JSONLDIdProperty)
 	// SetJSONLDType sets the "type" property.

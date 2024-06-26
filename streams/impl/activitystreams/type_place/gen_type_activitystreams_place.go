@@ -44,6 +44,7 @@ type ActivityStreamsPlace struct {
 	JSONLDId                    vocab.JSONLDIdProperty
 	ActivityStreamsImage        vocab.ActivityStreamsImageProperty
 	ActivityStreamsInReplyTo    vocab.ActivityStreamsInReplyToProperty
+	GoToSocialInteractionPolicy vocab.GoToSocialInteractionPolicyProperty
 	ActivityStreamsLatitude     vocab.ActivityStreamsLatitudeProperty
 	ActivityStreamsLikes        vocab.ActivityStreamsLikesProperty
 	ActivityStreamsLocation     vocab.ActivityStreamsLocationProperty
@@ -204,6 +205,11 @@ func DeserializePlace(m map[string]interface{}, aliasMap map[string]string) (*Ac
 	} else if p != nil {
 		this.ActivityStreamsInReplyTo = p
 	}
+	if p, err := mgr.DeserializeInteractionPolicyPropertyGoToSocial()(m, aliasMap); err != nil {
+		return nil, err
+	} else if p != nil {
+		this.GoToSocialInteractionPolicy = p
+	}
 	if p, err := mgr.DeserializeLatitudePropertyActivityStreams()(m, aliasMap); err != nil {
 		return nil, err
 	} else if p != nil {
@@ -354,6 +360,8 @@ func DeserializePlace(m map[string]interface{}, aliasMap map[string]string) (*Ac
 		} else if k == "image" {
 			continue
 		} else if k == "inReplyTo" {
+			continue
+		} else if k == "interactionPolicy" {
 			continue
 		} else if k == "latitude" {
 			continue
@@ -672,6 +680,12 @@ func (this ActivityStreamsPlace) GetActivityStreamsUrl() vocab.ActivityStreamsUr
 	return this.ActivityStreamsUrl
 }
 
+// GetGoToSocialInteractionPolicy returns the "interactionPolicy" property if it
+// exists, and nil otherwise.
+func (this ActivityStreamsPlace) GetGoToSocialInteractionPolicy() vocab.GoToSocialInteractionPolicyProperty {
+	return this.GoToSocialInteractionPolicy
+}
+
 // GetJSONLDId returns the "id" property if it exists, and nil otherwise.
 func (this ActivityStreamsPlace) GetJSONLDId() vocab.JSONLDIdProperty {
 	return this.JSONLDId
@@ -724,6 +738,7 @@ func (this ActivityStreamsPlace) JSONLDContext() map[string]string {
 	m = this.helperJSONLDContext(this.JSONLDId, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsImage, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsInReplyTo, m)
+	m = this.helperJSONLDContext(this.GoToSocialInteractionPolicy, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsLatitude, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsLikes, m)
 	m = this.helperJSONLDContext(this.ActivityStreamsLocation, m)
@@ -980,6 +995,20 @@ func (this ActivityStreamsPlace) LessThan(o vocab.ActivityStreamsPlace) bool {
 	} // Else: Both are nil
 	// Compare property "inReplyTo"
 	if lhs, rhs := this.ActivityStreamsInReplyTo, o.GetActivityStreamsInReplyTo(); lhs != nil && rhs != nil {
+		if lhs.LessThan(rhs) {
+			return true
+		} else if rhs.LessThan(lhs) {
+			return false
+		}
+	} else if lhs == nil && rhs != nil {
+		// Nil is less than anything else
+		return true
+	} else if rhs != nil && rhs == nil {
+		// Anything else is greater than nil
+		return false
+	} // Else: Both are nil
+	// Compare property "interactionPolicy"
+	if lhs, rhs := this.GoToSocialInteractionPolicy, o.GetGoToSocialInteractionPolicy(); lhs != nil && rhs != nil {
 		if lhs.LessThan(rhs) {
 			return true
 		} else if rhs.LessThan(lhs) {
@@ -1459,6 +1488,14 @@ func (this ActivityStreamsPlace) Serialize() (map[string]interface{}, error) {
 			m[this.ActivityStreamsInReplyTo.Name()] = i
 		}
 	}
+	// Maybe serialize property "interactionPolicy"
+	if this.GoToSocialInteractionPolicy != nil {
+		if i, err := this.GoToSocialInteractionPolicy.Serialize(); err != nil {
+			return nil, err
+		} else if i != nil {
+			m[this.GoToSocialInteractionPolicy.Name()] = i
+		}
+	}
 	// Maybe serialize property "latitude"
 	if this.ActivityStreamsLatitude != nil {
 		if i, err := this.ActivityStreamsLatitude.Serialize(); err != nil {
@@ -1832,6 +1869,11 @@ func (this *ActivityStreamsPlace) SetActivityStreamsUpdated(i vocab.ActivityStre
 // SetActivityStreamsUrl sets the "url" property.
 func (this *ActivityStreamsPlace) SetActivityStreamsUrl(i vocab.ActivityStreamsUrlProperty) {
 	this.ActivityStreamsUrl = i
+}
+
+// SetGoToSocialInteractionPolicy sets the "interactionPolicy" property.
+func (this *ActivityStreamsPlace) SetGoToSocialInteractionPolicy(i vocab.GoToSocialInteractionPolicyProperty) {
+	this.GoToSocialInteractionPolicy = i
 }
 
 // SetJSONLDId sets the "id" property.
