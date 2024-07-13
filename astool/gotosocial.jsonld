@@ -359,6 +359,11 @@
             "type": "owl:Class",
             "url": "https://www.w3.org/ns/activitystreams#Like",
             "name": "as:Like"
+          },
+          {
+            "type": "owl:Class",
+            "url": "https://www.w3.org/ns/activitystreams#Announce",
+            "name": "as:Announce"
           }
         ]
       },
