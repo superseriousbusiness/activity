@@ -126,10 +126,17 @@ func Serialize(a vocab.Type) (m map[string]any, e error) {
 	}
 
 	var (
-		// Slice of
-		vocabs         = a.JSONLDContext()
+		// Slice of vocab URIs
+		// used in this vocab.Type.
+		vocabs = a.JSONLDContext()
+
+		// Slice of vocab URIs to add
+		// to the base @context slice.
+		includeVocabs []string
+
+		// Object to inline as an extra
+		// entry in the @context slice.
 		inlinedContext = make(map[string]any)
-		includeVocabs  []string
 	)
 
 	// Get anlookup of all field and
