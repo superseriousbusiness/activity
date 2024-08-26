@@ -1,6 +1,6 @@
 module github.com/superseriousbusiness/activity
 
-go 1.18
+go 1.21
 
 require (
 	github.com/dave/jennifer v1.5.0
