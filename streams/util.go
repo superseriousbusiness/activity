@@ -139,7 +139,7 @@ func Serialize(a vocab.Type) (m map[string]any, e error) {
 		inlinedContext = make(map[string]any)
 	)
 
-	// Get anlookup of all field and
+	// Get a lookup of all field and
 	// type names we need to care about.
 	lookup := getLookup(m)
 
