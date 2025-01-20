@@ -410,14 +410,12 @@ func appendToActorsAndCollectionsIRIs(
 		return err
 	}
 
-	if IsPublic(id.String()) {
-		// Ignore Public IRI
-		// as we can't deliver
-		// to it directly.
-		return nil
+	// Ignore Public IRI as we
+	// can't deliver to it directly.
+	if !IsPublic(id.String()) {
+		actorsAndCollections = append(actorsAndCollections, id)
 	}
 
-	actorsAndCollections = append(actorsAndCollections, id)
 	return nil
 }
 

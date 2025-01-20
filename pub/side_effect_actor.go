@@ -810,7 +810,7 @@ func (a *SideEffectActor) prepare(
 	// Now look for any remaining actors/collections
 	// that weren't already dereferenced into inboxes
 	// with db calls; find these by making deref calls
-	// to remote instances
+	// to remote instances.
 	//
 	// First get a transport to do the http calls.
 	t, err := a.common.NewTransport(ctx, outboxIRI, goFedUserAgent())
