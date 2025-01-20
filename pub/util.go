@@ -385,19 +385,6 @@ func wrapInCreate(ctx context.Context, o vocab.Type, actor *url.URL) (c vocab.Ac
 	return
 }
 
-// filterURLs removes urls whose strings match the provided filter
-func filterURLs(u []*url.URL, fn func(s string) bool) []*url.URL {
-	i := 0
-	for i < len(u) {
-		if fn(u[i].String()) {
-			u = append(u[:i], u[i+1:]...)
-		} else {
-			i++
-		}
-	}
-	return u
-}
-
 const (
 	// PublicActivityPubIRI is the IRI that indicates an Activity is meant
 	// to be visible for general public consumption.
