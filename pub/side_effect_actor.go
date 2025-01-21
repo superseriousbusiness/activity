@@ -707,12 +707,13 @@ func (a *SideEffectActor) prepare(
 	//		"[...]"                                            // <-- etc
 	//	]
 	var actorsAndCollections []*url.URL
-
 	if to := activity.GetActivityStreamsTo(); to != nil {
 		for iter := to.Begin(); iter != to.End(); iter = iter.Next() {
-			if err := appendToActorsAndCollectionsIRIs(
+			var err error
+			actorsAndCollections, err = appendToActorsAndCollectionsIRIs(
 				iter, actorsAndCollections,
-			); err != nil {
+			)
+			if err != nil {
 				return nil, err
 			}
 		}
@@ -720,9 +721,11 @@ func (a *SideEffectActor) prepare(
 
 	if bto := activity.GetActivityStreamsBto(); bto != nil {
 		for iter := bto.Begin(); iter != bto.End(); iter = iter.Next() {
-			if err := appendToActorsAndCollectionsIRIs(
+			var err error
+			actorsAndCollections, err = appendToActorsAndCollectionsIRIs(
 				iter, actorsAndCollections,
-			); err != nil {
+			)
+			if err != nil {
 				return nil, err
 			}
 		}
@@ -730,9 +733,11 @@ func (a *SideEffectActor) prepare(
 
 	if cc := activity.GetActivityStreamsCc(); cc != nil {
 		for iter := cc.Begin(); iter != cc.End(); iter = iter.Next() {
-			if err := appendToActorsAndCollectionsIRIs(
+			var err error
+			actorsAndCollections, err = appendToActorsAndCollectionsIRIs(
 				iter, actorsAndCollections,
-			); err != nil {
+			)
+			if err != nil {
 				return nil, err
 			}
 		}
@@ -740,9 +745,11 @@ func (a *SideEffectActor) prepare(
 
 	if bcc := activity.GetActivityStreamsBcc(); bcc != nil {
 		for iter := bcc.Begin(); iter != bcc.End(); iter = iter.Next() {
-			if err := appendToActorsAndCollectionsIRIs(
+			var err error
+			actorsAndCollections, err = appendToActorsAndCollectionsIRIs(
 				iter, actorsAndCollections,
-			); err != nil {
+			)
+			if err != nil {
 				return nil, err
 			}
 		}
@@ -750,9 +757,11 @@ func (a *SideEffectActor) prepare(
 
 	if audience := activity.GetActivityStreamsAudience(); audience != nil {
 		for iter := audience.Begin(); iter != audience.End(); iter = iter.Next() {
-			if err := appendToActorsAndCollectionsIRIs(
+			var err error
+			actorsAndCollections, err = appendToActorsAndCollectionsIRIs(
 				iter, actorsAndCollections,
-			); err != nil {
+			)
+			if err != nil {
 				return nil, err
 			}
 		}

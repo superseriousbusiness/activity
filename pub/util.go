@@ -404,10 +404,10 @@ func IsPublic(s string) bool {
 func appendToActorsAndCollectionsIRIs(
 	iter IdProperty,
 	actorsAndCollections []*url.URL,
-) error {
+) ([]*url.URL, error) {
 	id, err := ToId(iter)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	// Ignore Public IRI as we
@@ -416,7 +416,7 @@ func appendToActorsAndCollectionsIRIs(
 		actorsAndCollections = append(actorsAndCollections, id)
 	}
 
-	return nil
+	return actorsAndCollections, nil
 }
 
 // actorsToInboxIRIs extracts the 'inbox' IRIs from actor types.
