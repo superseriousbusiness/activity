@@ -2,6 +2,18 @@
 
 **THIS IS FORKED FROM https://github.com/go-fed/activity**!
 
+tl;dr To generate the GtS (and other) schemas:
+
+```
+GOPATH=~/go ./astool/astool \
+    -spec ./astool/activitystreams.jsonld \
+    -spec ./astool/schema.jsonld \
+    -spec ./astool/security-v1.jsonld \
+    -spec ./astool/toot.jsonld \
+    -spec ./astool/gotosocial.jsonld \
+    ./streams
+```
+
 > Complete ActivityStreams-based ontologies plus middleware handlers implementing ActivityPub
 
 [![Build Status][Build-Status-Image]][Build-Status-Url] [![Go Reference][Go-Reference-Image]][Go-Reference-Url]
