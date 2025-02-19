@@ -301,7 +301,7 @@
         "rdf:Property",
         "owl:FunctionalProperty"
       ],
-      "notes": "URI/ID of an Approve Activity, which itself points towards the ID of the Activity or Object to which this property is attached. The presence of this property on an Activity or Object indicates that an interaction has been Approve'd by the Actor whose Object this Activity or Object interacts with.",
+      "notes": "URI/ID of an Accept Activity or approval, which itself points towards the ID of the Activity or Object to which this property is attached. The presence of this property on an Activity or Object indicates that an interaction has been Approve'd by the Actor whose Object this Activity or Object interacts with.",
       "domain": {
         "type": "owl:Class",
         "unionOf": [
@@ -374,6 +374,42 @@
       },
       "name": "approvedBy",
       "url": "https://gotosocial.org/ns#approvedBy"
+    },
+    {
+      "id": "https://gotosocial.org/ns#LikeApproval",
+      "type": "owl:Class",
+      "subClassOf": {
+        "type": "owl:Class",
+        "url": "https://www.w3.org/ns/activitystreams#Object",
+        "name": "as:Object"
+      },
+      "disjointWith": [],
+      "name": "LikeApproval",
+      "url": "https://gotosocial.org/ns#LikeApproval"
+    },
+    {
+      "id": "https://gotosocial.org/ns#ReplyApproval",
+      "type": "owl:Class",
+      "subClassOf": {
+        "type": "owl:Class",
+        "url": "https://www.w3.org/ns/activitystreams#Object",
+        "name": "as:Object"
+      },
+      "disjointWith": [],
+      "name": "ReplyApproval",
+      "url": "https://gotosocial.org/ns#ReplyApproval"
+    },
+    {
+      "id": "https://gotosocial.org/ns#AnnounceApproval",
+      "type": "owl:Class",
+      "subClassOf": {
+        "type": "owl:Class",
+        "url": "https://www.w3.org/ns/activitystreams#Object",
+        "name": "as:Object"
+      },
+      "disjointWith": [],
+      "name": "AnnounceApproval",
+      "url": "https://gotosocial.org/ns#AnnounceApproval"
     }
   ]
 }
