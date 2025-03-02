@@ -1,3 +1,7 @@
+***This repository now lives at Codeberg: https://codeberg.org/superseriousbusiness/activity***
+
+***This repository is a read-only archive.***
+
 # activity
 
 **THIS IS FORKED FROM https://github.com/go-fed/activity**!
